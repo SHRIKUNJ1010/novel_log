@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:novel_log/models/provider_model/page_state_provider.dart';
+import 'package:novel_log/router/my_app_router_delegate.dart';
+import 'package:novel_log/router/my_app_router_information_parser.dart';
+import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+late SharedPreferences prefs;
+PageStateProvider pageStateProvider = PageStateProvider();
+
+class MyApp extends StatelessWidget {
+  final MyAppRouterDelegate delegate = MyAppRouterDelegate(pageStateProvider);
+  final parser = MyAppRouterInformationParser();
+
+  MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: appName,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: appThemeColor,
+        primaryColor: appPrimaryColor,
+      ),
+      routerDelegate: delegate,
+      routeInformationParser: parser,
+    );
+  }
+}

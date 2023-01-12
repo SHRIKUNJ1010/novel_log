@@ -1,0 +1,36 @@
+name: novel_log
+description: A Flutter Project for keeping your novel log and practicing flutter with different devices.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  shared_preferences:
+  flash:
+  url_launcher:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito_Regular.ttf
+
+  assets:
+      - assets/
