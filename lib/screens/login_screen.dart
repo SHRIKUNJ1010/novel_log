@@ -16,6 +16,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailEditingController = TextEditingController();
+  TextEditingController passwordEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -26,7 +29,10 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
+            if (!kIsWeb)
+              Platform.isIOS || Platform.isAndroid
+                  ? const SizedBox(height: 100)
+                  : const SizedBox(height: 30),
             if (!kIsWeb)
               Platform.isAndroid || Platform.isIOS
                   ? Row(
@@ -64,13 +70,101 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-            const TextView(
-              padding: EdgeInsets.fromLTRB(0, 15, 0, 10),
-              label: 'Login',
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: mBlack,
-            ),
+            Material(
+              borderRadius: BorderRadius.circular(10),
+              color: appThemeColor[100],
+              child: SizedBox(
+                width: width > 1500
+                    ? width / 3
+                    : width > 580
+                        ? 500
+                        : width - 80,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: const [
+                        TextView(
+                          padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                          label: 'Login',
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: mWhite,
+                        ),
+                      ],
+                    ),
+                    const TextView(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      label: 'Email',
+                      color: mWhite,
+                      fontSize: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                      child: TextField(
+                        controller: emailEditingController,
+                      ),
+                    ),
+                    const TextView(
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                      label: 'Password',
+                      color: mWhite,
+                      fontSize: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                      child: TextField(
+                        controller: passwordEditingController,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: appPrimaryColor,
+                              ),
+                              child: const TextView(
+                                label: 'Sign Up',
+                                color: mWhite,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: appPrimaryColor,
+                              ),
+                              child: const TextView(
+                                label: 'Login',
+                                color: mWhite,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
