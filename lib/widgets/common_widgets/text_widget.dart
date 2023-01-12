@@ -19,6 +19,9 @@ class TextView extends StatelessWidget {
   final String fontFamily;
   final TextAlign textAlign;
   final EdgeInsetsGeometry padding;
+  final TextDecoration textDecoration;
+  final Color decorationColor;
+  final double decorationThickness;
 
   const TextView({
     super.key,
@@ -33,6 +36,9 @@ class TextView extends StatelessWidget {
     this.fontFamily = fontProxima,
     this.textAlign = TextAlign.start,
     this.padding = EdgeInsets.zero,
+    this.textDecoration = TextDecoration.none,
+    this.decorationColor = Colors.transparent,
+    this.decorationThickness = 0,
   });
 
   @override
@@ -51,6 +57,9 @@ class TextView extends StatelessWidget {
           fontWeight: fontWeight,
           letterSpacing: letterSpacing,
           fontFamily: fontFamily,
+          textDecoration: textDecoration,
+          decorationColor: decorationColor,
+          decorationThickness: decorationThickness,
         ),
       ),
     );

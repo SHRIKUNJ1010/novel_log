@@ -97,7 +97,8 @@ class Utility {
               backgroundColor: Colors.white,
               elevation: 0,
               contentPadding: EdgeInsets.zero,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               children: <Widget>[
                 Column(
                   mainAxisSize: MainAxisSize.max,
@@ -105,7 +106,9 @@ class Utility {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: const [
                     SizedBox(height: 30),
-                    CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appPrimaryColor)),
+                    CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(appPrimaryColor)),
                     TextView(
                       label: 'Please wait',
                       textAlign: TextAlign.center,

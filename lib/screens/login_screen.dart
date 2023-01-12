@@ -57,7 +57,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-            if (kIsWeb) const SizedBox(height: 30),
+            if (!kIsWeb)
+              Platform.isIOS || Platform.isAndroid
+                  ? const SizedBox(height: 15)
+                  : const SizedBox(height: 30),
             if (kIsWeb)
               Row(
                 mainAxisSize: MainAxisSize.max,
@@ -120,45 +123,96 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: appPrimaryColor,
-                              ),
-                              child: const TextView(
-                                label: 'Sign Up',
-                                color: mWhite,
-                                fontSize: 20,
-                              ),
+                    width > 500
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: appPrimaryColor,
+                                    ),
+                                    child: const TextView(
+                                      label: 'Sign Up',
+                                      color: mWhite,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 20),
+                                Expanded(
+                                  flex: 1,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: appPrimaryColor,
+                                    ),
+                                    child: const TextView(
+                                      label: 'Login',
+                                      color: mWhite,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: appPrimaryColor,
+                                  ),
+                                  child: const TextView(
+                                    label: 'Login',
+                                    color: mWhite,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                Container(
+                                  alignment: Alignment.center,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: appPrimaryColor,
+                                  ),
+                                  child: const TextView(
+                                    label: 'Sign Up',
+                                    color: mWhite,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 20),
-                          Expanded(
-                            flex: 1,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: appPrimaryColor,
-                              ),
-                              child: const TextView(
-                                label: 'Login',
-                                color: mWhite,
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: const [
+                        TextView(
+                          label: 'forgot password?',
+                          color: appPrimaryColor,
+                          fontSize: 18,
+                          textDecoration: TextDecoration.underline,
+                          decorationColor: appPrimaryColor,
+                          decorationThickness: 1,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 20),
                   ],
