@@ -169,31 +169,41 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: appPrimaryColor,
-                                  ),
-                                  child: const TextView(
-                                    label: 'Login',
-                                    color: mWhite,
-                                    fontSize: 20,
+                                InkWell(
+                                  onTap: () {
+                                    //TODO: do login and navigate to home screen
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: appPrimaryColor,
+                                    ),
+                                    child: const TextView(
+                                      label: 'Login',
+                                      color: mWhite,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                Container(
-                                  alignment: Alignment.center,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: appPrimaryColor,
-                                  ),
-                                  child: const TextView(
-                                    label: 'Sign Up',
-                                    color: mWhite,
-                                    fontSize: 20,
+                                InkWell(
+                                  onTap: () {
+                                    //TODO: navigate to sign up screen with replacement
+                                  },
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: appPrimaryColor,
+                                    ),
+                                    child: const TextView(
+                                      label: 'Sign Up',
+                                      color: mWhite,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -203,14 +213,19 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
-                      children: const [
-                        TextView(
-                          label: 'forgot password?',
-                          color: appPrimaryColor,
-                          fontSize: 18,
-                          textDecoration: TextDecoration.underline,
-                          decorationColor: appPrimaryColor,
-                          decorationThickness: 1,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            //TODO: navigate to forgot password screen with adition
+                          },
+                          child: const TextView(
+                            label: 'forgot password?',
+                            color: appPrimaryColor,
+                            fontSize: 18,
+                            textDecoration: TextDecoration.underline,
+                            decorationColor: appPrimaryColor,
+                            decorationThickness: 1,
+                          ),
                         ),
                       ],
                     ),
