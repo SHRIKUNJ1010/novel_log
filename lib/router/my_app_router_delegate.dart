@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/page_config.dart';
 import 'package:novel_log/models/provider_model/page_state_provider.dart';
+import 'package:novel_log/screens/forget_password_screen.dart';
 import 'package:novel_log/screens/home_screen.dart';
 import 'package:novel_log/screens/login_screen.dart';
 import 'package:novel_log/screens/sign_up_screen.dart';
@@ -13,7 +14,8 @@ import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
-class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   List<MaterialPage<dynamic>> pages = <MaterialPage<dynamic>>[];
 
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
@@ -89,6 +91,13 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           pageConfig,
         );
         break;
+      case forgetPasswordScreenRoute:
+        _addPageAtIndex(
+          index,
+          const ForgetPasswordScreen(),
+          pageConfig,
+        );
+        break;
       default:
         _addPageAtIndex(
           index,
@@ -122,6 +131,12 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       case homeScreenRoute:
         _addPageData(
           const HomeScreen(),
+          pageConfig,
+        );
+        break;
+      case forgetPasswordScreenRoute:
+        _addPageData(
+          const ForgetPasswordScreen(),
           pageConfig,
         );
         break;
@@ -162,12 +177,17 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   List<Page> buildPages() {
     //pages = [];
+    if (pageStateProvider.config.length < pages.length) {
+      pages = [];
+    }
     for (int i = 0; i < pageStateProvider.config.length; i++) {
-      if (pages[i].key.toString() == pageStateProvider.config[i].key.toString()) {
-        //do nothing
-      } else if (i < pages.length) {
-        pages.removeAt(i);
-        addPageAtIndex(i, pageStateProvider.config[i]);
+      if (i < pages.length) {
+        if (pages[i].name == pageStateProvider.config[i].path) {
+          //do nothing
+        } else {
+          pages.removeAt(i);
+          addPageAtIndex(i, pageStateProvider.config[i]);
+        }
       } else {
         addPage(pageStateProvider.config[i]);
       }

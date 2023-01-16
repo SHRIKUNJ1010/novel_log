@@ -37,4 +37,12 @@ class PageConfigList {
       arguments: null,
     );
   }
+
+  static PageConfiguration getForgetPasswordScreen() {
+    return PageConfiguration(
+      key: 'forget_password_screen',
+      path: forgetPasswordScreenRoute,
+      arguments: null,
+    );
+  }
 }

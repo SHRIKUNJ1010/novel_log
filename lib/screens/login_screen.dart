@@ -230,7 +230,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            //TODO: navigate to forgot password screen with adition
+                            pageStateProvider.addPage(
+                                PageConfigList.getForgetPasswordScreen());
                           },
                           child: const TextView(
                             label: 'forgot password?',

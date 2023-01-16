@@ -1,6 +1,11 @@
 {
      "editor.wordWrapColumn": 160,
      "[markdown]": {
-          "editor.wordWrapColumn": 160
-     }
+          "editor.wordWrapColumn": 160,
+          "diffEditor.wordWrap": "on",
+          "editor.wordWrap": "wordWrapColumn"
+     },
+     "diffEditor.wordWrap": "on",
+     "editor.wordWrap": "wordWrapColumn",
+     "prettier.printWidth": 160
 }

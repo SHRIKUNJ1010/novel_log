@@ -6,3 +6,4 @@ const String splashScreenRoute = '';
 const String loginScreenRoute = 'login_screen';
 const String signUpScreenRoute = 'sign_up_screen';
 const String homeScreenRoute = 'home_screen';
+const String forgetPasswordScreenRoute = 'forget_password_screen';
