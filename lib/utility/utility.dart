@@ -7,6 +7,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flash/flash.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -126,5 +128,62 @@ class Utility {
         );
       },
     );
+  }
+
+  static void toastMessage(Color color, String title, String message) async {
+    try {
+      if (flashController != null) {
+        flashController?.dismiss();
+      }
+    } catch (e) {
+      //do nothing
+    }
+    try {
+      showFlash(
+        context: navigateKey.currentContext!,
+        duration: const Duration(seconds: 5),
+        persistent: true,
+        builder: (_, controller) {
+          flashController = controller;
+          return Flash(
+            controller: controller,
+            position: FlashPosition.top,
+            behavior: FlashBehavior.fixed,
+            backgroundColor: color,
+            child: FlashBar(
+              title: TextView(
+                  label: title,
+                  color: mWhite,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+              content: TextView(label: message, color: mWhite),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      showFlash(
+        context: navigateKey.currentContext!,
+        duration: const Duration(seconds: 5),
+        persistent: true,
+        builder: (_, controller) {
+          flashController = controller;
+          return Flash(
+            controller: controller,
+            position: FlashPosition.top,
+            behavior: FlashBehavior.fixed,
+            backgroundColor: color,
+            child: FlashBar(
+              title: TextView(
+                  label: title,
+                  color: mWhite,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600),
+              content: TextView(label: message, color: mWhite),
+            ),
+          );
+        },
+      );
+    }
   }
 }

@@ -3,3 +3,4 @@
 */
 
 const String nlIconImage = 'assets/nl_background_app.png';
+const String libraryBackgroundImage = 'assets/library_background_image.jpg';

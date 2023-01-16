@@ -4,6 +4,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/models/page_config.dart';
 import 'package:novel_log/models/provider_model/page_state_provider.dart';
 import 'package:novel_log/screens/forget_password_screen.dart';
@@ -18,10 +19,8 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   List<MaterialPage<dynamic>> pages = <MaterialPage<dynamic>>[];
 
-  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
-
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
+  GlobalKey<NavigatorState>? get navigatorKey => navigateKey;
 
   PageStateProvider pageStateProvider;
 

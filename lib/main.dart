@@ -1,3 +1,4 @@
+import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/provider_model/page_state_provider.dart';
 import 'package:novel_log/router/my_app_router_delegate.dart';
@@ -11,7 +12,9 @@ void main() {
 }
 
 late SharedPreferences prefs;
+FlashController? flashController;
 PageStateProvider pageStateProvider = PageStateProvider();
+GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   final MyAppRouterDelegate delegate = MyAppRouterDelegate(pageStateProvider);

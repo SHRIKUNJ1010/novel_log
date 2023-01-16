@@ -7,6 +7,7 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'dart:io' show Platform;
 
@@ -24,183 +25,234 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController repeatPasswordEditingController =
       TextEditingController();
 
+  checkValidation() async {
+    if (nameEditingController.text.trim().isEmpty) {
+      Utility.toastMessage(
+          mFA5D5D, 'Name Field', "Name field can't be left empty!");
+    }
+    if (emailEditingController.text.trim().isEmpty) {
+      Utility.toastMessage(mFA5D5D, 'Email Address Field',
+          "Email Address field can't be left empty!");
+      return;
+    }
+    if (!Utility.validateEmail(emailEditingController.text.trim())) {
+      Utility.toastMessage(
+          mFA5D5D, 'Email Address Field', "Invalid Email Address!");
+      return;
+    }
+    if (passwordEditingController.text.trim().isEmpty) {
+      Utility.toastMessage(
+          mFA5D5D, 'Password Field', "Password field can't be left empty!");
+      return;
+    }
+    if (passwordEditingController.text.trim().length < 6) {
+      Utility.toastMessage(
+          mFA5D5D, 'Password Field', "There must be minimum 6 characters!");
+      return;
+    }
+    if (repeatPasswordEditingController.text.trim().isEmpty) {
+      Utility.toastMessage(mFA5D5D, 'Repeat Password Field',
+          "Repeat Password field can't be left empty!");
+      return;
+    }
+    if (repeatPasswordEditingController.text.trim() !=
+        passwordEditingController.text.trim()) {
+      Utility.toastMessage(
+          mFA5D5D, 'Error', "Password and Confirm password mismatch!");
+      return;
+    }
+    //TODO: do sign up and navigate to home screen
+    Utility.toastMessage(
+      mFA5D5D,
+      'Not Implemented',
+      'This function is not implemented yet.',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (!kIsWeb)
-                Platform.isIOS || Platform.isAndroid
-                    ? const SizedBox(height: 100)
-                    : const SizedBox(height: 30),
-              if (!kIsWeb)
-                Platform.isAndroid || Platform.isIOS
-                    ? Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            nlIconImage,
-                            width: width / 4,
-                            height: width / 4,
-                          ),
-                        ],
-                      )
-                    : Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            nlIconImage,
-                            width: 100,
-                            height: 100,
-                          ),
-                        ],
-                      ),
-              if (!kIsWeb)
-                Platform.isIOS || Platform.isAndroid
-                    ? const SizedBox(height: 15)
-                    : const SizedBox(height: 30),
-              if (kIsWeb)
-                Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      nlIconImage,
-                      width: 100,
-                      height: 100,
-                    ),
-                  ],
-                ),
-              Material(
-                borderRadius: BorderRadius.circular(10),
-                color: appThemeColor[100],
-                child: SizedBox(
-                  width: width > 1500
-                      ? width / 3
-                      : width > 580
-                          ? 500
-                          : width - 80,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(libraryBackgroundImage),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                if (!kIsWeb)
+                  Platform.isIOS || Platform.isAndroid
+                      ? const SizedBox(height: 100)
+                      : const SizedBox(height: 30),
+                if (!kIsWeb)
+                  Platform.isAndroid || Platform.isIOS
+                      ? Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              nlIconImage,
+                              width: width / 4,
+                              height: width / 4,
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              nlIconImage,
+                              width: 100,
+                              height: 100,
+                            ),
+                          ],
+                        ),
+                if (!kIsWeb)
+                  Platform.isIOS || Platform.isAndroid
+                      ? const SizedBox(height: 15)
+                      : const SizedBox(height: 30),
+                if (kIsWeb)
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: const [
-                          TextView(
-                            padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                            label: 'Create Account',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: mWhite,
-                          ),
-                        ],
+                      Image.asset(
+                        nlIconImage,
+                        width: 100,
+                        height: 100,
                       ),
-                      const TextView(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        label: 'Name',
-                        color: mWhite,
-                        fontSize: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
-                        child: TextField(
-                          controller: nameEditingController,
-                        ),
-                      ),
-                      const TextView(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        label: 'Email',
-                        color: mWhite,
-                        fontSize: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
-                        child: TextField(
-                          controller: emailEditingController,
-                        ),
-                      ),
-                      const TextView(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        label: 'Password',
-                        color: mWhite,
-                        fontSize: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
-                        child: TextField(
-                          controller: passwordEditingController,
-                        ),
-                      ),
-                      const TextView(
-                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
-                        label: 'Confirm Password',
-                        color: mWhite,
-                        fontSize: 20,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
-                        child: TextField(
-                          controller: repeatPasswordEditingController,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: InkWell(
-                          onTap: () {
-                            //TODO: do sign up and navigate to home screen
-                          },
-                          child: Container(
-                            alignment: Alignment.center,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25),
-                              color: appPrimaryColor,
-                            ),
-                            child: const TextView(
-                              label: 'Create Account',
-                              color: mWhite,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              pageStateProvider.replaceLastPage(
-                                  PageConfigList.getLoginScreen());
-                            },
-                            child: const TextView(
-                              label: 'have an account? login here.',
-                              color: appPrimaryColor,
-                              fontSize: 18,
-                              textDecoration: TextDecoration.underline,
-                              decorationColor: appPrimaryColor,
-                              decorationThickness: 1,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
                     ],
                   ),
-                ),
-              )
-            ],
+                Material(
+                  borderRadius: BorderRadius.circular(10),
+                  color: appThemeColor[100],
+                  child: SizedBox(
+                    width: width > 1500
+                        ? width / 3
+                        : width > 580
+                            ? 500
+                            : width - 80,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: const [
+                            TextView(
+                              padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
+                              label: 'Create Account',
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: mWhite,
+                            ),
+                          ],
+                        ),
+                        const TextView(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          label: 'Name',
+                          color: mWhite,
+                          fontSize: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                          child: TextField(
+                            controller: nameEditingController,
+                          ),
+                        ),
+                        const TextView(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          label: 'Email',
+                          color: mWhite,
+                          fontSize: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                          child: TextField(
+                            controller: emailEditingController,
+                          ),
+                        ),
+                        const TextView(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          label: 'Password',
+                          color: mWhite,
+                          fontSize: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                          child: TextField(
+                            controller: passwordEditingController,
+                          ),
+                        ),
+                        const TextView(
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          label: 'Confirm Password',
+                          color: mWhite,
+                          fontSize: 20,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
+                          child: TextField(
+                            controller: repeatPasswordEditingController,
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: InkWell(
+                            onTap: checkValidation,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: appPrimaryColor,
+                              ),
+                              child: const TextView(
+                                label: 'Create Account',
+                                color: mWhite,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                pageStateProvider.replaceLastPage(
+                                    PageConfigList.getLoginScreen());
+                              },
+                              child: const TextView(
+                                label: 'have an account? login here.',
+                                color: appPrimaryColor,
+                                fontSize: 18,
+                                textDecoration: TextDecoration.underline,
+                                decorationColor: appPrimaryColor,
+                                decorationThickness: 1,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
