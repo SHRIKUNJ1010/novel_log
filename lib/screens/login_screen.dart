@@ -3,8 +3,10 @@
 */
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'dart:io' show Platform;
 
@@ -99,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const TextView(
-                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                       label: 'Email',
                       color: mWhite,
                       fontSize: 20,
@@ -130,34 +132,45 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: appPrimaryColor,
-                                    ),
-                                    child: const TextView(
-                                      label: 'Sign Up',
-                                      color: mWhite,
-                                      fontSize: 20,
+                                  child: InkWell(
+                                    onTap: () {
+                                      pageStateProvider.replaceLastPage(
+                                          PageConfigList.getSignUpScreen());
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: appPrimaryColor,
+                                      ),
+                                      child: const TextView(
+                                        label: 'Sign Up',
+                                        color: mWhite,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   ),
                                 ),
                                 const SizedBox(width: 20),
                                 Expanded(
                                   flex: 1,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(25),
-                                      color: appPrimaryColor,
-                                    ),
-                                    child: const TextView(
-                                      label: 'Login',
-                                      color: mWhite,
-                                      fontSize: 20,
+                                  child: InkWell(
+                                    onTap: () {
+                                      //TODO: do login and navigate to home screen
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: appPrimaryColor,
+                                      ),
+                                      child: const TextView(
+                                        label: 'Login',
+                                        color: mWhite,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -190,7 +203,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 const SizedBox(height: 20),
                                 InkWell(
                                   onTap: () {
-                                    //TODO: navigate to sign up screen with replacement
+                                    pageStateProvider.replaceLastPage(
+                                        PageConfigList.getSignUpScreen());
                                   },
                                   child: Container(
                                     alignment: Alignment.center,

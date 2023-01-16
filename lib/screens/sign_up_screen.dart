@@ -3,8 +3,10 @@
 */
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'dart:io' show Platform;
 
@@ -95,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: const [
                           TextView(
                             padding: EdgeInsets.fromLTRB(0, 15, 0, 15),
-                            label: 'Login',
+                            label: 'Create Account',
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: mWhite,
@@ -103,7 +105,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ],
                       ),
                       const TextView(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                         label: 'Name',
                         color: mWhite,
                         fontSize: 20,
@@ -115,7 +117,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const TextView(
-                        padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                         label: 'Email',
                         color: mWhite,
                         fontSize: 20,
@@ -179,7 +181,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              //TODO: navigate to login screen with adition
+                              pageStateProvider.replaceLastPage(
+                                  PageConfigList.getLoginScreen());
                             },
                             child: const TextView(
                               label: 'have an account? login here.',
