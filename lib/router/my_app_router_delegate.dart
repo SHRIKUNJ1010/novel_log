@@ -5,8 +5,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/page_config.dart';
-import 'package:novel_log/models/provider_model/page_state_provider.dart';
+import 'package:novel_log/models/router_models/page_config.dart';
+import 'package:novel_log/models/router_models/page_state_provider.dart';
 import 'package:novel_log/screens/forget_password_screen.dart';
 import 'package:novel_log/screens/home_screen.dart';
 import 'package:novel_log/screens/login_screen.dart';

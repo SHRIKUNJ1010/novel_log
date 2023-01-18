@@ -3,7 +3,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:novel_log/models/page_config.dart';
+import 'package:novel_log/models/router_models/page_config.dart';
 
 class PageStateProvider extends ChangeNotifier {
   List<PageConfiguration> config = [];

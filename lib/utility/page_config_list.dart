@@ -2,7 +2,7 @@
 * Created by Shrikunj Patel on 1/12/2023.
 */
 
-import 'package:novel_log/models/page_config.dart';
+import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
 class PageConfigList {
