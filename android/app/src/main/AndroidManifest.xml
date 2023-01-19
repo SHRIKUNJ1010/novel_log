@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.novel_log.novel_log">
    <application
-        android:label="novel_log"
+        android:label="Novel Log"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

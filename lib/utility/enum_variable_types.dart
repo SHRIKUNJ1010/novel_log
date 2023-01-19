@@ -1,3 +1,12 @@
-enum NovelStatus { production, hiatus, completed }
+enum NovelStatus {
+  production,
+  hiatus,
+  completed,
+}
 
-enum NovelReadingStatus { notStarted, reading, hiatusCompleted, completed }
+enum NovelReadingStatus {
+  notStarted,
+  reading,
+  hiatusCompleted,
+  completed,
+}

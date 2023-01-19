@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "385937273331",
+    "project_id": "novel-log-33dd4",
+    "storage_bucket": "novel-log-33dd4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385937273331:android:85daee233c4537b275e286",
+        "android_client_info": {
+          "package_name": "com.novel_log.novel_log"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385937273331-jq90i54knrdiotdch766okj20i2c5ehb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeuHO1_gaZv1XVSqvTzi7r-Jl1MTSbAYI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385937273331-jq90i54knrdiotdch766okj20i2c5ehb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,7 @@ class NovelDiscriptionModel {
   NovelStatus? novelStatus;
   NovelReadingStatus? novelReadingStatus;
   bool? isHidden;
+  bool? isInWishList;
 
   NovelDiscriptionModel({
     this.novelId,
@@ -29,6 +30,7 @@ class NovelDiscriptionModel {
     String novelStatus = '',
     String novelReadingStatus = '',
     this.isHidden,
+    this.isInWishList,
   }) {
     switch (novelStatus) {
       case 'production':
@@ -106,6 +108,7 @@ class NovelDiscriptionModel {
         break;
     }
     isHidden = json['is_hidden'] == '1' ? true : false;
+    isInWishList = json['is_in_wish_list'] == '1' ? true : false;
   }
 
   Map<String, dynamic> toJson() {
@@ -152,6 +155,7 @@ class NovelDiscriptionModel {
         break;
     }
     data['is_hidden'] = (isHidden ?? false) ? '1' : '0';
+    data['is_in_wish_list'] = (isInWishList ?? false) ? '1' : '0';
     return data;
   }
 }
