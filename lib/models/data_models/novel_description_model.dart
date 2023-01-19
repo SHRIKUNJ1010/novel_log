@@ -120,21 +120,18 @@ class NovelDiscriptionModel {
     data['total_novel_chapter_count'] = totalNovelChapterCount;
     data['read_novel_chapter_count'] = readNovelChapterCount;
     data['novel_link_url'] = novelLinkUrl;
-    switch (novelReadingStatus) {
-      case NovelReadingStatus.notStarted:
-        data['novel_status'] = 'not_started';
+    switch (novelStatus) {
+      case NovelStatus.production:
+        data['novel_status'] = 'production';
         break;
-      case NovelReadingStatus.reading:
-        data['novel_status'] = 'reading';
+      case NovelStatus.hiatus:
+        data['novel_status'] = 'hiatus';
         break;
-      case NovelReadingStatus.hiatusCompleted:
-        data['novel_status'] = 'hiatusCompleted';
-        break;
-      case NovelReadingStatus.completed:
+      case NovelStatus.completed:
         data['novel_status'] = 'completed';
         break;
       default:
-        data['novel_status'] = 'reading';
+        data['novel_status'] = 'production';
         break;
     }
     switch (novelReadingStatus) {
