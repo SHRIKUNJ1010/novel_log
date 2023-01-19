@@ -15,6 +15,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   shared_preferences:
   firebase_database:
+  firebase_storage:
+  cloud_firestore:
+  firebase_auth:
   firebase_core:
   flash:
   url_launcher:

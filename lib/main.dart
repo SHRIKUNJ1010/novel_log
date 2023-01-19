@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_state_provider.dart';
@@ -7,7 +8,9 @@ import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -24,15 +27,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: appName,
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: appThemeColor,
-        primaryColor: appPrimaryColor,
+    return Listener(
+      onPointerDown: (_) {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          currentFocus.focusedChild?.unfocus();
+        }
+      },
+      child: MaterialApp.router(
+        title: appName,
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: appThemeColor,
+          primaryColor: appPrimaryColor,
+        ),
+        routerDelegate: delegate,
+        routeInformationParser: parser,
       ),
-      routerDelegate: delegate,
-      routeInformationParser: parser,
     );
   }
 }
