@@ -4,11 +4,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
+import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'dart:io' show Platform;
 
@@ -58,7 +61,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      //TODO: add user data in database by user id
+      final tempUser = UserProfileModel.create(
+        userId: tempUserId,
+        userName: nameEditingController.text,
+        email: emailEditingController.text,
+      );
+      UserServices.createUser(tempUserId, tempUser.toJson());
       //TODO: navigate to home screen with user data
       emailEditingController.clear();
       nameEditingController.clear();
@@ -202,21 +210,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: InkWell(
+                          child: CommonRoundedButton(
                             onTap: checkValidation,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: appPrimaryColor,
-                              ),
-                              child: const TextView(
-                                label: 'Create Account',
-                                color: mWhite,
-                                fontSize: 20,
-                              ),
-                            ),
+                            height: 50,
+                            text: 'Create Account',
+                            textColor: mWhite,
+                            buttonColor: appPrimaryColor,
+                            fontSize: 20,
                           ),
                         ),
                         const SizedBox(height: 20),

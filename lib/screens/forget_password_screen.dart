@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/utility.dart';
+import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -132,21 +133,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: InkWell(
+                          child: CommonRoundedButton(
                             onTap: checkValidation,
-                            child: Container(
-                              alignment: Alignment.center,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: appPrimaryColor,
-                              ),
-                              child: const TextView(
-                                label: 'Submit Request',
-                                color: mWhite,
-                                fontSize: 20,
-                              ),
-                            ),
+                            height: 50,
+                            text: 'Submit Request',
+                            textColor: mWhite,
+                            buttonColor: appPrimaryColor,
+                            fontSize: 20,
                           ),
                         ),
                         const SizedBox(height: 20),

@@ -33,6 +33,26 @@ class UserProfileModel {
     yearlyChapterReadCount.isEmpty ? this.yearlyChapterReadCount = List.filled(365, 0) : this.yearlyChapterReadCount = yearlyChapterReadCount;
   }
 
+  UserProfileModel.create({
+    required this.userId,
+    required this.userName,
+    required this.email,
+    this.totalStartedNovelCount = 0,
+    this.userProfileImageUrl = '',
+    this.todayChapterReadCount = 0,
+    this.totalNovelReadCompleteWithNovelHiatus = 0,
+    this.totalNovelReadCompleteWithNovelComplete = 0,
+    this.totalChapterReadCount = 0,
+    this.dailyAverageChapterReadCount = 0,
+    List<int> weeklyChapterReadCount = const [],
+    List<int> monthlyChapterReadCount = const [],
+    List<int> yearlyChapterReadCount = const [],
+  }) {
+    weeklyChapterReadCount.isEmpty ? this.weeklyChapterReadCount = List.filled(7, 0) : this.weeklyChapterReadCount = weeklyChapterReadCount;
+    monthlyChapterReadCount.isEmpty ? this.monthlyChapterReadCount = List.filled(31, 0) : this.monthlyChapterReadCount = monthlyChapterReadCount;
+    yearlyChapterReadCount.isEmpty ? this.yearlyChapterReadCount = List.filled(365, 0) : this.yearlyChapterReadCount = yearlyChapterReadCount;
+  }
+
   UserProfileModel.fromJson(String tempUserId, Map<String, dynamic> json) {
     userId = tempUserId;
     userName = json['user_name'] ?? '';
