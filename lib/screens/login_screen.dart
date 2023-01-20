@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (tempUserId != '') {
       UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
+      Utility.printLog(tempUser.toJson());
       //TODO: navigate to home screen with user data
       emailEditingController.clear();
       passwordEditingController.clear();
