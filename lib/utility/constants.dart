@@ -8,3 +8,6 @@ const String fontProxima = 'Nunito';
 //for firebase database
 const String userCollection = 'users';
 const String novelCollection = 'novels';
+
+//Preference Data
+const String prefUserId = 'PREF_USER_ID';

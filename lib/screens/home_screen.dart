@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const TextView(label: 'Home Screen'),
       ),
       body: Container(
-        color: appPrimaryColor,
+        color: mWhite,
       ),
     );
   }

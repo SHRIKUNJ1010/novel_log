@@ -5,9 +5,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
+import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/preference.dart';
+
+import '../utility/utility.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -20,13 +26,16 @@ class _SplashScreenState extends State<SplashScreen> {
   bool isLoggedIn = false;
 
   void manageHomeNavigation() async {
+    isLoggedIn = await FirebaseAuthService.isAlreadyLoggedIn();
     if (isLoggedIn) {
-      Timer(const Duration(milliseconds: 100), () {
+      Timer(const Duration(milliseconds: 100), () async {
+        String tempUserId = Preference.getUserId();
+        UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
+        Utility.printLog(tempUser.toJson());
         pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
       });
     } else {
       Timer(const Duration(milliseconds: 3000), () {
-        isLoggedIn = true;
         pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
       });
     }
