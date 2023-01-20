@@ -7,11 +7,9 @@ import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
-class MyAppRouterInformationParser
-    extends RouteInformationParser<List<PageConfiguration>> {
+class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfiguration>> {
   @override
-  Future<List<PageConfiguration>> parseRouteInformation(
-      RouteInformation routeInformation) async {
+  Future<List<PageConfiguration>> parseRouteInformation(RouteInformation routeInformation) async {
     final Uri uri = Uri.parse(routeInformation.location!);
     List<PageConfiguration> tempConfig = [];
     bool show404 = false;
@@ -52,8 +50,7 @@ class MyAppRouterInformationParser
   }
 
   @override
-  RouteInformation? restoreRouteInformation(
-      List<PageConfiguration> configuration) {
+  RouteInformation? restoreRouteInformation(List<PageConfiguration> configuration) {
     String url = '/';
     for (int i = 0; i < configuration.length; i++) {
       if (i == 0) {

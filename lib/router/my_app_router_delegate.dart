@@ -15,8 +15,7 @@ import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
-class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   List<MaterialPage<dynamic>> pages = <MaterialPage<dynamic>>[];
 
   @override

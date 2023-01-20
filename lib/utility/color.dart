@@ -21,8 +21,6 @@ const MaterialColor appThemeColor = MaterialColor(
   },
 );
 
-
-
 //======================================================================//
 ///normal color codes
 const mWhite = Color(0xFFFFFFFF);

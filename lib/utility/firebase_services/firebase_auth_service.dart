@@ -5,8 +5,7 @@ import 'package:novel_log/utility/utility.dart';
 class FirebaseAuthService {
   static final auth = FirebaseAuth.instance;
 
-  static Future<String> signInWithEmail(String email, String password,
-      [bool admin = false]) async {
+  static Future<String> signInWithEmail(String email, String password, [bool admin = false]) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
