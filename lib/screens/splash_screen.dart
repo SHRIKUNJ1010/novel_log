@@ -22,12 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void manageHomeNavigation() async {
     if (isLoggedIn) {
       Timer(const Duration(milliseconds: 100), () {
-        pageStateProvider.replaceLastPage(PageConfigList.getHomeScreen());
+        pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
       });
     } else {
       Timer(const Duration(milliseconds: 3000), () {
         isLoggedIn = true;
-        pageStateProvider.replaceLastPage(PageConfigList.getLoginScreen());
+        pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
       });
     }
   }

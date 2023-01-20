@@ -46,7 +46,8 @@ class _LoginScreenState extends State<LoginScreen> {
     if (tempUserId != '') {
       UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
       Utility.printLog(tempUser.toJson());
-      //TODO: navigate to home screen with user data
+      pageStateProvider.popUntil(PageConfigList.getLoginScreen());
+      pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
       emailEditingController.clear();
       passwordEditingController.clear();
     }
@@ -169,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       flex: 1,
                                       child: CommonRoundedButton(
                                         onTap: () {
-                                          pageStateProvider.replaceLastPage(PageConfigList.getSignUpScreen());
+                                          pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen());
                                         },
                                         height: 50,
                                         text: 'Sign Up',
@@ -209,7 +210,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     const SizedBox(height: 20),
                                     CommonRoundedButton(
                                       onTap: () {
-                                        pageStateProvider.replaceLastPage(PageConfigList.getSignUpScreen());
+                                        pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen());
                                       },
                                       height: 50,
                                       text: 'Sign Up',
@@ -227,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                pageStateProvider.addPage(PageConfigList.getForgetPasswordScreen());
+                                pageStateProvider.push(PageConfigList.getForgetPasswordScreen());
                               },
                               child: const TextView(
                                 label: 'forgot password?',

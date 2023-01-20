@@ -154,7 +154,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   @override
   Future<bool> popRoute() {
     if (canPop()) {
-      pageStateProvider.removeLastPage();
+      pageStateProvider.pop();
       return Future.value(true);
     }
     return Future.value(false);
@@ -166,7 +166,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       return false;
     }
     if (canPop()) {
-      pageStateProvider.removeLastPage();
+      pageStateProvider.pop();
       return true;
     } else {
       return false;

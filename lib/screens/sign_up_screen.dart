@@ -67,7 +67,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailEditingController.text,
       );
       await UserServices.createUser(tempUserId, tempUser.toJson());
-      //TODO: navigate to home screen with user data
+      pageStateProvider.popUntil(PageConfigList.getLoginScreen());
+      pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
       emailEditingController.clear();
       nameEditingController.clear();
       passwordEditingController.clear();
@@ -226,7 +227,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                pageStateProvider.replaceLastPage(PageConfigList.getLoginScreen());
+                                pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
                               },
                               child: const TextView(
                                 label: 'have an account? login here.',

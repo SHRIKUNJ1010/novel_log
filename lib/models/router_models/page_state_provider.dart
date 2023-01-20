@@ -10,16 +10,6 @@ class PageStateProvider extends ChangeNotifier {
 
   PageStateProvider();
 
-  void addPage(PageConfiguration configuration) {
-    config.add(configuration);
-    notifyListeners();
-  }
-
-  void removeLastPage() {
-    config.removeLast();
-    notifyListeners();
-  }
-
   void clearPages() {
     config = [];
     notifyListeners();
@@ -30,9 +20,27 @@ class PageStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void replaceLastPage(PageConfiguration configuration) {
+  void push(PageConfiguration configuration) {
+    config.add(configuration);
+    notifyListeners();
+  }
+
+  void pop() {
+    config.removeLast();
+    notifyListeners();
+  }
+
+  void pushReplacement(PageConfiguration configuration) {
     if (config.isNotEmpty) config.removeLast();
     config.add(configuration);
     notifyListeners();
+  }
+
+  void popUntil(PageConfiguration configuration) {
+    int last = config.length;
+    int i = config.indexWhere((element) => element.path == configuration.path);
+    while (last != i) {
+      config.removeLast();
+    }
   }
 }
