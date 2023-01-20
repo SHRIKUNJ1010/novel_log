@@ -2,6 +2,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 
 class NovelDiscriptionModel {
   String? novelId;
+  String? userId;
   String? novelName;
   String? novelAuthorName;
   String? novelGenre;
@@ -18,6 +19,7 @@ class NovelDiscriptionModel {
 
   NovelDiscriptionModel({
     this.novelId,
+    this.userId,
     this.novelName,
     this.novelAuthorName,
     this.novelGenre,
@@ -67,6 +69,7 @@ class NovelDiscriptionModel {
 
   NovelDiscriptionModel.fromJson(Map<String, dynamic> json) {
     novelId = json['novel_id'];
+    userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
     novelGenre = json['novel_genre'];
@@ -114,6 +117,7 @@ class NovelDiscriptionModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['novel_id'] = novelId;
+    data['user_id'] = userId;
     data['novel_name'] = novelName;
     data['novel_author_name'] = novelAuthorName;
     data['novel_genre'] = novelGenre;
