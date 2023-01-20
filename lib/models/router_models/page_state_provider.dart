@@ -37,10 +37,17 @@ class PageStateProvider extends ChangeNotifier {
   }
 
   void popUntil(PageConfiguration configuration) {
-    int last = config.length;
+    int last = config.length - 1;
+    if (last < 0) {
+      last = 0;
+    }
     int i = config.indexWhere((element) => element.path == configuration.path);
+    if (i == -1) {
+      i = 0;
+    }
     while (last != i) {
       config.removeLast();
+      last = config.length - 1;
     }
   }
 }
