@@ -12,6 +12,7 @@ import 'package:novel_log/utility/firebase_services/database_services/user_servi
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utility/utility.dart';
 
@@ -26,13 +27,18 @@ class _SplashScreenState extends State<SplashScreen> {
   bool isLoggedIn = false;
 
   void manageHomeNavigation() async {
+    prefs = await SharedPreferences.getInstance();
     isLoggedIn = await FirebaseAuthService.isAlreadyLoggedIn();
     if (isLoggedIn) {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();
-        UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
-        Utility.printLog(tempUser.toJson());
-        pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
+        if(tempUserId != ''){
+          UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
+          Utility.printLog(tempUser.toJson());
+          pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
+        }else{
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
+        }
       });
     } else {
       Timer(const Duration(milliseconds: 3000), () {

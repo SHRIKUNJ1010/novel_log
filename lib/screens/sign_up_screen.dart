@@ -10,6 +10,7 @@ import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -67,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailEditingController.text,
       );
       await UserServices.createUser(tempUserId, tempUser.toJson());
+      Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
       emailEditingController.clear();
