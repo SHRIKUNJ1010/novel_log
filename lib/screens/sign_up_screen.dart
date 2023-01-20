@@ -66,7 +66,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         userName: nameEditingController.text,
         email: emailEditingController.text,
       );
-      UserServices.createUser(tempUserId, tempUser.toJson());
+      await UserServices.createUser(tempUserId, tempUser.toJson());
       //TODO: navigate to home screen with user data
       emailEditingController.clear();
       nameEditingController.clear();
