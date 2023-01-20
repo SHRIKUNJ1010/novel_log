@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -61,12 +62,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mFA5D5D, 'Error', "Password and Confirm password mismatch!");
       return;
     }
-    //TODO: do sign up and navigate to home screen
-    Utility.toastMessage(
-      mFA5D5D,
-      'Not Implemented',
-      'This function is not implemented yet.',
+    String tempUserId = await FirebaseAuthService.signUpWithEmail(
+      emailEditingController.text,
+      passwordEditingController.text,
     );
+    if (tempUserId != '') {
+      //TODO: add user data in database by user id
+      //TODO: navigate to home screen with user data
+      emailEditingController.clear();
+      nameEditingController.clear();
+      passwordEditingController.clear();
+      repeatPasswordEditingController.clear();
+    }
   }
 
   @override
@@ -191,6 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: passwordEditingController,
+                            obscureText: true,
                           ),
                         ),
                         const TextView(
@@ -203,6 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: repeatPasswordEditingController,
+                            obscureText: true,
                           ),
                         ),
                         const SizedBox(height: 20),

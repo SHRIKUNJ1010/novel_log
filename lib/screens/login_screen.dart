@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -38,12 +39,16 @@ class _LoginScreenState extends State<LoginScreen> {
           mFA5D5D, 'Password Field', "Password field can't be left empty!");
       return;
     }
-    //TODO: do login and navigate to home screen
-    Utility.toastMessage(
-      mFA5D5D,
-      'Not Implemented',
-      'This function is not implemented yet.',
+    String tempUserId = await FirebaseAuthService.signInWithEmail(
+      emailEditingController.text,
+      passwordEditingController.text,
     );
+    if (tempUserId != '') {
+      //TODO: get user data by using user id
+      //TODO: navigate to home screen with user data
+      emailEditingController.clear();
+      passwordEditingController.clear();
+    }
   }
 
   @override
@@ -156,6 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: passwordEditingController,
+                            obscureText: true,
                           ),
                         ),
                         const SizedBox(height: 20),

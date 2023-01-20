@@ -4,3 +4,7 @@
 
 const String appName = 'Novel Log';
 const String fontProxima = 'Nunito';
+
+//for firebase database
+const String userCollection = 'users';
+const String novelCollection = 'novels';
