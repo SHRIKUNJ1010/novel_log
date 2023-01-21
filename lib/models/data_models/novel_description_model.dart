@@ -1,12 +1,12 @@
 import 'package:novel_log/utility/enum_variable_types.dart';
 
-class NovelDiscriptionModel {
+class NovelDescriptionModel {
   String? novelId;
   String? userId;
   String? novelName;
   String? novelAuthorName;
   String? novelGenre;
-  String? novelDiscription;
+  String? novelDescription;
   String? novelImageUrl;
   bool? isNovel;
   int? totalNovelChapterCount;
@@ -17,13 +17,13 @@ class NovelDiscriptionModel {
   bool? isHidden;
   bool? isInWishList;
 
-  NovelDiscriptionModel({
+  NovelDescriptionModel({
     this.novelId,
     this.userId,
     this.novelName,
     this.novelAuthorName,
     this.novelGenre,
-    this.novelDiscription,
+    this.novelDescription,
     this.novelImageUrl,
     this.isNovel,
     this.totalNovelChapterCount,
@@ -67,13 +67,13 @@ class NovelDiscriptionModel {
     }
   }
 
-  NovelDiscriptionModel.fromJson(Map<String, dynamic> json) {
+  NovelDescriptionModel.fromJson(Map<String, dynamic> json) {
     novelId = json['novel_id'];
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
     novelGenre = json['novel_genre'];
-    novelDiscription = json['novel_discription'];
+    novelDescription = json['novel_description'];
     novelImageUrl = json['novel_image_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
     totalNovelChapterCount = json['total_novel_chapter_count'];
@@ -121,7 +121,7 @@ class NovelDiscriptionModel {
     data['novel_name'] = novelName;
     data['novel_author_name'] = novelAuthorName;
     data['novel_genre'] = novelGenre;
-    data['novel_discription'] = novelDiscription;
+    data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     data['total_novel_chapter_count'] = totalNovelChapterCount;
