@@ -41,8 +41,8 @@ class NovelListItemModel {
     }
   }
 
-  NovelListItemModel.fromJson(Map<String, dynamic> json) {
-    novelId = json['novel_id'];
+  NovelListItemModel.fromJson(String givenId, Map<String, dynamic> json) {
+    novelId = givenId;
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelImageUrl = json['novel_image_url'];
