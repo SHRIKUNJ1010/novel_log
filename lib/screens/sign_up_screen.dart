@@ -1,6 +1,8 @@
 /*
 * Created by Shrikunj Patel on 1/12/2023.
 */
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
@@ -24,11 +26,23 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  StreamController<bool> validateFieldController =
+      StreamController<bool>.broadcast();
   TextEditingController nameEditingController = TextEditingController();
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
   TextEditingController repeatPasswordEditingController =
       TextEditingController();
+
+  bool verifyFields() {
+    return nameEditingController.text.isNotEmpty &&
+        emailEditingController.text.isNotEmpty &&
+        Utility.validateEmail(emailEditingController.text) &&
+        passwordEditingController.text.isNotEmpty &&
+        passwordEditingController.text.length < 6 &&
+        repeatPasswordEditingController.text.isNotEmpty &&
+        repeatPasswordEditingController.text != passwordEditingController.text;
+  }
 
   checkValidation() async {
     if (nameEditingController.text.trim().isEmpty) {
@@ -85,6 +99,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.clear();
       repeatPasswordEditingController.clear();
     }
+  }
+
+  @override
+  void initState() {
+    nameEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    emailEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    passwordEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    repeatPasswordEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    super.initState();
   }
 
   @override
@@ -228,14 +259,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CommonRoundedButton(
-                            onTap: checkValidation,
-                            height: 50,
-                            text: 'Create Account',
-                            textColor: mWhite,
-                            buttonColor: appPrimaryColor,
-                            fontSize: 20,
-                          ),
+                          child: StreamBuilder<bool>(
+                              stream: validateFieldController.stream,
+                              builder: (context, snapshot) {
+                                return CommonRoundedButton(
+                                  onTap: checkValidation,
+                                  height: 50,
+                                  text: 'Create Account',
+                                  textColor: mWhite,
+                                  buttonColor: (snapshot.data ?? false)
+                                      ? appPrimaryColor
+                                      : appPrimaryColor.withOpacity(0.2),
+                                  fontSize: 20,
+                                );
+                              }),
                         ),
                         const SizedBox(height: 20),
                         Row(

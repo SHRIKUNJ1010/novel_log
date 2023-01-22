@@ -1,6 +1,8 @@
 /*
 * Created by Shrikunj Patel on 1/12/2023.
 */
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
@@ -24,8 +26,16 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  StreamController<bool> validateFieldController =
+      StreamController<bool>.broadcast();
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
+
+  bool verifyFields() {
+    return emailEditingController.text.isNotEmpty &&
+        passwordEditingController.text.isNotEmpty &&
+        Utility.validateEmail(emailEditingController.text);
+  }
 
   checkValidation() async {
     if (emailEditingController.text.trim().isEmpty) {
@@ -56,6 +66,17 @@ class _LoginScreenState extends State<LoginScreen> {
       emailEditingController.clear();
       passwordEditingController.clear();
     }
+  }
+
+  @override
+  void initState() {
+    emailEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    passwordEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    super.initState();
   }
 
   @override
@@ -213,14 +234,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    CommonRoundedButton(
-                                      onTap: checkValidation,
-                                      height: 50,
-                                      text: 'Login',
-                                      textColor: mWhite,
-                                      buttonColor: appPrimaryColor,
-                                      fontSize: 20,
-                                    ),
+                                    StreamBuilder<bool>(
+                                        stream: validateFieldController.stream,
+                                        builder: (context, snapshot) {
+                                          return CommonRoundedButton(
+                                            onTap: checkValidation,
+                                            height: 50,
+                                            text: 'Login',
+                                            textColor: mWhite,
+                                            buttonColor:
+                                                (snapshot.data ?? false)
+                                                    ? appPrimaryColor
+                                                    : appPrimaryColor
+                                                        .withOpacity(0.2),
+                                            fontSize: 20,
+                                          );
+                                        }),
                                     const SizedBox(height: 20),
                                     CommonRoundedButton(
                                       onTap: () {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -16,7 +17,14 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
+  StreamController<bool> validateFieldController =
+      StreamController<bool>.broadcast();
   TextEditingController emailEditingController = TextEditingController();
+
+  bool verifyFields() {
+    return emailEditingController.text.isNotEmpty &&
+        Utility.validateEmail(emailEditingController.text);
+  }
 
   checkValidation() async {
     if (emailEditingController.text.trim().isEmpty) {
@@ -35,6 +43,14 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       'Not Implemented',
       'This function is not implemented yet.',
     );
+  }
+
+  @override
+  void initState() {
+    emailEditingController.addListener(() {
+      validateFieldController.add(verifyFields());
+    });
+    super.initState();
   }
 
   @override
@@ -141,14 +157,20 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         const SizedBox(height: 20),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: CommonRoundedButton(
-                            onTap: checkValidation,
-                            height: 50,
-                            text: 'Submit Request',
-                            textColor: mWhite,
-                            buttonColor: appPrimaryColor,
-                            fontSize: 20,
-                          ),
+                          child: StreamBuilder<bool>(
+                              stream: validateFieldController.stream,
+                              builder: (context, snapshot) {
+                                return CommonRoundedButton(
+                                  onTap: checkValidation,
+                                  height: 50,
+                                  text: 'Submit Request',
+                                  textColor: mWhite,
+                                  buttonColor: (snapshot.data ?? false)
+                                      ? appPrimaryColor
+                                      : appPrimaryColor.withOpacity(0.2),
+                                  fontSize: 20,
+                                );
+                              }),
                         ),
                         const SizedBox(height: 20),
                       ],
