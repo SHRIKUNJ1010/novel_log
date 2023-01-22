@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
     return Listener(
       onPointerDown: (_) {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
           currentFocus.focusedChild?.unfocus();
         }
       },
@@ -46,4 +47,6 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+//end of file
 }

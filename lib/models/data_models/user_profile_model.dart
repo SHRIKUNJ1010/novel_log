@@ -28,9 +28,15 @@ class UserProfileModel {
     this.totalNovelReadCompleteWithNovelHiatus,
     this.totalStartedNovelCount,
   }) {
-    weeklyChapterReadCount.isEmpty ? this.weeklyChapterReadCount = List.filled(7, 0) : this.weeklyChapterReadCount = weeklyChapterReadCount;
-    monthlyChapterReadCount.isEmpty ? this.monthlyChapterReadCount = List.filled(31, 0) : this.monthlyChapterReadCount = monthlyChapterReadCount;
-    yearlyChapterReadCount.isEmpty ? this.yearlyChapterReadCount = List.filled(365, 0) : this.yearlyChapterReadCount = yearlyChapterReadCount;
+    weeklyChapterReadCount.isEmpty
+        ? this.weeklyChapterReadCount = List.filled(7, 0)
+        : this.weeklyChapterReadCount = weeklyChapterReadCount;
+    monthlyChapterReadCount.isEmpty
+        ? this.monthlyChapterReadCount = List.filled(31, 0)
+        : this.monthlyChapterReadCount = monthlyChapterReadCount;
+    yearlyChapterReadCount.isEmpty
+        ? this.yearlyChapterReadCount = List.filled(365, 0)
+        : this.yearlyChapterReadCount = yearlyChapterReadCount;
   }
 
   UserProfileModel.create({
@@ -48,9 +54,15 @@ class UserProfileModel {
     List<dynamic> monthlyChapterReadCount = const [],
     List<dynamic> yearlyChapterReadCount = const [],
   }) {
-    weeklyChapterReadCount.isEmpty ? this.weeklyChapterReadCount = List.filled(7, 0) : this.weeklyChapterReadCount = weeklyChapterReadCount;
-    monthlyChapterReadCount.isEmpty ? this.monthlyChapterReadCount = List.filled(31, 0) : this.monthlyChapterReadCount = monthlyChapterReadCount;
-    yearlyChapterReadCount.isEmpty ? this.yearlyChapterReadCount = List.filled(365, 0) : this.yearlyChapterReadCount = yearlyChapterReadCount;
+    weeklyChapterReadCount.isEmpty
+        ? this.weeklyChapterReadCount = List.filled(7, 0)
+        : this.weeklyChapterReadCount = weeklyChapterReadCount;
+    monthlyChapterReadCount.isEmpty
+        ? this.monthlyChapterReadCount = List.filled(31, 0)
+        : this.monthlyChapterReadCount = monthlyChapterReadCount;
+    yearlyChapterReadCount.isEmpty
+        ? this.yearlyChapterReadCount = List.filled(365, 0)
+        : this.yearlyChapterReadCount = yearlyChapterReadCount;
   }
 
   UserProfileModel.fromJson(String tempUserId, Map<String, dynamic> json) {
@@ -59,10 +71,13 @@ class UserProfileModel {
     email = json['email'] ?? '';
     userProfileImageUrl = json['user_profile_image_url'] ?? '';
     todayChapterReadCount = json['today_chapter_read_count'] ?? '';
-    dailyAverageChapterReadCount = json['daily_average_chapter_read_count'] ?? '';
+    dailyAverageChapterReadCount =
+        json['daily_average_chapter_read_count'] ?? '';
     totalChapterReadCount = json['total_chapter_read_count'] ?? '';
-    totalNovelReadCompleteWithNovelComplete = json['total_novel_read_complete_with_novel_complete'] ?? '';
-    totalNovelReadCompleteWithNovelHiatus = json['total_novel_read_complete_with_novel_hiatus'] ?? '';
+    totalNovelReadCompleteWithNovelComplete =
+        json['total_novel_read_complete_with_novel_complete'] ?? '';
+    totalNovelReadCompleteWithNovelHiatus =
+        json['total_novel_read_complete_with_novel_hiatus'] ?? '';
     totalStartedNovelCount = json['total_started_novel_count'] ?? '';
     weeklyChapterReadCount = json['weekly_chapter_read_count'] ?? [];
     monthlyChapterReadCount = json['monthly_chapter_read_count'] ?? [];
@@ -77,12 +92,16 @@ class UserProfileModel {
     data['today_chapter_read_count'] = todayChapterReadCount;
     data['daily_average_chapter_read_count'] = dailyAverageChapterReadCount;
     data['total_chapter_read_count'] = totalChapterReadCount;
-    data['total_novel_read_complete_with_novel_complete'] = totalNovelReadCompleteWithNovelComplete;
-    data['total_novel_read_complete_with_novel_hiatus'] = totalNovelReadCompleteWithNovelHiatus;
+    data['total_novel_read_complete_with_novel_complete'] =
+        totalNovelReadCompleteWithNovelComplete;
+    data['total_novel_read_complete_with_novel_hiatus'] =
+        totalNovelReadCompleteWithNovelHiatus;
     data['total_started_novel_count'] = totalStartedNovelCount;
     data['weekly_chapter_read_count'] = weeklyChapterReadCount;
     data['monthly_chapter_read_count'] = monthlyChapterReadCount;
     data['yearly_chapter_read_count'] = yearlyChapterReadCount;
     return data;
   }
+
+//end of file
 }

@@ -35,7 +35,7 @@ class CommonRoundedButton extends StatelessWidget {
         alignment: Alignment.center,
         height: height,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(height/2),
+          borderRadius: BorderRadius.circular(height / 2),
           color: buttonColor,
         ),
         child: TextView(
@@ -49,4 +49,6 @@ class CommonRoundedButton extends StatelessWidget {
       ),
     );
   }
+
+//end of file
 }

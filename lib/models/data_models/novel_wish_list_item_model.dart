@@ -40,8 +40,8 @@ class NovelWishListItemModel {
     }
   }
 
-  NovelWishListItemModel.fromJson(Map<String, dynamic> json) {
-    novelId = json['novel_id'];
+  NovelWishListItemModel.fromJson(String givenId, Map<String, dynamic> json) {
+    novelId = givenId;
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
@@ -93,4 +93,6 @@ class NovelWishListItemModel {
     }
     return data;
   }
+
+//end of file
 }

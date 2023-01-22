@@ -98,4 +98,6 @@ class NovelListItemModel {
     }
     return data;
   }
+
+//end of file
 }

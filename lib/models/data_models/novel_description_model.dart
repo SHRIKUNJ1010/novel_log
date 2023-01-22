@@ -162,4 +162,6 @@ class NovelDescriptionModel {
     data['is_in_wish_list'] = (isInWishList ?? false) ? '1' : '0';
     return data;
   }
+
+//end of file
 }

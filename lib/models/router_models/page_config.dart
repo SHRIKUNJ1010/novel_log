@@ -12,4 +12,5 @@ class PageConfiguration {
     required this.path,
     this.arguments,
   });
+//end of file
 }

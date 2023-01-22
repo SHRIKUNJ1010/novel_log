@@ -32,11 +32,12 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isLoggedIn) {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();
-        if(tempUserId != ''){
-          UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
+        if (tempUserId != '') {
+          UserProfileModel tempUser =
+              await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
           pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
-        }else{
+        } else {
           pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
         }
       });
@@ -61,4 +62,6 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Image.asset(nlIconImage),
     );
   }
+
+//end of file
 }

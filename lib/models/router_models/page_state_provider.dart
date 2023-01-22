@@ -50,4 +50,6 @@ class PageStateProvider extends ChangeNotifier {
       last = config.length - 1;
     }
   }
+
+//end of file
 }

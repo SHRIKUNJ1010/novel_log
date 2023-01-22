@@ -18,4 +18,5 @@ class Preference {
     prefs.setString(prefUserId, userId);
   }
 
+//end of file
 }

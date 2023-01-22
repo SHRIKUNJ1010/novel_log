@@ -20,11 +20,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
 
   checkValidation() async {
     if (emailEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Email Address field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Email Address Field',
+          "Email Address field can't be left empty!");
       return;
     }
     if (!Utility.validateEmail(emailEditingController.text.trim())) {
-      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Invalid Email Address!");
+      Utility.toastMessage(
+          mFA5D5D, 'Email Address Field', "Invalid Email Address!");
       return;
     }
     //TODO: check how to do forget password activity
@@ -55,7 +57,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
+                if (!kIsWeb)
+                  Platform.isIOS || Platform.isAndroid
+                      ? const SizedBox(height: 100)
+                      : const SizedBox(height: 30),
                 if (!kIsWeb)
                   Platform.isAndroid || Platform.isIOS
                       ? Row(
@@ -80,7 +85,10 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             ),
                           ],
                         ),
-                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 15) : const SizedBox(height: 30),
+                if (!kIsWeb)
+                  Platform.isIOS || Platform.isAndroid
+                      ? const SizedBox(height: 15)
+                      : const SizedBox(height: 30),
                 if (kIsWeb)
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -154,4 +162,6 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       ),
     );
   }
+
+//end of file
 }
