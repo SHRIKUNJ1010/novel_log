@@ -119,6 +119,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   @override
+  void dispose() {
+    validateFieldController.close();
+    nameEditingController.dispose();
+    emailEditingController.dispose();
+    passwordEditingController.dispose();
+    repeatPasswordEditingController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 

@@ -134,6 +134,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   @override
+  void dispose() {
+    selectedTabController.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,

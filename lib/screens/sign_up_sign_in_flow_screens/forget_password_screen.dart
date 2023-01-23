@@ -17,24 +17,20 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  StreamController<bool> validateFieldController =
-      StreamController<bool>.broadcast();
+  StreamController<bool> validateFieldController = StreamController<bool>.broadcast();
   TextEditingController emailEditingController = TextEditingController();
 
   bool verifyFields() {
-    return emailEditingController.text.isNotEmpty &&
-        Utility.validateEmail(emailEditingController.text);
+    return emailEditingController.text.isNotEmpty && Utility.validateEmail(emailEditingController.text);
   }
 
   checkValidation() async {
     if (emailEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(mFA5D5D, 'Email Address Field',
-          "Email Address field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Email Address field can't be left empty!");
       return;
     }
     if (!Utility.validateEmail(emailEditingController.text.trim())) {
-      Utility.toastMessage(
-          mFA5D5D, 'Email Address Field', "Invalid Email Address!");
+      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Invalid Email Address!");
       return;
     }
     //TODO: check how to do forget password activity
@@ -51,6 +47,13 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       validateFieldController.add(verifyFields());
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    validateFieldController.close();
+    emailEditingController.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,10 +76,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!kIsWeb)
-                  Platform.isIOS || Platform.isAndroid
-                      ? const SizedBox(height: 100)
-                      : const SizedBox(height: 30),
+                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
                 if (!kIsWeb)
                   Platform.isAndroid || Platform.isIOS
                       ? Row(
@@ -101,10 +101,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             ),
                           ],
                         ),
-                if (!kIsWeb)
-                  Platform.isIOS || Platform.isAndroid
-                      ? const SizedBox(height: 15)
-                      : const SizedBox(height: 30),
+                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 15) : const SizedBox(height: 30),
                 if (kIsWeb)
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -165,9 +162,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                   height: 50,
                                   text: 'Submit Request',
                                   textColor: mWhite,
-                                  buttonColor: (snapshot.data ?? false)
-                                      ? appPrimaryColor
-                                      : appPrimaryColor.withOpacity(0.2),
+                                  buttonColor: (snapshot.data ?? false) ? appPrimaryColor : appPrimaryColor.withOpacity(0.2),
                                   fontSize: 20,
                                 );
                               }),
