@@ -191,30 +191,31 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           ],
                         ),
                         const SizedBox(height: 5),
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: drawerItemTitleText.length,
-                          itemBuilder: (context, index) {
-                            if ((snapshot.data ?? yourNovelListScreenRoute) == drawerItemPathList[index]) {
-                              return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                                onTap: () {
-                                  onHorizontalDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            } else {
-                              return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                                onTap: () {
-                                  onHorizontalDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            }
-                          },
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: drawerItemTitleText.length,
+                            itemBuilder: (context, index) {
+                              if ((snapshot.data ?? yourNovelListScreenRoute) == drawerItemPathList[index]) {
+                                return DrawerSelectedItemButton(
+                                  icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                                  onTap: () {
+                                    onHorizontalDrawerItemTap(context, index);
+                                  },
+                                  title: drawerItemTitleText[index],
+                                );
+                              } else {
+                                return DrawerItemButton(
+                                  icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                                  onTap: () {
+                                    onHorizontalDrawerItemTap(context, index);
+                                  },
+                                  title: drawerItemTitleText[index],
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -314,30 +315,31 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ],
               ),
               const SizedBox(height: 5),
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: drawerItemTitleText.length,
-                itemBuilder: (context, index) {
-                  if (selectedPath == drawerItemPathList[index]) {
-                    return DrawerSelectedItemButton(
-                      icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                      onTap: () {
-                        onDrawerItemTap(context, index);
-                      },
-                      title: drawerItemTitleText[index],
-                    );
-                  } else {
-                    return DrawerItemButton(
-                      icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                      onTap: () {
-                        onDrawerItemTap(context, index);
-                      },
-                      title: drawerItemTitleText[index],
-                    );
-                  }
-                },
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: drawerItemTitleText.length,
+                  itemBuilder: (context, index) {
+                    if (selectedPath == drawerItemPathList[index]) {
+                      return DrawerSelectedItemButton(
+                        icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                        onTap: () {
+                          onDrawerItemTap(context, index);
+                        },
+                        title: drawerItemTitleText[index],
+                      );
+                    } else {
+                      return DrawerItemButton(
+                        icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                        onTap: () {
+                          onDrawerItemTap(context, index);
+                        },
+                        title: drawerItemTitleText[index],
+                      );
+                    }
+                  },
+                ),
               ),
             ],
           ),

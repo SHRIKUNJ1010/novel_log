@@ -5,6 +5,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/router_models/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_screen.dart';
@@ -15,7 +16,7 @@ import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
 class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
-  List<MaterialPage<dynamic>> pages = <MaterialPage<dynamic>>[];
+  List<Page<dynamic>> pages = <Page<dynamic>>[];
 
   @override
   GlobalKey<NavigatorState>? get navigatorKey => navigateKey;
@@ -41,6 +42,25 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       key: ValueKey(pageConfig.key),
       name: pageConfig.path,
       arguments: pageConfig.arguments,
+    );
+  }
+
+  FadePage _createFadePage(Widget child, PageConfiguration pageConfig) {
+    return FadePage(
+      child: child,
+    );
+  }
+
+  void _addFadePage(Widget child, PageConfiguration pageConfig) {
+    pages.add(
+      _createFadePage(child, pageConfig),
+    );
+  }
+
+  void _addFadePageAtIndex(int index, Widget child, PageConfiguration pageConfig) {
+    pages.insert(
+      index,
+      _createFadePage(child, pageConfig),
     );
   }
 
@@ -104,6 +124,53 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     }
   }
 
+  void addFadePageAtIndex(int index, PageConfiguration pageConfig) {
+    switch (pageConfig.path) {
+      case splashScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const SplashScreen(),
+          pageConfig,
+        );
+        break;
+      case loginScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const LoginScreen(),
+          pageConfig,
+        );
+        break;
+      case signUpScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const SignUpScreen(),
+          pageConfig,
+        );
+        break;
+      case drawerScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const DrawerScreen(),
+          pageConfig,
+        );
+        break;
+      case forgetPasswordScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const ForgetPasswordScreen(),
+          pageConfig,
+        );
+        break;
+      default:
+        _addFadePageAtIndex(
+          index,
+          const SplashScreen(),
+          pageConfig,
+        );
+        break;
+    }
+  }
+
   void addPage(PageConfiguration pageConfig) {
     switch (pageConfig.path) {
       case splashScreenRoute:
@@ -138,6 +205,47 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
         break;
       default:
         _addPageData(
+          const SplashScreen(),
+          pageConfig,
+        );
+        break;
+    }
+  }
+
+  void addFadePage(PageConfiguration pageConfig) {
+    switch (pageConfig.path) {
+      case splashScreenRoute:
+        _addFadePage(
+          const SplashScreen(),
+          pageConfig,
+        );
+        break;
+      case loginScreenRoute:
+        _addFadePage(
+          const LoginScreen(),
+          pageConfig,
+        );
+        break;
+      case signUpScreenRoute:
+        _addFadePage(
+          const SignUpScreen(),
+          pageConfig,
+        );
+        break;
+      case drawerScreenRoute:
+        _addFadePage(
+          const DrawerScreen(),
+          pageConfig,
+        );
+        break;
+      case forgetPasswordScreenRoute:
+        _addFadePage(
+          const ForgetPasswordScreen(),
+          pageConfig,
+        );
+        break;
+      default:
+        _addFadePage(
           const SplashScreen(),
           pageConfig,
         );
