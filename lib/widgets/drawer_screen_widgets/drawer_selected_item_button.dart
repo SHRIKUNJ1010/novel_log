@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
-class DrawerItemButton extends StatelessWidget {
+class DrawerSelectedItemButton extends StatelessWidget {
   final Widget icon;
   final GestureTapCallback onTap;
   final String title;
 
-  const DrawerItemButton({
+  const DrawerSelectedItemButton({
     super.key,
     required this.icon,
     required this.onTap,
@@ -23,6 +23,7 @@ class DrawerItemButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
+          color: appThemeColor[200]!,
           border: Border.all(
             color: appThemeColor[200]!,
             width: 2,
@@ -39,7 +40,7 @@ class DrawerItemButton extends StatelessWidget {
             TextView(
               label: title,
               fontSize: 18,
-              color: mWhite,
+              color: mBlack,
               padding: const EdgeInsets.only(left: 12),
             ),
           ],

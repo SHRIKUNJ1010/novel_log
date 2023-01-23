@@ -185,5 +185,14 @@ class Utility {
     );
   }
 
+  //drawer selected item icon
+  static Widget getSelectedDrawerItemIcon({required IconData icon, double iconSize = 35}) {
+    return Icon(
+      icon,
+      size: iconSize,
+      color: mBlack,
+    );
+  }
+
 //end of file
 }

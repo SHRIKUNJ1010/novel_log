@@ -17,6 +17,7 @@ import 'package:novel_log/utility/page_routes.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/drawer_screen_widgets/drawer_item_button.dart';
+import 'package:novel_log/widgets/drawer_screen_widgets/drawer_selected_item_button.dart';
 
 class DrawerScreen extends StatefulWidget {
   const DrawerScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  String selectedPath = yourNovelListScreenRoute;
   StreamController<String> selectedTabController = StreamController<String>.broadcast();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
@@ -59,23 +61,72 @@ class _DrawerScreenState extends State<DrawerScreen> {
     'Logout',
   ];
 
-  List<Widget> drawerItemIcon = [
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
-    Utility.getDefaultDrawerItemIcon(icon: Icons.home_outlined),
+  List<String> drawerItemPathList = [
+    yourNovelListScreenRoute,
+    novelWishListScreenRoute,
+    novelHiddenListScreenRoute,
+    profileScreenRoute,
+    changePasswordScreenRoute,
+    changeHiddenPinScreenRoute,
+    'logout',
   ];
+
+  List<IconData> drawerItemIcon = [
+    Icons.home_outlined,
+    Icons.home_outlined,
+    Icons.home_outlined,
+    Icons.home_outlined,
+    Icons.home_outlined,
+    Icons.home_outlined,
+    Icons.home_outlined,
+  ];
+
+  List<IconData> selectedDrawerItemIcon = [
+    Icons.home,
+    Icons.home,
+    Icons.home,
+    Icons.home,
+    Icons.home,
+    Icons.home,
+    Icons.home,
+  ];
+
+  onDrawerItemTap(BuildContext context, int index) {
+    switch (drawerItemTitleText[index]) {
+      case 'Your Novels':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
+        break;
+      case 'Wish List':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
+        break;
+      case 'Hidden List':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
+        break;
+      case 'Profile':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
+        break;
+      case 'Change Password':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
+        break;
+      case 'Change Pin':
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen());
+        break;
+      case 'Logout':
+        //do logout
+        break;
+    }
+    Navigator.of(context).pop();
+  }
 
   @override
   void initState() {
+    selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       drawerStateProvider.addListener(() {
         selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
       });
       selectedTabController.stream.listen((event) {
+        selectedPath = event;
         Navigator.pushReplacementNamed(drawerNavigatorKey.currentContext!, event);
       });
     });
@@ -132,42 +183,30 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 5),
             ListView.builder(
               padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: drawerItemTitleText.length,
               itemBuilder: (context, index) {
-                return DrawerItemButton(
-                  icon: drawerItemIcon[index],
-                  onTap: () {
-                    switch (drawerItemTitleText[index]) {
-                      case 'Your Novels':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
-                        break;
-                      case 'Wish List':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
-                        break;
-                      case 'Hidden List':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
-                        break;
-                      case 'Profile':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
-                        break;
-                      case 'Change Password':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
-                        break;
-                      case 'Change Pin':
-                        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen());
-                        break;
-                      case 'Logout':
-                        //do logout
-                        break;
-                    }
-                    Navigator.of(context).pop();
-                  },
-                  title: drawerItemTitleText[index],
-                );
+                if (selectedPath == drawerItemPathList[index]) {
+                  return DrawerSelectedItemButton(
+                    icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                    onTap: () {
+                      onDrawerItemTap(context, index);
+                    },
+                    title: drawerItemTitleText[index],
+                  );
+                } else {
+                  return DrawerItemButton(
+                    icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                    onTap: () {
+                      onDrawerItemTap(context, index);
+                    },
+                    title: drawerItemTitleText[index],
+                  );
+                }
               },
             ),
           ],
