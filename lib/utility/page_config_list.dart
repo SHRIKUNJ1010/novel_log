@@ -86,5 +86,13 @@ class PageConfigList {
     );
   }
 
+  static PageConfiguration getChangeHiddenPinScreen() {
+    return PageConfiguration(
+      key: 'change_hidden_pin_screen',
+      path: changeHiddenPinScreenRoute,
+      arguments: null,
+    );
+  }
+
 //end of file
 }

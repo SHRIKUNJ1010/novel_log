@@ -13,6 +13,8 @@ class NovelHiddenListScreen extends StatefulWidget {
 class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.yellow,
+    );
   }
 }

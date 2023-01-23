@@ -11,4 +11,5 @@ const String novelWishListScreenRoute = 'novel_wish_list_screen';
 const String novelHiddenListScreenRoute = 'novel_hidden_list_screen';
 const String profileScreenRoute = 'profile_screen';
 const String changePasswordScreenRoute = 'change_password_screen';
+const String changeHiddenPinScreenRoute = 'change_hidden_pin_screen';
 const String forgetPasswordScreenRoute = 'forget_password_screen';

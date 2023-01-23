@@ -13,6 +13,8 @@ class YourNovelListScreen extends StatefulWidget {
 class _YourNovelListScreenState extends State<YourNovelListScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.green,
+    );
   }
 }

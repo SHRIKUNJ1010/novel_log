@@ -22,6 +22,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   MyAppRouterDelegate() : super() {
     pageStateProvider.addListener(notifyListeners);
+    drawerStateProvider.addListener(notifyListeners);
   }
 
   @override

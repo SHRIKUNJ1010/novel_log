@@ -7,11 +7,12 @@ import 'package:novel_log/router/my_app_router_delegate.dart';
 import 'package:novel_log/router/my_app_router_information_parser.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
+import 'package:novel_log/utility/firebase_services/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -32,8 +33,7 @@ class MyApp extends StatelessWidget {
     return Listener(
       onPointerDown: (_) {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus &&
-            currentFocus.focusedChild != null) {
+        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
           currentFocus.focusedChild?.unfocus();
         }
       },
