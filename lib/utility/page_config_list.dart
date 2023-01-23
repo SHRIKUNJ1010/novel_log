@@ -30,6 +30,14 @@ class PageConfigList {
     );
   }
 
+  static PageConfiguration getForgetPasswordScreen() {
+    return PageConfiguration(
+      key: 'forget_password_screen',
+      path: forgetPasswordScreenRoute,
+      arguments: null,
+    );
+  }
+
   static PageConfiguration getDrawerScreen() {
     return PageConfiguration(
       key: 'drawer_screen',
@@ -38,10 +46,42 @@ class PageConfigList {
     );
   }
 
-  static PageConfiguration getForgetPasswordScreen() {
+  static PageConfiguration getYourNovelListScreen() {
     return PageConfiguration(
-      key: 'forget_password_screen',
-      path: forgetPasswordScreenRoute,
+      key: 'your_novel_list_screen',
+      path: yourNovelListScreenRoute,
+      arguments: null,
+    );
+  }
+
+  static PageConfiguration getProfileScreen() {
+    return PageConfiguration(
+      key: 'profile_screen',
+      path: profileScreenRoute,
+      arguments: null,
+    );
+  }
+
+  static PageConfiguration getNovelWishListScreen() {
+    return PageConfiguration(
+      key: 'novel_wish_list_screen',
+      path: novelWishListScreenRoute,
+      arguments: null,
+    );
+  }
+
+  static PageConfiguration getNovelHiddenListScreen() {
+    return PageConfiguration(
+      key: 'novel_hidden_list_screen',
+      path: novelHiddenListScreenRoute,
+      arguments: null,
+    );
+  }
+
+  static PageConfiguration getChangePasswordScreen() {
+    return PageConfiguration(
+      key: 'change_password_screen',
+      path: changePasswordScreenRoute,
       arguments: null,
     );
   }

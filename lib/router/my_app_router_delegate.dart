@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/models/router_models/page_state_provider.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
@@ -21,9 +20,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   @override
   GlobalKey<NavigatorState>? get navigatorKey => navigateKey;
 
-  PageStateProvider pageStateProvider;
-
-  MyAppRouterDelegate(this.pageStateProvider) : super() {
+  MyAppRouterDelegate() : super() {
     pageStateProvider.addListener(notifyListeners);
   }
 

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flash/flash.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_log/models/router_models/drawer_state_provider.dart';
 import 'package:novel_log/models/router_models/page_state_provider.dart';
 import 'package:novel_log/router/my_app_router_delegate.dart';
 import 'package:novel_log/router/my_app_router_information_parser.dart';
@@ -17,10 +18,11 @@ Future<void> main() async {
 late SharedPreferences prefs;
 FlashController? flashController;
 PageStateProvider pageStateProvider = PageStateProvider();
+DrawerStateProvider drawerStateProvider = DrawerStateProvider();
 GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
-  final MyAppRouterDelegate delegate = MyAppRouterDelegate(pageStateProvider);
+  final MyAppRouterDelegate delegate = MyAppRouterDelegate();
   final parser = MyAppRouterInformationParser();
 
   MyApp({super.key});

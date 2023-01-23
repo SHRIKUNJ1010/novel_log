@@ -3,6 +3,7 @@
 */
 
 import 'package:flutter/cupertino.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -31,6 +32,32 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
         case drawerScreenRoute:
           tempConfig.add(PageConfigList.getDrawerScreen());
           i++;
+          switch (uri.pathSegments[i]) {
+            case yourNovelListScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
+              i++;
+              break;
+            case novelWishListScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
+              i++;
+              break;
+            case novelHiddenListScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
+              i++;
+              break;
+            case profileScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
+              i++;
+              break;
+            case changePasswordScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
+              i++;
+              break;
+            default:
+              show404 = true;
+              i++;
+              break;
+          }
           break;
         case forgetPasswordScreenRoute:
           tempConfig.add(PageConfigList.getForgetPasswordScreen());
@@ -66,6 +93,23 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
             break;
           case drawerScreenRoute:
             url += drawerScreenRoute;
+            switch (drawerStateProvider.selectedPageConfig.path) {
+              case yourNovelListScreenRoute:
+                url += "/$yourNovelListScreenRoute";
+                break;
+              case novelWishListScreenRoute:
+                url += "/$novelWishListScreenRoute";
+                break;
+              case novelHiddenListScreenRoute:
+                url += "/$novelHiddenListScreenRoute";
+                break;
+              case profileScreenRoute:
+                url += "/$profileScreenRoute";
+                break;
+              case changePasswordScreenRoute:
+                url += "/$changePasswordScreenRoute";
+                break;
+            }
             break;
           case forgetPasswordScreenRoute:
             url += forgetPasswordScreenRoute;
@@ -86,6 +130,23 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
             break;
           case drawerScreenRoute:
             url += '/$drawerScreenRoute';
+            switch (drawerStateProvider.selectedPageConfig.path) {
+              case yourNovelListScreenRoute:
+                url += "/$yourNovelListScreenRoute";
+                break;
+              case novelWishListScreenRoute:
+                url += "/$novelWishListScreenRoute";
+                break;
+              case novelHiddenListScreenRoute:
+                url += "/$novelHiddenListScreenRoute";
+                break;
+              case profileScreenRoute:
+                url += "/$profileScreenRoute";
+                break;
+              case changePasswordScreenRoute:
+                url += "/$changePasswordScreenRoute";
+                break;
+            }
             break;
           case forgetPasswordScreenRoute:
             url += '/$forgetPasswordScreenRoute';
