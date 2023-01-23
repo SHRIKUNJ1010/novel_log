@@ -2,9 +2,15 @@
 * Created by Shrikunj Patel on 1/23/2023.
 */
 import 'package:flutter/material.dart';
+import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class ChangeHiddenPinScreen extends StatefulWidget {
-  const ChangeHiddenPinScreen({Key? key}) : super(key: key);
+  final bool showAppBar;
+
+  const ChangeHiddenPinScreen({
+    Key? key,
+    this.showAppBar = false,
+  }) : super(key: key);
 
   @override
   State<ChangeHiddenPinScreen> createState() => _ChangeHiddenPinScreenState();
@@ -13,8 +19,22 @@ class ChangeHiddenPinScreen extends StatefulWidget {
 class _ChangeHiddenPinScreenState extends State<ChangeHiddenPinScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.cyanAccent,
-    );
+    if (widget.showAppBar) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const TextView(label: 'Change Pin'),
+        ),
+        body: Container(
+          color: Colors.blueGrey,
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: Container(
+          color: Colors.blueGrey,
+        ),
+      );
+    }
   }
 }

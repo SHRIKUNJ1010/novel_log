@@ -3,9 +3,15 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key? key}) : super(key: key);
+  final bool showAppBar;
+
+  const ProfileScreen({
+    Key? key,
+    this.showAppBar = false,
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -14,8 +20,22 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.purple,
-    );
+    if (widget.showAppBar) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const TextView(label: 'Profile'),
+        ),
+        body: Container(
+          color: Colors.purple,
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: Container(
+          color: Colors.purple,
+        ),
+      );
+    }
   }
 }
