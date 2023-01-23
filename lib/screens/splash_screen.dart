@@ -36,7 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
           UserProfileModel tempUser =
               await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
-          pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
+          pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
         } else {
           pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
         }

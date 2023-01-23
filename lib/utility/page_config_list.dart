@@ -30,10 +30,10 @@ class PageConfigList {
     );
   }
 
-  static PageConfiguration getHomeScreen() {
+  static PageConfiguration getDrawerScreen() {
     return PageConfiguration(
-      key: 'home_screen',
-      path: homeScreenRoute,
+      key: 'drawer_screen',
+      path: drawerScreenRoute,
       arguments: null,
     );
   }

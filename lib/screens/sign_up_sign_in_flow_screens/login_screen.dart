@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Utility.printLog(tempUser.toJson());
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
-      pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
+      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
       emailEditingController.clear();
       passwordEditingController.clear();
     }

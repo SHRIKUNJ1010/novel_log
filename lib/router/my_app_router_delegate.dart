@@ -7,16 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/models/router_models/page_state_provider.dart';
-import 'package:novel_log/screens/forget_password_screen.dart';
-import 'package:novel_log/screens/home_screen.dart';
-import 'package:novel_log/screens/login_screen.dart';
-import 'package:novel_log/screens/sign_up_screen.dart';
+import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
+import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_screen.dart';
+import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
+import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.dart';
 import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 
-class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin {
+class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   List<MaterialPage<dynamic>> pages = <MaterialPage<dynamic>>[];
 
   @override
@@ -83,10 +82,10 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
           pageConfig,
         );
         break;
-      case homeScreenRoute:
+      case drawerScreenRoute:
         _addPageAtIndex(
           index,
-          const HomeScreen(),
+          const DrawerScreen(),
           pageConfig,
         );
         break;
@@ -127,9 +126,9 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>>
           pageConfig,
         );
         break;
-      case homeScreenRoute:
+      case drawerScreenRoute:
         _addPageData(
-          const HomeScreen(),
+          const DrawerScreen(),
           pageConfig,
         );
         break;

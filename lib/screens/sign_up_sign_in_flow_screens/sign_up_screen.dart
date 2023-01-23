@@ -93,7 +93,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await UserServices.createUser(tempUserId, tempUser.toJson());
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
-      pageStateProvider.pushReplacement(PageConfigList.getHomeScreen());
+      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
       emailEditingController.clear();
       nameEditingController.clear();
       passwordEditingController.clear();
