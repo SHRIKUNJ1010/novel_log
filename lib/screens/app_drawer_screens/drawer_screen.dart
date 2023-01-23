@@ -115,22 +115,25 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   height: 170 + MediaQuery.of(context).padding.top,
                   color: appThemeColor[100],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 15, top: 15),
-                  child: InkWell(
-                    onTap: () {
-                      scaffoldKey.currentState!.closeDrawer();
-                    },
-                    child: const Icon(
-                      Icons.menu,
-                      color: mWhite,
-                      size: 30,
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: InkWell(
+                      onTap: () {
+                        scaffoldKey.currentState!.closeDrawer();
+                      },
+                      child: const Icon(
+                        Icons.menu,
+                        color: mWhite,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
             ListView.builder(
+              padding: EdgeInsets.zero,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: drawerItemTitleText.length,

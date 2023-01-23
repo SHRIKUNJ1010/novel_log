@@ -22,15 +22,15 @@ class DrawerItemButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           border: Border(
             bottom: BorderSide(
-              color: appPrimaryColor,
+              color: appThemeColor[200]!,
               width: 2,
             ),
           ),
         ),
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(15),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
