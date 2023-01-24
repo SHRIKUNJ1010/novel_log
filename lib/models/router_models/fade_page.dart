@@ -13,8 +13,11 @@ class FadePage extends Page {
   @override
   Route createRoute(BuildContext context) {
     return PageRouteBuilder(
-      pageBuilder: (_, __, ___) => child,
-      transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+      settings: this,
+      pageBuilder: (context, animation, secondaryAnimation) => FadeTransition(
+        opacity: animation,
+        child: child,
+      ),
       maintainState: true,
     );
   }

@@ -48,6 +48,9 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   FadePage _createFadePage(Widget child, PageConfiguration pageConfig) {
     return FadePage(
       child: child,
+      key: ValueKey(pageConfig.key),
+      name: pageConfig.path,
+      arguments: pageConfig.arguments,
     );
   }
 
