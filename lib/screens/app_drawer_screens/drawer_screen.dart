@@ -5,12 +5,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/screens/app_drawer_screens/change_hidden_pin_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/change_password_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/novel_hidden_list_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/novel_wish_list_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/profile_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/your_novel_list_screen.dart';
+import 'package:novel_log/router/drawer_router_delegate.dart';
+import 'package:novel_log/router/drawer_router_delegate_without_appbar.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -28,11 +24,11 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
+  final DrawerRouterDelegate delegate = DrawerRouterDelegate();
+  final DrawerRouterDelegateWithoutAppbar delegateWithoutAppbar = DrawerRouterDelegateWithoutAppbar();
   String selectedPath = yourNovelListScreenRoute;
   StreamController<String> selectedTabController = StreamController<String>.broadcast();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
-  GlobalKey<NavigatorState> drawerNavigatorKey2 = GlobalKey<NavigatorState>();
 
   String getAppBarTitle(String selectedValue) {
     switch (selectedValue) {
@@ -155,8 +151,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
       });
       selectedTabController.stream.listen((event) {
         selectedPath = event;
-        Navigator.pushReplacementNamed(drawerNavigatorKey.currentContext!, event, arguments: drawerStateProvider.selectedPageConfig.arguments);
-        Navigator.pushReplacementNamed(drawerNavigatorKey2.currentContext!, event, arguments: drawerStateProvider.selectedPageConfig.arguments);
       });
     });
     super.initState();
@@ -255,7 +249,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
           body: StreamBuilder<String>(
               stream: selectedTabController.stream,
               builder: (context, snapshot) {
-                return Navigator(
+                return Router(
+                  routerDelegate: delegateWithoutAppbar,
+                );
+                /*return Navigator(
                   key: drawerNavigatorKey2,
                   initialRoute: snapshot.data ?? yourNovelListScreenRoute,
                   onGenerateRoute: (RouteSettings settings) {
@@ -310,7 +307,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       maintainState: true,
                     );
                   },
-                );
+                );*/
               }),
         ),
         Row(
@@ -369,7 +366,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
               child: StreamBuilder<String>(
                 stream: selectedTabController.stream,
                 builder: (context, snapshot) {
-                  return Navigator(
+                  return Router(
+                    routerDelegate: delegate,
+                  );
+                  /*return Navigator(
                     key: drawerNavigatorKey,
                     initialRoute: snapshot.data ?? yourNovelListScreenRoute,
                     onGenerateRoute: (RouteSettings settings) {
@@ -424,7 +424,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         maintainState: true,
                       );
                     },
-                  );
+                  );*/
                 },
               ),
             ),

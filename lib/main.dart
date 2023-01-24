@@ -22,6 +22,9 @@ FlashController? flashController;
 PageStateProvider pageStateProvider = PageStateProvider();
 DrawerStateProvider drawerStateProvider = DrawerStateProvider();
 GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
+GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
+GlobalKey<NavigatorState> drawerNavigatorKey2 = GlobalKey<NavigatorState>();
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -32,7 +35,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final MyAppRouterDelegate delegate = MyAppRouterDelegate();
-
   final parser = MyAppRouterInformationParser();
 
   @override

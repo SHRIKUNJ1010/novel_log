@@ -54,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (tempUserId != '') {
       UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
       Utility.printLog(tempUser.toJson());
+      drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());

@@ -85,6 +85,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
+      drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
       final tempUser = UserProfileModel.create(
         userId: tempUserId,
         userName: nameEditingController.text,

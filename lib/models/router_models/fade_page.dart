@@ -6,6 +6,8 @@ class FadePage extends Page {
   const FadePage({
     required this.child,
     super.key,
+    super.name,
+    super.arguments,
   });
 
   @override
