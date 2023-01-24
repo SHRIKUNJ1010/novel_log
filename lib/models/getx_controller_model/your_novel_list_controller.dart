@@ -38,7 +38,7 @@ class YourNovelListController extends GetxController {
     //update();
   }
 
-  addNewPage(String userId) async {
+  addNextData(String userId) async {
     if (remainingLength < 20) return;
     callIsLoading();
     final data = await NovelServices.getMainNovelListNextPages(lastData);

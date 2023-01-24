@@ -36,7 +36,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           () {
             if (novelListController.position.pixels == novelListController.position.maxScrollExtent) {
               if (Get.find<YourNovelListController>().isLoading) return;
-              Get.find<YourNovelListController>().addNewPage(widget.userId);
+              Get.find<YourNovelListController>().addNextData(widget.userId);
             }
           },
         );
