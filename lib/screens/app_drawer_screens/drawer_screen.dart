@@ -31,6 +31,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
   StreamController<String> selectedTabController = StreamController<String>.broadcast();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState> drawerNavigatorKey2 = GlobalKey<NavigatorState>();
 
   String getAppBarTitle(String selectedValue) {
     switch (selectedValue) {
@@ -154,6 +155,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
       selectedTabController.stream.listen((event) {
         selectedPath = event;
         Navigator.pushReplacementNamed(drawerNavigatorKey.currentContext!, event);
+        Navigator.pushReplacementNamed(drawerNavigatorKey2.currentContext!, event);
       });
     });
     super.initState();
@@ -168,62 +170,181 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-
-    if (width > 800) {
-      return Row(
-        children: [
-          StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
-                return Drawer(
-                  backgroundColor: appPrimaryColor,
-                  child: SizedBox(
-                    width: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              height: 170 + MediaQuery.of(context).padding.top,
-                              color: appThemeColor[100],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: drawerItemTitleText.length,
-                            itemBuilder: (context, index) {
-                              if ((snapshot.data ?? yourNovelListScreenRoute) == drawerItemPathList[index]) {
-                                return DrawerSelectedItemButton(
-                                  icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                                  onTap: () {
-                                    onHorizontalDrawerItemTap(context, index);
-                                  },
-                                  title: drawerItemTitleText[index],
-                                );
-                              } else {
-                                return DrawerItemButton(
-                                  icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                                  onTap: () {
-                                    onHorizontalDrawerItemTap(context, index);
-                                  },
-                                  title: drawerItemTitleText[index],
-                                );
-                              }
-                            },
+    return IndexedStack(
+      index: width > 800 ? 1 : 0,
+      children: [
+        Scaffold(
+          key: scaffoldKey,
+          appBar: AppBar(
+            leading: InkWell(
+              onTap: () {
+                scaffoldKey.currentState!.openDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
+                color: mWhite,
+                size: 30,
+              ),
+            ),
+            centerTitle: true,
+            title: StreamBuilder<String>(
+                stream: selectedTabController.stream,
+                builder: (context, snapshot) {
+                  return TextView(label: getAppBarTitle(snapshot.data ?? yourNovelListScreenRoute));
+                }),
+          ),
+          drawer: Drawer(
+            backgroundColor: appPrimaryColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 170 + MediaQuery.of(context).padding.top,
+                      color: appThemeColor[100],
+                    ),
+                    SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 15, top: 15),
+                        child: InkWell(
+                          onTap: () {
+                            scaffoldKey.currentState!.closeDrawer();
+                          },
+                          child: const Icon(
+                            Icons.menu,
+                            color: mWhite,
+                            size: 30,
                           ),
                         ),
-                      ],
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: drawerItemTitleText.length,
+                    itemBuilder: (context, index) {
+                      if (selectedPath == drawerItemPathList[index]) {
+                        return DrawerSelectedItemButton(
+                          icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      } else {
+                        return DrawerItemButton(
+                          icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      }
+                    },
                   ),
+                ),
+              ],
+            ),
+          ),
+          body: StreamBuilder<String>(
+              stream: selectedTabController.stream,
+              builder: (context, snapshot) {
+                return Navigator(
+                  key: drawerNavigatorKey2,
+                  initialRoute: snapshot.data ?? yourNovelListScreenRoute,
+                  onGenerateRoute: (RouteSettings settings) {
+                    RoutePageBuilder builder;
+                    switch (settings.name) {
+                      case yourNovelListScreenRoute:
+                        builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
+                        break;
+                      case novelWishListScreenRoute:
+                        builder = (_, __, ___) => const NovelWishListScreen(showAppBar: false);
+                        break;
+                      case novelHiddenListScreenRoute:
+                        builder = (_, __, ___) => const NovelHiddenListScreen(showAppBar: false);
+                        break;
+                      case profileScreenRoute:
+                        builder = (_, __, ___) => const ProfileScreen(showAppBar: false);
+                        break;
+                      case changePasswordScreenRoute:
+                        builder = (_, __, ___) => const ChangePasswordScreen(showAppBar: false);
+                        break;
+                      case changeHiddenPinScreenRoute:
+                        builder = (_, __, ___) => const ChangeHiddenPinScreen(showAppBar: false);
+                        break;
+                      default:
+                        builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
+                        break;
+                    }
+                    return PageRouteBuilder(
+                      pageBuilder: builder,
+                      transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
+                      maintainState: true,
+                    );
+                  },
                 );
               }),
-          Expanded(
-            child: StreamBuilder<String>(
+        ),
+        Row(
+          children: [
+            StreamBuilder<String>(
+                stream: selectedTabController.stream,
+                builder: (context, snapshot) {
+                  return Drawer(
+                    backgroundColor: appPrimaryColor,
+                    child: SizedBox(
+                      width: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Container(
+                                height: 170 + MediaQuery.of(context).padding.top,
+                                color: appThemeColor[100],
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              itemCount: drawerItemTitleText.length,
+                              itemBuilder: (context, index) {
+                                if ((snapshot.data ?? yourNovelListScreenRoute) == drawerItemPathList[index]) {
+                                  return DrawerSelectedItemButton(
+                                    icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                                    onTap: () {
+                                      onHorizontalDrawerItemTap(context, index);
+                                    },
+                                    title: drawerItemTitleText[index],
+                                  );
+                                } else {
+                                  return DrawerItemButton(
+                                    icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                                    onTap: () {
+                                      onHorizontalDrawerItemTap(context, index);
+                                    },
+                                    title: drawerItemTitleText[index],
+                                  );
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
+            Expanded(
+              child: StreamBuilder<String>(
                 stream: selectedTabController.stream,
                 builder: (context, snapshot) {
                   return Navigator(
@@ -261,129 +382,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       );
                     },
                   );
-                }),
-          ),
-        ],
-      );
-    } else {
-      return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          leading: InkWell(
-            onTap: () {
-              scaffoldKey.currentState!.openDrawer();
-            },
-            child: const Icon(
-              Icons.menu,
-              color: mWhite,
-              size: 30,
-            ),
-          ),
-          centerTitle: true,
-          title: StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
-                return TextView(label: getAppBarTitle(snapshot.data ?? yourNovelListScreenRoute));
-              }),
-        ),
-        drawer: Drawer(
-          backgroundColor: appPrimaryColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 170 + MediaQuery.of(context).padding.top,
-                    color: appThemeColor[100],
-                  ),
-                  SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 15),
-                      child: InkWell(
-                        onTap: () {
-                          scaffoldKey.currentState!.closeDrawer();
-                        },
-                        child: const Icon(
-                          Icons.menu,
-                          color: mWhite,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: drawerItemTitleText.length,
-                  itemBuilder: (context, index) {
-                    if (selectedPath == drawerItemPathList[index]) {
-                      return DrawerSelectedItemButton(
-                        icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                        onTap: () {
-                          onDrawerItemTap(context, index);
-                        },
-                        title: drawerItemTitleText[index],
-                      );
-                    } else {
-                      return DrawerItemButton(
-                        icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                        onTap: () {
-                          onDrawerItemTap(context, index);
-                        },
-                        title: drawerItemTitleText[index],
-                      );
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: StreamBuilder<String>(
-            stream: selectedTabController.stream,
-            builder: (context, snapshot) {
-              return Navigator(
-                key: drawerNavigatorKey,
-                initialRoute: snapshot.data ?? yourNovelListScreenRoute,
-                onGenerateRoute: (RouteSettings settings) {
-                  RoutePageBuilder builder;
-                  switch (settings.name) {
-                    case yourNovelListScreenRoute:
-                      builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
-                      break;
-                    case novelWishListScreenRoute:
-                      builder = (_, __, ___) => const NovelWishListScreen(showAppBar: false);
-                      break;
-                    case novelHiddenListScreenRoute:
-                      builder = (_, __, ___) => const NovelHiddenListScreen(showAppBar: false);
-                      break;
-                    case profileScreenRoute:
-                      builder = (_, __, ___) => const ProfileScreen(showAppBar: false);
-                      break;
-                    case changePasswordScreenRoute:
-                      builder = (_, __, ___) => const ChangePasswordScreen(showAppBar: false);
-                      break;
-                    case changeHiddenPinScreenRoute:
-                      builder = (_, __, ___) => const ChangeHiddenPinScreen(showAppBar: false);
-                      break;
-                    default:
-                      builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
-                      break;
-                  }
-                  return PageRouteBuilder(
-                    pageBuilder: builder,
-                    transitionsBuilder: (_, a, __, c) => FadeTransition(opacity: a, child: c),
-                    maintainState: true,
-                  );
                 },
-              );
-            }),
-      );
-    }
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
