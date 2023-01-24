@@ -16,6 +16,7 @@ dependencies:
   shared_preferences:
   cloud_firestore:
   firebase_storage:
+  get:
   firebase_auth:
   firebase_core:
   flash:
