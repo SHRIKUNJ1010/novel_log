@@ -60,6 +60,18 @@ class Utility {
         : const SizedBox();
   }
 
+  static Widget noDataLoadedText() {
+    return const Center(
+      child: TextView(
+        label: 'No Data loaded',
+        color: mBlack,
+        fontSize: 22,
+        fontWeight: FontWeight.bold,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+      ),
+    );
+  }
+
   static TextStyle getRichTextStyle({
     color = mBlack,
     double fontSize = 14,
