@@ -6,9 +6,11 @@ import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class NovelHiddenListScreen extends StatefulWidget {
   final bool showAppBar;
+  final String userId;
 
   const NovelHiddenListScreen({
     Key? key,
+    required this.userId,
     this.showAppBar = false,
   }) : super(key: key);
 

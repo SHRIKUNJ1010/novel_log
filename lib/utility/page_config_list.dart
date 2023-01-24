@@ -46,51 +46,51 @@ class PageConfigList {
     );
   }
 
-  static PageConfiguration getYourNovelListScreen() {
+  static PageConfiguration getYourNovelListScreen(String userId) {
     return PageConfiguration(
       key: 'your_novel_list_screen',
       path: yourNovelListScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 
-  static PageConfiguration getProfileScreen() {
+  static PageConfiguration getProfileScreen(String userId) {
     return PageConfiguration(
       key: 'profile_screen',
       path: profileScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 
-  static PageConfiguration getNovelWishListScreen() {
+  static PageConfiguration getNovelWishListScreen(String userId) {
     return PageConfiguration(
       key: 'novel_wish_list_screen',
       path: novelWishListScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 
-  static PageConfiguration getNovelHiddenListScreen() {
+  static PageConfiguration getNovelHiddenListScreen(String userId) {
     return PageConfiguration(
       key: 'novel_hidden_list_screen',
       path: novelHiddenListScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 
-  static PageConfiguration getChangePasswordScreen() {
+  static PageConfiguration getChangePasswordScreen(String userId) {
     return PageConfiguration(
       key: 'change_password_screen',
       path: changePasswordScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 
-  static PageConfiguration getChangeHiddenPinScreen() {
+  static PageConfiguration getChangeHiddenPinScreen(String userId) {
     return PageConfiguration(
       key: 'change_hidden_pin_screen',
       path: changeHiddenPinScreenRoute,
-      arguments: null,
+      arguments: userId,
     );
   }
 

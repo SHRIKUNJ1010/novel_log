@@ -14,6 +14,7 @@ import 'package:novel_log/screens/app_drawer_screens/your_novel_list_screen.dart
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/drawer_screen_widgets/drawer_item_button.dart';
@@ -95,22 +96,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
   onDrawerItemTap(BuildContext context, int index) {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
         break;
       case 'Wish List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(Preference.getUserId()));
         break;
       case 'Hidden List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()));
         break;
       case 'Profile':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(Preference.getUserId()));
         break;
       case 'Change Password':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(Preference.getUserId()));
         break;
       case 'Change Pin':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()));
         break;
       case 'Logout':
         //do logout
@@ -122,22 +123,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
   onHorizontalDrawerItemTap(BuildContext context, int index) {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
         break;
       case 'Wish List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(Preference.getUserId()));
         break;
       case 'Hidden List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()));
         break;
       case 'Profile':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(Preference.getUserId()));
         break;
       case 'Change Password':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(Preference.getUserId()));
         break;
       case 'Change Pin':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen());
+        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()));
         break;
       case 'Logout':
         //do logout
@@ -154,8 +155,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
       });
       selectedTabController.stream.listen((event) {
         selectedPath = event;
-        Navigator.pushReplacementNamed(drawerNavigatorKey.currentContext!, event);
-        Navigator.pushReplacementNamed(drawerNavigatorKey2.currentContext!, event);
+        Navigator.pushReplacementNamed(drawerNavigatorKey.currentContext!, event, arguments: drawerStateProvider.selectedPageConfig.arguments);
+        Navigator.pushReplacementNamed(drawerNavigatorKey2.currentContext!, event, arguments: drawerStateProvider.selectedPageConfig.arguments);
       });
     });
     super.initState();
@@ -261,25 +262,46 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     RoutePageBuilder builder;
                     switch (settings.name) {
                       case yourNovelListScreenRoute:
-                        builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
+                        builder = (_, __, ___) => YourNovelListScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       case novelWishListScreenRoute:
-                        builder = (_, __, ___) => const NovelWishListScreen(showAppBar: false);
+                        builder = (_, __, ___) => NovelWishListScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       case novelHiddenListScreenRoute:
-                        builder = (_, __, ___) => const NovelHiddenListScreen(showAppBar: false);
+                        builder = (_, __, ___) => NovelHiddenListScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       case profileScreenRoute:
-                        builder = (_, __, ___) => const ProfileScreen(showAppBar: false);
+                        builder = (_, __, ___) => ProfileScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       case changePasswordScreenRoute:
-                        builder = (_, __, ___) => const ChangePasswordScreen(showAppBar: false);
+                        builder = (_, __, ___) => ChangePasswordScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       case changeHiddenPinScreenRoute:
-                        builder = (_, __, ___) => const ChangeHiddenPinScreen(showAppBar: false);
+                        builder = (_, __, ___) => ChangeHiddenPinScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                       default:
-                        builder = (_, __, ___) => const YourNovelListScreen(showAppBar: false);
+                        builder = (_, __, ___) => YourNovelListScreen(
+                              showAppBar: false,
+                              userId: settings.arguments as String,
+                            );
                         break;
                     }
                     return PageRouteBuilder(
@@ -354,25 +376,46 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       RoutePageBuilder builder;
                       switch (settings.name) {
                         case yourNovelListScreenRoute:
-                          builder = (_, __, ___) => const YourNovelListScreen(showAppBar: true);
+                          builder = (_, __, ___) => YourNovelListScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         case novelWishListScreenRoute:
-                          builder = (_, __, ___) => const NovelWishListScreen(showAppBar: true);
+                          builder = (_, __, ___) => NovelWishListScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         case novelHiddenListScreenRoute:
-                          builder = (_, __, ___) => const NovelHiddenListScreen(showAppBar: true);
+                          builder = (_, __, ___) => NovelHiddenListScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         case profileScreenRoute:
-                          builder = (_, __, ___) => const ProfileScreen(showAppBar: true);
+                          builder = (_, __, ___) => ProfileScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         case changePasswordScreenRoute:
-                          builder = (_, __, ___) => const ChangePasswordScreen(showAppBar: true);
+                          builder = (_, __, ___) => ChangePasswordScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         case changeHiddenPinScreenRoute:
-                          builder = (_, __, ___) => const ChangeHiddenPinScreen(showAppBar: true);
+                          builder = (_, __, ___) => ChangeHiddenPinScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                         default:
-                          builder = (_, __, ___) => const YourNovelListScreen(showAppBar: true);
+                          builder = (_, __, ___) => YourNovelListScreen(
+                                showAppBar: true,
+                                userId: settings.arguments as String,
+                              );
                           break;
                       }
                       return PageRouteBuilder(

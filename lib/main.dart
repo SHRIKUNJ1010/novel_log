@@ -12,8 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 late SharedPreferences prefs;
@@ -22,11 +23,22 @@ PageStateProvider pageStateProvider = PageStateProvider();
 DrawerStateProvider drawerStateProvider = DrawerStateProvider();
 GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final MyAppRouterDelegate delegate = MyAppRouterDelegate();
+
   final parser = MyAppRouterInformationParser();
 
-  MyApp({super.key});
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +61,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-
-//end of file
 }

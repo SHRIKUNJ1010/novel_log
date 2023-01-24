@@ -5,9 +5,10 @@
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/preference.dart';
 
 class DrawerStateProvider extends ChangeNotifier {
-  PageConfiguration selectedPageConfig = PageConfigList.getYourNovelListScreen();
+  PageConfiguration selectedPageConfig = PageConfigList.getYourNovelListScreen(Preference.getUserId());
 
   DrawerStateProvider();
 

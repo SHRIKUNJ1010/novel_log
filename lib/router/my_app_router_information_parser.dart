@@ -34,24 +34,28 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           i++;
           switch (uri.pathSegments[i]) {
             case yourNovelListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen());
-              i++;
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(uri.pathSegments[i + 1]));
+              i += 2;
               break;
             case novelWishListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen());
-              i++;
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(uri.pathSegments[i + 1]));
+              i += 2;
               break;
             case novelHiddenListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen());
-              i++;
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(uri.pathSegments[i + 1]));
+              i += 2;
               break;
             case profileScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen());
-              i++;
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(uri.pathSegments[i + 1]));
+              i += 2;
               break;
             case changePasswordScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen());
-              i++;
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(uri.pathSegments[i + 1]));
+              i += 2;
+              break;
+            case changeHiddenPinScreenRoute:
+              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(uri.pathSegments[i + 1]));
+              i += 2;
               break;
             default:
               show404 = true;
@@ -95,19 +99,22 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
             url += drawerScreenRoute;
             switch (drawerStateProvider.selectedPageConfig.path) {
               case yourNovelListScreenRoute:
-                url += "/$yourNovelListScreenRoute";
+                url += "/$yourNovelListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case novelWishListScreenRoute:
-                url += "/$novelWishListScreenRoute";
+                url += "/$novelWishListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case novelHiddenListScreenRoute:
-                url += "/$novelHiddenListScreenRoute";
+                url += "/$novelHiddenListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case profileScreenRoute:
-                url += "/$profileScreenRoute";
+                url += "/$profileScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case changePasswordScreenRoute:
-                url += "/$changePasswordScreenRoute";
+                url += "/$changePasswordScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
+                break;
+              case changeHiddenPinScreenRoute:
+                url += "/$changeHiddenPinScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
             }
             break;
@@ -132,19 +139,22 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
             url += '/$drawerScreenRoute';
             switch (drawerStateProvider.selectedPageConfig.path) {
               case yourNovelListScreenRoute:
-                url += "/$yourNovelListScreenRoute";
+                url += "/$yourNovelListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case novelWishListScreenRoute:
-                url += "/$novelWishListScreenRoute";
+                url += "/$novelWishListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case novelHiddenListScreenRoute:
-                url += "/$novelHiddenListScreenRoute";
+                url += "/$novelHiddenListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case profileScreenRoute:
-                url += "/$profileScreenRoute";
+                url += "/$profileScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
               case changePasswordScreenRoute:
-                url += "/$changePasswordScreenRoute";
+                url += "/$changePasswordScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
+                break;
+              case changeHiddenPinScreenRoute:
+                url += "/$changeHiddenPinScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
                 break;
             }
             break;
