@@ -31,7 +31,7 @@ class YourNovelListController extends GetxController {
     callIsLoading();
     final data = await NovelServices.getMainNovelListFirstPage();
     lastData = data['last_document'];
-    novelList += data['novel_list'];
+    novelList = data['novel_list'];
     remainingLength = data['remaining_length'];
     Utility.printLog(novelList);
     callIsNotLoading();

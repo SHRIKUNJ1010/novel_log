@@ -5,13 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class NovelHiddenListScreen extends StatefulWidget {
-  final bool showAppBar;
   final String userId;
 
   const NovelHiddenListScreen({
     Key? key,
     required this.userId,
-    this.showAppBar = false,
   }) : super(key: key);
 
   @override
@@ -21,7 +19,9 @@ class NovelHiddenListScreen extends StatefulWidget {
 class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
   @override
   Widget build(BuildContext context) {
-    if (widget.showAppBar) {
+    final double width = MediaQuery.of(context).size.width;
+
+    if (width > 600) {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,

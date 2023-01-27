@@ -6,7 +6,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
-import 'package:novel_log/router/drawer_router_delegate_without_appbar.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -25,7 +24,6 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   final DrawerRouterDelegate delegate = DrawerRouterDelegate();
-  final DrawerRouterDelegateWithoutAppbar delegateWithoutAppbar = DrawerRouterDelegateWithoutAppbar();
   String selectedPath = yourNovelListScreenRoute;
   StreamController<String> selectedTabController = StreamController<String>.broadcast();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -165,161 +163,159 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    return IndexedStack(
-      index: width > 800 ? 1 : 0,
-      children: [
-        Scaffold(
-          key: scaffoldKey,
-          appBar: AppBar(
-            leading: InkWell(
-              onTap: () {
-                scaffoldKey.currentState!.openDrawer();
-              },
-              child: const Icon(
-                Icons.menu,
-                color: mWhite,
-                size: 30,
-              ),
+    if (width < 600) {
+      return Scaffold(
+        key: scaffoldKey,
+        appBar: AppBar(
+          leading: InkWell(
+            onTap: () {
+              scaffoldKey.currentState!.openDrawer();
+            },
+            child: const Icon(
+              Icons.menu,
+              color: mWhite,
+              size: 30,
             ),
-            centerTitle: true,
-            title: StreamBuilder<String>(
-                stream: selectedTabController.stream,
-                builder: (context, snapshot) {
-                  return TextView(label: getAppBarTitle(snapshot.data ?? yourNovelListScreenRoute));
-                }),
           ),
-          drawer: Drawer(
-            backgroundColor: appPrimaryColor,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      height: 170 + MediaQuery.of(context).padding.top,
-                      color: appThemeColor[100],
-                    ),
-                    SafeArea(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 15, top: 15),
-                        child: InkWell(
-                          onTap: () {
-                            scaffoldKey.currentState!.closeDrawer();
-                          },
-                          child: const Icon(
-                            Icons.menu,
-                            color: mWhite,
-                            size: 30,
-                          ),
+          centerTitle: true,
+          title: StreamBuilder<String>(
+              stream: selectedTabController.stream,
+              builder: (context, snapshot) {
+                return TextView(label: getAppBarTitle(selectedPath));
+              }),
+        ),
+        drawer: Drawer(
+          backgroundColor: appPrimaryColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 170 + MediaQuery.of(context).padding.top,
+                    color: appThemeColor[100],
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15, top: 15),
+                      child: InkWell(
+                        onTap: () {
+                          scaffoldKey.currentState!.closeDrawer();
+                        },
+                        child: const Icon(
+                          Icons.menu,
+                          color: mWhite,
+                          size: 30,
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Expanded(
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: drawerItemTitleText.length,
-                    itemBuilder: (context, index) {
-                      if (selectedPath == drawerItemPathList[index]) {
-                        return DrawerSelectedItemButton(
-                          icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                          onTap: () {
-                            onDrawerItemTap(context, index);
-                          },
-                          title: drawerItemTitleText[index],
-                        );
-                      } else {
-                        return DrawerItemButton(
-                          icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                          onTap: () {
-                            onDrawerItemTap(context, index);
-                          },
-                          title: drawerItemTitleText[index],
-                        );
-                      }
-                    },
                   ),
-                ),
-              ],
-            ),
-          ),
-          body: StreamBuilder<String>(
-            stream: selectedTabController.stream,
-            builder: (context, snapshot) {
-              return Router(
-                routerDelegate: delegateWithoutAppbar,
-              );
-            },
-          ),
-        ),
-        Row(
-          children: [
-            StreamBuilder<String>(
-                stream: selectedTabController.stream,
-                builder: (context, snapshot) {
-                  return Drawer(
-                    backgroundColor: appPrimaryColor,
-                    child: SizedBox(
-                      width: 300,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              Container(
-                                height: 170 + MediaQuery.of(context).padding.top,
-                                color: appThemeColor[100],
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 5),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              itemCount: drawerItemTitleText.length,
-                              itemBuilder: (context, index) {
-                                if ((snapshot.data ?? yourNovelListScreenRoute) == drawerItemPathList[index]) {
-                                  return DrawerSelectedItemButton(
-                                    icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                                    onTap: () {
-                                      onHorizontalDrawerItemTap(context, index);
-                                    },
-                                    title: drawerItemTitleText[index],
-                                  );
-                                } else {
-                                  return DrawerItemButton(
-                                    icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                                    onTap: () {
-                                      onHorizontalDrawerItemTap(context, index);
-                                    },
-                                    title: drawerItemTitleText[index],
-                                  );
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                }),
-            Expanded(
-              child: StreamBuilder<String>(
-                stream: selectedTabController.stream,
-                builder: (context, snapshot) {
-                  return Router(
-                    routerDelegate: delegate,
-                  );
-                },
+                ],
               ),
-            ),
-          ],
+              const SizedBox(height: 5),
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: drawerItemTitleText.length,
+                  itemBuilder: (context, index) {
+                    if (selectedPath == drawerItemPathList[index]) {
+                      return DrawerSelectedItemButton(
+                        icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                        onTap: () {
+                          onDrawerItemTap(context, index);
+                        },
+                        title: drawerItemTitleText[index],
+                      );
+                    } else {
+                      return DrawerItemButton(
+                        icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                        onTap: () {
+                          onDrawerItemTap(context, index);
+                        },
+                        title: drawerItemTitleText[index],
+                      );
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
-    );
+        body: StreamBuilder<String>(
+          stream: selectedTabController.stream,
+          builder: (context, snapshot) {
+            return Router(
+              routerDelegate: delegate,
+            );
+          },
+        ),
+      );
+    } else {
+      return Row(
+        children: [
+          StreamBuilder<String>(
+              stream: selectedTabController.stream,
+              builder: (context, snapshot) {
+                return Drawer(
+                  backgroundColor: appPrimaryColor,
+                  child: SizedBox(
+                    width: 300,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                              height: 170 + MediaQuery.of(context).padding.top,
+                              color: appThemeColor[100],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        Expanded(
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            itemCount: drawerItemTitleText.length,
+                            itemBuilder: (context, index) {
+                              if (selectedPath == drawerItemPathList[index]) {
+                                return DrawerSelectedItemButton(
+                                  icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                                  onTap: () {
+                                    onHorizontalDrawerItemTap(context, index);
+                                  },
+                                  title: drawerItemTitleText[index],
+                                );
+                              } else {
+                                return DrawerItemButton(
+                                  icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                                  onTap: () {
+                                    onHorizontalDrawerItemTap(context, index);
+                                  },
+                                  title: drawerItemTitleText[index],
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }),
+          Expanded(
+            child: StreamBuilder<String>(
+              stream: selectedTabController.stream,
+              builder: (context, snapshot) {
+                return Router(
+                  routerDelegate: delegate,
+                );
+              },
+            ),
+          ),
+        ],
+      );
+    }
   }
 }

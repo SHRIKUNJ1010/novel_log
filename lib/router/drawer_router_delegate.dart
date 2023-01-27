@@ -78,7 +78,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           YourNovelListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -88,7 +87,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           NovelWishListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -98,7 +96,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           NovelHiddenListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -108,7 +105,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ProfileScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -118,7 +114,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ChangePasswordScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -128,7 +123,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ChangeHiddenPinScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -138,7 +132,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           YourNovelListScreen(
             userId: Preference.getUserId(),
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -152,7 +145,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           YourNovelListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -161,7 +153,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           NovelWishListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -170,7 +161,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           NovelHiddenListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -179,7 +169,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           ProfileScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -188,7 +177,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           ChangePasswordScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -197,7 +185,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           ChangeHiddenPinScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -206,7 +193,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addPageData(
           YourNovelListScreen(
             userId: Preference.getUserId(),
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -243,7 +229,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           YourNovelListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -253,7 +238,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           NovelWishListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -263,7 +247,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           NovelHiddenListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -273,7 +256,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ProfileScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -283,7 +265,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ChangePasswordScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -293,7 +274,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           ChangeHiddenPinScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -303,7 +283,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           index,
           YourNovelListScreen(
             userId: Preference.getUserId(),
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -317,7 +296,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           YourNovelListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -326,7 +304,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           NovelWishListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -335,7 +312,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           NovelHiddenListScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -344,7 +320,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           ProfileScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -353,7 +328,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           ChangePasswordScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -362,7 +336,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           ChangeHiddenPinScreen(
             userId: pageConfig.arguments as String,
-            showAppBar: true,
           ),
           pageConfig,
         );
@@ -371,7 +344,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         _addFadePage(
           YourNovelListScreen(
             userId: Preference.getUserId(),
-            showAppBar: true,
           ),
           pageConfig,
         );

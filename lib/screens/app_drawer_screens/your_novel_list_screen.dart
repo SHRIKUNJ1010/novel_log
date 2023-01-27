@@ -10,13 +10,11 @@ import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/your_novel_list_screen_widgets/your_novel_list_tile.dart';
 
 class YourNovelListScreen extends StatefulWidget {
-  final bool showAppBar;
   final String userId;
 
   const YourNovelListScreen({
     Key? key,
     required this.userId,
-    this.showAppBar = false,
   }) : super(key: key);
 
   @override
@@ -31,7 +29,9 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        Get.find<YourNovelListController>().refreshList(widget.userId);
+        if (Get.find<YourNovelListController>().novelList.isEmpty) {
+          Get.find<YourNovelListController>().refreshList(widget.userId);
+        }
         novelListController.addListener(
           () {
             if (novelListController.position.pixels == novelListController.position.maxScrollExtent) {
@@ -47,7 +47,9 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.showAppBar) {
+    final double width = MediaQuery.of(context).size.width;
+
+    if (width > 600) {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,

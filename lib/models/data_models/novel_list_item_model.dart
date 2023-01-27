@@ -46,8 +46,8 @@ class NovelListItemModel {
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelImageUrl = json['novel_image_url'];
-    totalNovelChapterCount = json['total_novel_chapter_count'];
-    readNovelChapterCount = json['read_novel_chapter_count'];
+    totalNovelChapterCount = int.parse(json['total_novel_chapter_count']);
+    readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
     switch (json['novel_reading_status']) {
@@ -75,8 +75,8 @@ class NovelListItemModel {
     data['user_id'] = userId;
     data['novel_name'] = novelName;
     data['novel_image_url'] = novelImageUrl;
-    data['total_novel_chapter_count'] = totalNovelChapterCount;
-    data['read_novel_chapter_count'] = readNovelChapterCount;
+    data['total_novel_chapter_count'] = totalNovelChapterCount.toString();
+    data['read_novel_chapter_count'] = readNovelChapterCount.toString();
     data['novel_link_url'] = novelLinkUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     switch (novelReadingStatus) {

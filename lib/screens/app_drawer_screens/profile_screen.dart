@@ -6,13 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final bool showAppBar;
   final String userId;
 
   const ProfileScreen({
     Key? key,
     required this.userId,
-    this.showAppBar = false,
   }) : super(key: key);
 
   @override
@@ -22,7 +20,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    if (widget.showAppBar) {
+    final double width = MediaQuery.of(context).size.width;
+
+    if (width > 600) {
       return Scaffold(
         appBar: AppBar(
           centerTitle: true,

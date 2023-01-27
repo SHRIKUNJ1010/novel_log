@@ -76,8 +76,8 @@ class NovelDescriptionModel {
     novelDescription = json['novel_description'];
     novelImageUrl = json['novel_image_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
-    totalNovelChapterCount = json['total_novel_chapter_count'];
-    readNovelChapterCount = json['read_novel_chapter_count'];
+    totalNovelChapterCount = int.parse(json['total_novel_chapter_count']);
+    readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
     novelLinkUrl = json['novel_link_url'];
     switch (json['novel_status']) {
       case 'production':
@@ -124,8 +124,8 @@ class NovelDescriptionModel {
     data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
-    data['total_novel_chapter_count'] = totalNovelChapterCount;
-    data['read_novel_chapter_count'] = readNovelChapterCount;
+    data['total_novel_chapter_count'] = totalNovelChapterCount.toString();
+    data['read_novel_chapter_count'] = readNovelChapterCount.toString();
     data['novel_link_url'] = novelLinkUrl;
     switch (novelStatus) {
       case NovelStatus.production:
