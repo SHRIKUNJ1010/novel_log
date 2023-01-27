@@ -29,6 +29,8 @@ class _LoginScreenState extends State<LoginScreen> {
   StreamController<bool> validateFieldController = StreamController<bool>.broadcast();
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
+  late Image smallBackgroundImage;
+  late Image bigBackgroundImage;
 
   bool verifyFields() {
     return emailEditingController.text.isNotEmpty && passwordEditingController.text.isNotEmpty && Utility.validateEmail(emailEditingController.text);
@@ -65,13 +67,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    emailEditingController.addListener(() {
-      validateFieldController.add(verifyFields());
+    bigBackgroundImage = Image.asset(
+      libraryBackgroundImageForBigScreen,
+      gaplessPlayback: true,
+    );
+    smallBackgroundImage = Image.asset(
+      libraryBackgroundImage,
+      gaplessPlayback: true,
+    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      emailEditingController.addListener(() {
+        validateFieldController.add(verifyFields());
+      });
+      passwordEditingController.addListener(() {
+        validateFieldController.add(verifyFields());
+      });
     });
-    passwordEditingController.addListener(() {
-      validateFieldController.add(verifyFields());
-    });
+
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    precacheImage(bigBackgroundImage.image, context);
+    precacheImage(smallBackgroundImage.image, context);
+    super.didChangeDependencies();
   }
 
   @override
@@ -86,10 +106,12 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     //final double height = MediaQuery.of(context).size.height;
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
+        color: Colors.black,
         image: DecorationImage(
-          image: AssetImage(libraryBackgroundImage),
+          image: width > 600 ? bigBackgroundImage.image : smallBackgroundImage.image,
           fit: BoxFit.cover,
         ),
       ),

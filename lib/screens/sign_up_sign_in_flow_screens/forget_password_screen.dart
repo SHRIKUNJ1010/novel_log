@@ -62,9 +62,9 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     //final double height = MediaQuery.of(context).size.height;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(libraryBackgroundImage),
+          image: width > 600 ? const AssetImage(libraryBackgroundImageForBigScreen) : const AssetImage(libraryBackgroundImage),
           fit: BoxFit.cover,
         ),
       ),

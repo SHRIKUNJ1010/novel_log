@@ -124,9 +124,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(libraryBackgroundImage),
+          image: width > 600 ? const AssetImage(libraryBackgroundImageForBigScreen) : const AssetImage(libraryBackgroundImage),
           fit: BoxFit.cover,
         ),
       ),
