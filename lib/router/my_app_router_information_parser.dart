@@ -20,6 +20,16 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
         break;
       case loginScreenRoute:
         tempConfig.add(PageConfigList.getLoginScreen());
+        if (uri.pathSegments.length > 1) {
+          switch (uri.pathSegments[1]) {
+            case forgetPasswordScreenRoute:
+              tempConfig.add(PageConfigList.getForgetPasswordScreen());
+              break;
+            default:
+              show404 = true;
+              break;
+          }
+        }
         break;
       case signUpScreenRoute:
         tempConfig.add(PageConfigList.getSignUpScreen());
@@ -80,7 +90,11 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
         url += signUpScreenRoute;
         break;
       case forgetPasswordScreenRoute:
-        url += '$loginScreenRoute/$forgetPasswordScreenRoute';
+        if (configuration.length > 1) {
+          url += '$loginScreenRoute/$forgetPasswordScreenRoute';
+        } else {
+          url += forgetPasswordScreenRoute;
+        }
         break;
       case drawerScreenRoute:
         url += drawerScreenRoute;
