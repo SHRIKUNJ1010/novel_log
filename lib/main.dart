@@ -24,7 +24,6 @@ PageStateProvider pageStateProvider = PageStateProvider();
 DrawerStateProvider drawerStateProvider = DrawerStateProvider();
 GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
 GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
-GlobalKey<NavigatorState> drawerNavigatorKey2 = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -61,16 +60,6 @@ class _MyAppState extends State<MyApp> {
         routerDelegate: delegate,
         routeInformationParser: parser,
       ),
-      /*MaterialApp.router(
-        title: appName,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: appThemeColor,
-          primaryColor: appPrimaryColor,
-        ),
-        routerDelegate: delegate,
-        routeInformationParser: parser,
-      ),*/
     );
   }
 }
