@@ -174,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: emailEditingController,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         const TextView(
@@ -187,6 +188,10 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: TextField(
                             controller: passwordEditingController,
                             obscureText: true,
+                            textInputAction: TextInputAction.done,
+                            onSubmitted: (value) {
+                              checkValidation();
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),

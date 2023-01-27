@@ -26,13 +26,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  StreamController<bool> validateFieldController =
-      StreamController<bool>.broadcast();
+  StreamController<bool> validateFieldController = StreamController<bool>.broadcast();
   TextEditingController nameEditingController = TextEditingController();
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
-  TextEditingController repeatPasswordEditingController =
-      TextEditingController();
+  TextEditingController repeatPasswordEditingController = TextEditingController();
 
   bool verifyFields() {
     return nameEditingController.text.isNotEmpty &&
@@ -46,38 +44,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   checkValidation() async {
     if (nameEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(
-          mFA5D5D, 'Name Field', "Name field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Name Field', "Name field can't be left empty!");
     }
     if (emailEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(mFA5D5D, 'Email Address Field',
-          "Email Address field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Email Address field can't be left empty!");
       return;
     }
     if (!Utility.validateEmail(emailEditingController.text.trim())) {
-      Utility.toastMessage(
-          mFA5D5D, 'Email Address Field', "Invalid Email Address!");
+      Utility.toastMessage(mFA5D5D, 'Email Address Field', "Invalid Email Address!");
       return;
     }
     if (passwordEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(
-          mFA5D5D, 'Password Field', "Password field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Password Field', "Password field can't be left empty!");
       return;
     }
     if (passwordEditingController.text.trim().length < 6) {
-      Utility.toastMessage(
-          mFA5D5D, 'Password Field', "There must be minimum 6 characters!");
+      Utility.toastMessage(mFA5D5D, 'Password Field', "There must be minimum 6 characters!");
       return;
     }
     if (repeatPasswordEditingController.text.trim().isEmpty) {
-      Utility.toastMessage(mFA5D5D, 'Repeat Password Field',
-          "Repeat Password field can't be left empty!");
+      Utility.toastMessage(mFA5D5D, 'Repeat Password Field', "Repeat Password field can't be left empty!");
       return;
     }
-    if (repeatPasswordEditingController.text.trim() !=
-        passwordEditingController.text.trim()) {
-      Utility.toastMessage(
-          mFA5D5D, 'Error', "Password and Confirm password mismatch!");
+    if (repeatPasswordEditingController.text.trim() != passwordEditingController.text.trim()) {
+      Utility.toastMessage(mFA5D5D, 'Error', "Password and Confirm password mismatch!");
       return;
     }
     String tempUserId = await FirebaseAuthService.signUpWithEmail(
@@ -148,10 +138,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                if (!kIsWeb)
-                  Platform.isIOS || Platform.isAndroid
-                      ? const SizedBox(height: 100)
-                      : const SizedBox(height: 30),
+                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
                 if (!kIsWeb)
                   Platform.isAndroid || Platform.isIOS
                       ? Row(
@@ -176,10 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ],
                         ),
-                if (!kIsWeb)
-                  Platform.isIOS || Platform.isAndroid
-                      ? const SizedBox(height: 15)
-                      : const SizedBox(height: 30),
+                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 15) : const SizedBox(height: 30),
                 if (kIsWeb)
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -227,6 +211,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: nameEditingController,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         const TextView(
@@ -239,6 +224,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: emailEditingController,
+                            textInputAction: TextInputAction.next,
                           ),
                         ),
                         const TextView(
@@ -251,6 +237,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: passwordEditingController,
+                            textInputAction: TextInputAction.next,
                             obscureText: true,
                           ),
                         ),
@@ -264,7 +251,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                           child: TextField(
                             controller: repeatPasswordEditingController,
+                            textInputAction: TextInputAction.done,
                             obscureText: true,
+                            onSubmitted: (value) {
+                              if (kIsWeb) {
+                                checkValidation();
+                              }
+                            },
                           ),
                         ),
                         const SizedBox(height: 20),
@@ -278,9 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   height: 50,
                                   text: 'Create Account',
                                   textColor: mWhite,
-                                  buttonColor: (snapshot.data ?? false)
-                                      ? appPrimaryColor
-                                      : appPrimaryColor.withOpacity(0.2),
+                                  buttonColor: (snapshot.data ?? false) ? appPrimaryColor : appPrimaryColor.withOpacity(0.2),
                                   fontSize: 20,
                                 );
                               }),
@@ -292,8 +283,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             InkWell(
                               onTap: () {
-                                pageStateProvider.pushReplacement(
-                                    PageConfigList.getLoginScreen());
+                                pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
                               },
                               child: const TextView(
                                 label: 'have an account? login here.',

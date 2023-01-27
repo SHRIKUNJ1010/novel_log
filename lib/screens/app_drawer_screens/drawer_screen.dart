@@ -143,14 +143,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   void initState() {
     selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      drawerStateProvider.addListener(() {
-        selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
-      });
-      selectedTabController.stream.listen((event) {
-        selectedPath = event;
-      });
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        drawerStateProvider.addListener(
+          () {
+            selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
+          },
+        );
+        selectedTabController.stream.listen(
+          (event) {
+            selectedPath = event;
+          },
+        );
+      },
+    );
     super.initState();
   }
 
@@ -179,10 +185,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
           ),
           centerTitle: true,
           title: StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
-                return TextView(label: getAppBarTitle(selectedPath));
-              }),
+            stream: selectedTabController.stream,
+            builder: (context, snapshot) {
+              return TextView(label: getAppBarTitle(selectedPath));
+            },
+          ),
         ),
         drawer: Drawer(
           backgroundColor: appPrimaryColor,
@@ -255,55 +262,56 @@ class _DrawerScreenState extends State<DrawerScreen> {
       return Row(
         children: [
           StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
-                return Drawer(
-                  backgroundColor: appPrimaryColor,
-                  child: SizedBox(
-                    width: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              height: 170 + MediaQuery.of(context).padding.top,
-                              color: appThemeColor[100],
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 5),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            itemCount: drawerItemTitleText.length,
-                            itemBuilder: (context, index) {
-                              if (selectedPath == drawerItemPathList[index]) {
-                                return DrawerSelectedItemButton(
-                                  icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
-                                  onTap: () {
-                                    onHorizontalDrawerItemTap(context, index);
-                                  },
-                                  title: drawerItemTitleText[index],
-                                );
-                              } else {
-                                return DrawerItemButton(
-                                  icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
-                                  onTap: () {
-                                    onHorizontalDrawerItemTap(context, index);
-                                  },
-                                  title: drawerItemTitleText[index],
-                                );
-                              }
-                            },
+            stream: selectedTabController.stream,
+            builder: (context, snapshot) {
+              return Drawer(
+                backgroundColor: appPrimaryColor,
+                child: SizedBox(
+                  width: 300,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Stack(
+                        children: [
+                          Container(
+                            height: 170 + MediaQuery.of(context).padding.top,
+                            color: appThemeColor[100],
                           ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Expanded(
+                        child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          itemCount: drawerItemTitleText.length,
+                          itemBuilder: (context, index) {
+                            if (selectedPath == drawerItemPathList[index]) {
+                              return DrawerSelectedItemButton(
+                                icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                                onTap: () {
+                                  onHorizontalDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            } else {
+                              return DrawerItemButton(
+                                icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                                onTap: () {
+                                  onHorizontalDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            }
+                          },
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              }),
+                ),
+              );
+            },
+          ),
           Expanded(
             child: StreamBuilder<String>(
               stream: selectedTabController.stream,
