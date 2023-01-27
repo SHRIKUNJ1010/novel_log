@@ -29,8 +29,6 @@ class _LoginScreenState extends State<LoginScreen> {
   StreamController<bool> validateFieldController = StreamController<bool>.broadcast();
   TextEditingController emailEditingController = TextEditingController();
   TextEditingController passwordEditingController = TextEditingController();
-  late Image smallBackgroundImage;
-  late Image bigBackgroundImage;
 
   bool verifyFields() {
     return emailEditingController.text.isNotEmpty && passwordEditingController.text.isNotEmpty && Utility.validateEmail(emailEditingController.text);
@@ -67,14 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-    bigBackgroundImage = Image.asset(
-      libraryBackgroundImageForBigScreen,
-      gaplessPlayback: true,
-    );
-    smallBackgroundImage = Image.asset(
-      libraryBackgroundImage,
-      gaplessPlayback: true,
-    );
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       emailEditingController.addListener(() {
         validateFieldController.add(verifyFields());
@@ -85,13 +75,6 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    precacheImage(bigBackgroundImage.image, context);
-    precacheImage(smallBackgroundImage.image, context);
-    super.didChangeDependencies();
   }
 
   @override
@@ -111,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
       decoration: BoxDecoration(
         color: Colors.black,
         image: DecorationImage(
-          image: width > 600 ? bigBackgroundImage.image : smallBackgroundImage.image,
+          image: width > 600 ? const AssetImage(libraryBackgroundImageForBigScreen) : const AssetImage(libraryBackgroundImage),
           fit: BoxFit.cover,
         ),
       ),
