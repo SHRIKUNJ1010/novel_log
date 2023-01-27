@@ -29,9 +29,9 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
 
   @override
   void initState() {
-    Get.find<YourNovelListController>().refreshList(widget.userId);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
+        Get.find<YourNovelListController>().refreshList(widget.userId);
         novelListController.addListener(
           () {
             if (novelListController.position.pixels == novelListController.position.maxScrollExtent) {
@@ -72,6 +72,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   controller: novelListController,
+                  itemCount: controller.novelList.length + 1,
                   itemBuilder: (context, index) {
                     if (index == controller.novelList.length) {
                       return Utility.getLoadingView(isLoading: controller.isLoading);
@@ -88,7 +89,6 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                     }
                   },
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
-                  itemCount: controller.novelList.length + 1,
                 ),
               );
             }
@@ -116,6 +116,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                 child: ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   controller: novelListController,
+                  itemCount: controller.novelList.length + 1,
                   itemBuilder: (context, index) {
                     if (index == controller.novelList.length) {
                       return Utility.getLoadingView(isLoading: controller.isLoading);
@@ -132,7 +133,6 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                     }
                   },
                   separatorBuilder: (context, index) => const SizedBox(height: 10),
-                  itemCount: controller.novelList.length + 1,
                 ),
               );
             }
