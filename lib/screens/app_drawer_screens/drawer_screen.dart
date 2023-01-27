@@ -4,6 +4,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
 import 'package:novel_log/utility/color.dart';
@@ -68,23 +70,23 @@ class _DrawerScreenState extends State<DrawerScreen> {
   ];
 
   List<IconData> drawerItemIcon = [
-    Icons.home_outlined,
-    Icons.home_outlined,
-    Icons.home_outlined,
-    Icons.home_outlined,
-    Icons.home_outlined,
-    Icons.home_outlined,
-    Icons.home_outlined,
+    FontAwesome5.book,
+    FontAwesome.heart_empty,
+    Icons.security_outlined,
+    FontAwesome.user,
+    FontAwesome.keyboard,
+    FontAwesome5.key,
+    FontAwesome.logout,
   ];
 
   List<IconData> selectedDrawerItemIcon = [
-    Icons.home,
-    Icons.home,
-    Icons.home,
-    Icons.home,
-    Icons.home,
-    Icons.home,
-    Icons.home,
+    FontAwesome5.book_open,
+    FontAwesome.heart,
+    Icons.security,
+    FontAwesome.user,
+    FontAwesome5.keyboard,
+    FontAwesome5.key,
+    FontAwesome.logout,
   ];
 
   onDrawerItemTap(BuildContext context, int index) {
