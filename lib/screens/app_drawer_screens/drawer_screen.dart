@@ -79,6 +79,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
     FontAwesome.logout,
   ];
 
+  List<double> iconSizeList = [
+    28,
+    30,
+    35,
+    35,
+    29,
+    31,
+    33,
+  ];
+
   List<IconData> selectedDrawerItemIcon = [
     FontAwesome5.book_open,
     FontAwesome.heart,
@@ -87,6 +97,16 @@ class _DrawerScreenState extends State<DrawerScreen> {
     FontAwesome5.keyboard,
     FontAwesome5.key,
     FontAwesome.logout,
+  ];
+
+  List<double> selectedIconSizeList = [
+    27,
+    30,
+    37,
+    35,
+    29,
+    31,
+    33,
   ];
 
   onDrawerItemTap(BuildContext context, int index) {
@@ -230,7 +250,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   itemBuilder: (context, index) {
                     if (selectedPath == drawerItemPathList[index]) {
                       return DrawerSelectedItemButton(
-                        icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                        icon: Utility.getSelectedDrawerItemIcon(
+                          icon: selectedDrawerItemIcon[index],
+                          iconSize: selectedIconSizeList[index],
+                        ),
                         onTap: () {
                           onDrawerItemTap(context, index);
                         },
@@ -238,7 +261,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       );
                     } else {
                       return DrawerItemButton(
-                        icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                        icon: Utility.getDefaultDrawerItemIcon(
+                          icon: drawerItemIcon[index],
+                          iconSize: iconSizeList[index],
+                        ),
                         onTap: () {
                           onDrawerItemTap(context, index);
                         },
@@ -290,7 +316,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           itemBuilder: (context, index) {
                             if (selectedPath == drawerItemPathList[index]) {
                               return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(icon: selectedDrawerItemIcon[index]),
+                                icon: Utility.getSelectedDrawerItemIcon(
+                                  icon: selectedDrawerItemIcon[index],
+                                  iconSize: selectedIconSizeList[index],
+                                ),
                                 onTap: () {
                                   onHorizontalDrawerItemTap(context, index);
                                 },
@@ -298,7 +327,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
                               );
                             } else {
                               return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(icon: drawerItemIcon[index]),
+                                icon: Utility.getDefaultDrawerItemIcon(
+                                  icon: drawerItemIcon[index],
+                                  iconSize: iconSizeList[index],
+                                ),
                                 onTap: () {
                                   onHorizontalDrawerItemTap(context, index);
                                 },
