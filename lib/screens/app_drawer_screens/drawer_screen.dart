@@ -8,6 +8,7 @@ import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
+import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -222,7 +223,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 children: [
                   Container(
                     height: 170 + MediaQuery.of(context).padding.top,
-                    color: appThemeColor[100],
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(drawerLibraryBackground),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   SafeArea(
                     child: Padding(
@@ -303,7 +309,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         children: [
                           Container(
                             height: 170 + MediaQuery.of(context).padding.top,
-                            color: appThemeColor[100],
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(drawerLibraryBackground),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         ],
                       ),
