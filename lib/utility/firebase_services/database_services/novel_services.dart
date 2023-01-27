@@ -62,13 +62,13 @@ class NovelServices {
 
   //next page novel wish list
   static Future<Map<String, dynamic>> getNovelWishListNextPages(
-    DocumentSnapshot<Object?> startAfterDoc,
+    QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "1")
         .orderBy("total_novel_chapter_count")
-        .startAfterDocument(startAfterDoc)
+        .startAfterDocument(startAfterDoc!)
         .limit(20)
         .get();
     return {
@@ -91,12 +91,12 @@ class NovelServices {
 
   //next page for novel hidden list
   static Future<Map<String, dynamic>> getNovelHiddenListNextPages(
-    DocumentSnapshot<Object?> startAfterDoc,
+      QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
         .where("is_hidden", isEqualTo: "1")
         .where("is_in_wish_list", isEqualTo: "0")
-        .startAfterDocument(startAfterDoc)
+        .startAfterDocument(startAfterDoc!)
         .limit(20)
         .get();
     return {
