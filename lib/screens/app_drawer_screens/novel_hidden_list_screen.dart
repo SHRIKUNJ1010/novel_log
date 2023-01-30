@@ -2,8 +2,9 @@
 * Created by Shrikunj Patel on 1/23/2023.
 */
 import 'package:flutter/material.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
-import 'package:novel_log/utility/utility.dart';
+import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class NovelHiddenListScreen extends StatefulWidget {
@@ -31,7 +32,7 @@ class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
         ),
         floatingActionButton: InkWell(
           onTap: () {
-            Utility.printLog('tapped on floating action button');
+            pageStateProvider.push(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId));
           },
           child: Container(
             width: 55,
@@ -48,7 +49,7 @@ class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
       return Scaffold(
         floatingActionButton: InkWell(
           onTap: () {
-            Utility.printLog('tapped on floating action button');
+            pageStateProvider.push(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId));
           },
           child: Container(
             width: 55,

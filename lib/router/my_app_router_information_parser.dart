@@ -65,12 +65,26 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
               break;
           }
           break;
+        case createNovelListItemScreenRoute:
+          tempConfig.add(PageConfigList.getDrawerScreen());
+          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(uri.pathSegments[1]));
+          tempConfig.add(PageConfigList.getCreateNovelListItemScreen(uri.pathSegments[1]));
+          break;
+        case createNovelWishListItemScreenRoute:
+          tempConfig.add(PageConfigList.getDrawerScreen());
+          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(uri.pathSegments[1]));
+          tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(uri.pathSegments[1]));
+          break;
+        case createNovelHiddenListItemScreenRoute:
+          tempConfig.add(PageConfigList.getDrawerScreen());
+          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(uri.pathSegments[1]));
+          tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(uri.pathSegments[1]));
+          break;
         default:
           show404 = true;
           break;
       }
     }
-
     if (show404) {
       return [PageConfigList.getSplashScreen()];
     } else {
@@ -124,6 +138,15 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
               url += "/$changeHiddenPinScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
               break;
           }
+          break;
+        case createNovelListItemScreenRoute:
+          url += '$createNovelListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
+          break;
+        case createNovelWishListItemScreenRoute:
+          url += '$createNovelWishListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
+          break;
+        case createNovelHiddenListItemScreenRoute:
+          url += '$createNovelHiddenListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
           break;
         default:
           return const RouteInformation(location: '');

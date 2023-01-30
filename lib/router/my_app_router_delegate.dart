@@ -397,7 +397,11 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   @override
   Future<void> setInitialRoutePath(configuration) {
-    pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+    if (configuration.isNotEmpty) {
+      pageStateProvider.addAllPages(configuration);
+    } else {
+      pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+    }
     return SynchronousFuture(null);
   }
 
