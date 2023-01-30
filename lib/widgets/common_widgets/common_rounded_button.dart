@@ -29,22 +29,28 @@ class CommonRoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        alignment: Alignment.center,
-        height: height,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(height / 2),
-          color: buttonColor,
-        ),
-        child: TextView(
-          label: text,
-          color: textColor,
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          fontFamily: fontFamily,
-          letterSpacing: letterSpacing,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(height / 2),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            alignment: Alignment.center,
+            height: height,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(height / 2),
+              color: buttonColor,
+            ),
+            child: TextView(
+              label: text,
+              color: textColor,
+              fontSize: fontSize,
+              fontWeight: fontWeight,
+              fontFamily: fontFamily,
+              letterSpacing: letterSpacing,
+            ),
+          ),
         ),
       ),
     );
