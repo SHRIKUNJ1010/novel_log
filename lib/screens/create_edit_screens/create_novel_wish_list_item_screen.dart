@@ -51,6 +51,8 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             ? FadeInImage(
                 width: width,
                 height: height,
+                fadeInDuration: const Duration(milliseconds: 10),
+                fadeOutDuration: const Duration(milliseconds: 10),
                 placeholder: smallBackgroundImage.image,
                 image: bigBackgroundImage.image,
                 fit: BoxFit.cover,
@@ -58,6 +60,8 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             : FadeInImage(
                 width: width,
                 height: height,
+                fadeInDuration: const Duration(milliseconds: 10),
+                fadeOutDuration: const Duration(milliseconds: 10),
                 placeholder: bigBackgroundImage.image,
                 image: smallBackgroundImage.image,
                 fit: BoxFit.cover,
