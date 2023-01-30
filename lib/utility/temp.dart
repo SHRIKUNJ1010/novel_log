@@ -58,3 +58,11 @@
                       );
                     },
                   );*/
+
+/*decoration: BoxDecoration(
+        color: Colors.black,
+        image: DecorationImage(
+          image: width > 600 ? bigBackgroundImage.image : smallBackgroundImage.image,
+          fit: BoxFit.cover,
+        ),
+      ),*/

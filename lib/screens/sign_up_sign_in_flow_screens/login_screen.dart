@@ -107,14 +107,6 @@ class _LoginScreenState extends State<LoginScreen> {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
-    /*decoration: BoxDecoration(
-        color: Colors.black,
-        image: DecorationImage(
-          image: width > 600 ? bigBackgroundImage.image : smallBackgroundImage.image,
-          fit: BoxFit.cover,
-        ),
-      ),*/
-
     return Stack(
       children: [
         width > 600
