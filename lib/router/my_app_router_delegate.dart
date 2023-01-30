@@ -8,6 +8,9 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
+import 'package:novel_log/screens/create_edit_screens/create_novel_hidden_list_item_screen.dart';
+import 'package:novel_log/screens/create_edit_screens/create_novel_list_item_screen.dart';
+import 'package:novel_log/screens/create_edit_screens/create_novel_wish_list_item_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.dart';
@@ -110,6 +113,27 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           pageConfig,
         );
         break;
+      case createNovelListItemScreenRoute:
+        _addPageAtIndex(
+          index,
+          const CreateNovelListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addPageAtIndex(
+          index,
+          const CreateNovelWishListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addPageAtIndex(
+          index,
+          const CreateNovelHiddenListItemScreen(),
+          pageConfig,
+        );
+        break;
       case forgetPasswordScreenRoute:
         _addPageAtIndex(
           index,
@@ -157,6 +181,27 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           pageConfig,
         );
         break;
+      case createNovelListItemScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const CreateNovelListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const CreateNovelWishListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addFadePageAtIndex(
+          index,
+          const CreateNovelHiddenListItemScreen(),
+          pageConfig,
+        );
+        break;
       case forgetPasswordScreenRoute:
         _addFadePageAtIndex(
           index,
@@ -200,6 +245,24 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           pageConfig,
         );
         break;
+      case createNovelListItemScreenRoute:
+        _addPageData(
+          const CreateNovelListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addPageData(
+          const CreateNovelWishListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addPageData(
+          const CreateNovelHiddenListItemScreen(),
+          pageConfig,
+        );
+        break;
       case forgetPasswordScreenRoute:
         _addPageData(
           const ForgetPasswordScreen(),
@@ -238,6 +301,24 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       case drawerScreenRoute:
         _addFadePage(
           const DrawerScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelListItemScreenRoute:
+        _addFadePage(
+          const CreateNovelListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addFadePage(
+          const CreateNovelWishListItemScreen(),
+          pageConfig,
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addFadePage(
+          const CreateNovelHiddenListItemScreen(),
           pageConfig,
         );
         break;

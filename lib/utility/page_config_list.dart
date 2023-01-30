@@ -94,5 +94,29 @@ class PageConfigList {
     );
   }
 
+  static PageConfiguration getCreateNovelListItemScreen(String userId) {
+    return PageConfiguration(
+      key: 'create_novel_list_item_screen',
+      path: createNovelListItemScreenRoute,
+      arguments: userId,
+    );
+  }
+
+  static PageConfiguration getCreateNovelWishListItemScreen(String userId) {
+    return PageConfiguration(
+      key: 'create_novel_wish_list_item_screen',
+      path: createNovelWishListItemScreenRoute,
+      arguments: userId,
+    );
+  }
+
+  static PageConfiguration getCreateNovelHiddenListItemScreen(String userId) {
+    return PageConfiguration(
+      key: 'create_novel_hidden_list_item_screen',
+      path: createNovelHiddenListItemScreenRoute,
+      arguments: userId,
+    );
+  }
+
 //end of file
 }

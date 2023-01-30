@@ -13,3 +13,6 @@ const String profileScreenRoute = 'profile_screen';
 const String changePasswordScreenRoute = 'change_password_screen';
 const String changeHiddenPinScreenRoute = 'change_hidden_pin_screen';
 const String forgetPasswordScreenRoute = 'forget_password_screen';
+const String createNovelListItemScreenRoute = 'create_novel_list_item_screen';
+const String createNovelWishListItemScreenRoute = 'create_novel_wish_list_item_screen';
+const String createNovelHiddenListItemScreenRoute = 'create_novel_hidden_list_item_screen';
