@@ -8,7 +8,7 @@ import 'package:novel_log/utility/page_routes.dart';
 class PageConfigList {
   static PageConfiguration getSplashScreen() {
     return PageConfiguration(
-      key: 'splash_screen',
+      key: 'splash_screen${DateTime.now().microsecondsSinceEpoch}',
       path: splashScreenRoute,
       arguments: null,
     );
@@ -16,7 +16,7 @@ class PageConfigList {
 
   static PageConfiguration getLoginScreen() {
     return PageConfiguration(
-      key: 'login_screen',
+      key: 'login_screen${DateTime.now().microsecondsSinceEpoch}',
       path: loginScreenRoute,
       arguments: null,
     );
@@ -24,7 +24,7 @@ class PageConfigList {
 
   static PageConfiguration getSignUpScreen() {
     return PageConfiguration(
-      key: 'sign_up_screen',
+      key: 'sign_up_screen${DateTime.now().microsecondsSinceEpoch}',
       path: signUpScreenRoute,
       arguments: null,
     );
@@ -32,7 +32,7 @@ class PageConfigList {
 
   static PageConfiguration getForgetPasswordScreen() {
     return PageConfiguration(
-      key: 'forget_password_screen',
+      key: 'forget_password_screen${DateTime.now().microsecondsSinceEpoch}',
       path: forgetPasswordScreenRoute,
       arguments: null,
     );
@@ -40,7 +40,7 @@ class PageConfigList {
 
   static PageConfiguration getDrawerScreen() {
     return PageConfiguration(
-      key: 'drawer_screen',
+      key: 'drawer_screen${DateTime.now().microsecondsSinceEpoch}',
       path: drawerScreenRoute,
       arguments: null,
     );
@@ -48,7 +48,7 @@ class PageConfigList {
 
   static PageConfiguration getYourNovelListScreen(String userId) {
     return PageConfiguration(
-      key: 'your_novel_list_screen',
+      key: 'your_novel_list_screen${DateTime.now().microsecondsSinceEpoch}',
       path: yourNovelListScreenRoute,
       arguments: userId,
     );
@@ -56,7 +56,7 @@ class PageConfigList {
 
   static PageConfiguration getProfileScreen(String userId) {
     return PageConfiguration(
-      key: 'profile_screen',
+      key: 'profile_screen${DateTime.now().microsecondsSinceEpoch}',
       path: profileScreenRoute,
       arguments: userId,
     );
@@ -64,7 +64,7 @@ class PageConfigList {
 
   static PageConfiguration getNovelWishListScreen(String userId) {
     return PageConfiguration(
-      key: 'novel_wish_list_screen',
+      key: 'novel_wish_list_screen${DateTime.now().microsecondsSinceEpoch}',
       path: novelWishListScreenRoute,
       arguments: userId,
     );
@@ -72,7 +72,7 @@ class PageConfigList {
 
   static PageConfiguration getNovelHiddenListScreen(String userId) {
     return PageConfiguration(
-      key: 'novel_hidden_list_screen',
+      key: 'novel_hidden_list_screen${DateTime.now().microsecondsSinceEpoch}',
       path: novelHiddenListScreenRoute,
       arguments: userId,
     );
@@ -80,7 +80,7 @@ class PageConfigList {
 
   static PageConfiguration getChangePasswordScreen(String userId) {
     return PageConfiguration(
-      key: 'change_password_screen',
+      key: 'change_password_screen${DateTime.now().microsecondsSinceEpoch}',
       path: changePasswordScreenRoute,
       arguments: userId,
     );
@@ -88,7 +88,7 @@ class PageConfigList {
 
   static PageConfiguration getChangeHiddenPinScreen(String userId) {
     return PageConfiguration(
-      key: 'change_hidden_pin_screen',
+      key: 'change_hidden_pin_screen${DateTime.now().microsecondsSinceEpoch}',
       path: changeHiddenPinScreenRoute,
       arguments: userId,
     );
@@ -96,7 +96,7 @@ class PageConfigList {
 
   static PageConfiguration getCreateNovelListItemScreen(String userId) {
     return PageConfiguration(
-      key: 'create_novel_list_item_screen',
+      key: 'create_novel_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
       path: createNovelListItemScreenRoute,
       arguments: userId,
     );
@@ -104,7 +104,7 @@ class PageConfigList {
 
   static PageConfiguration getCreateNovelWishListItemScreen(String userId) {
     return PageConfiguration(
-      key: 'create_novel_wish_list_item_screen',
+      key: 'create_novel_wish_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
       path: createNovelWishListItemScreenRoute,
       arguments: userId,
     );
@@ -112,7 +112,7 @@ class PageConfigList {
 
   static PageConfiguration getCreateNovelHiddenListItemScreen(String userId) {
     return PageConfiguration(
-      key: 'create_novel_hidden_list_item_screen',
+      key: 'create_novel_hidden_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
       path: createNovelHiddenListItemScreenRoute,
       arguments: userId,
     );
