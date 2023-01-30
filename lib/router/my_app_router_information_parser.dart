@@ -16,9 +16,6 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     bool show404 = false;
     if (uri.pathSegments.isNotEmpty) {
       switch (uri.pathSegments[0]) {
-        case splashScreenRoute:
-          tempConfig.add(PageConfigList.getSplashScreen());
-          break;
         case loginScreenRoute:
           tempConfig.add(PageConfigList.getLoginScreen());
           if (uri.pathSegments.length > 1) {

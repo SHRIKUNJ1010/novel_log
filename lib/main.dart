@@ -34,7 +34,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final MyAppRouterDelegate delegate = MyAppRouterDelegate();
-  final parser = MyAppRouterInformationParser();
+  final MyAppRouterInformationParser parser = MyAppRouterInformationParser();
 
   @override
   void initState() {
