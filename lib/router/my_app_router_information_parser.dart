@@ -36,7 +36,6 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           tempConfig.add(PageConfigList.getSignUpScreen());
           break;
         case forgetPasswordScreenRoute:
-          tempConfig.add(PageConfigList.getLoginScreen());
           tempConfig.add(PageConfigList.getForgetPasswordScreen());
           break;
         case drawerScreenRoute:
@@ -66,18 +65,12 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           }
           break;
         case createNovelListItemScreenRoute:
-          tempConfig.add(PageConfigList.getDrawerScreen());
-          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(uri.pathSegments[1]));
           tempConfig.add(PageConfigList.getCreateNovelListItemScreen(uri.pathSegments[1]));
           break;
         case createNovelWishListItemScreenRoute:
-          tempConfig.add(PageConfigList.getDrawerScreen());
-          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(uri.pathSegments[1]));
           tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(uri.pathSegments[1]));
           break;
         case createNovelHiddenListItemScreenRoute:
-          tempConfig.add(PageConfigList.getDrawerScreen());
-          drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(uri.pathSegments[1]));
           tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(uri.pathSegments[1]));
           break;
         default:
@@ -149,7 +142,7 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           url += '$createNovelHiddenListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
           break;
         default:
-          return const RouteInformation(location: '');
+          return const RouteInformation(location: '/');
       }
     }
     return RouteInformation(location: url);
