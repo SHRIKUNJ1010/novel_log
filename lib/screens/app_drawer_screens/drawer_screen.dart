@@ -224,25 +224,59 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   Container(
                     height: 170 + MediaQuery.of(context).padding.top,
                     decoration: const BoxDecoration(
+                      color: appPrimaryColor,
                       image: DecorationImage(
                         image: AssetImage(drawerLibraryBackground),
                         fit: BoxFit.cover,
+                        opacity: 0.6,
                       ),
                     ),
                   ),
                   SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15, top: 15),
-                      child: InkWell(
-                        onTap: () {
-                          scaffoldKey.currentState!.closeDrawer();
-                        },
-                        child: const Icon(
+                    child: InkWell(
+                      onTap: () {
+                        scaffoldKey.currentState!.closeDrawer();
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(left: 15, top: 10),
+                        child: Icon(
                           Icons.menu,
                           color: mWhite,
                           size: 30,
                         ),
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 5 + MediaQuery.of(context).padding.top,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          nlIconImage,
+                          width: 70,
+                          height: 70,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                    top: 75 + MediaQuery.of(context).padding.top,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        TextView(
+                          label: 'Welcome',
+                          color: mWhite,
+                          fontSize: 20,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -310,10 +344,44 @@ class _DrawerScreenState extends State<DrawerScreen> {
                           Container(
                             height: 170 + MediaQuery.of(context).padding.top,
                             decoration: const BoxDecoration(
+                              color: appPrimaryColor,
                               image: DecorationImage(
                                 image: AssetImage(drawerLibraryBackground),
                                 fit: BoxFit.cover,
+                                opacity: 0.6,
                               ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 5 + MediaQuery.of(context).padding.top,
+                            left: 0,
+                            right: 0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  nlIconImage,
+                                  width: 70,
+                                  height: 70,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            top: 75 + MediaQuery.of(context).padding.top,
+                            left: 0,
+                            right: 0,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                TextView(
+                                  label: 'Welcome',
+                                  color: mWhite,
+                                  fontSize: 20,
+                                ),
+                              ],
                             ),
                           ),
                         ],

@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
+import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -55,6 +56,17 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           centerTitle: true,
           title: const TextView(label: 'Your Novels'),
         ),
+        floatingActionButton: InkWell(
+          onTap: () {
+            Utility.printLog('tapped on floating action button');
+          },
+          child: Container(
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(color: appPrimaryColor, borderRadius: BorderRadius.circular(27.5)),
+            child: const Icon(color: mWhite, size: 30, Icons.add),
+          ),
+        ),
         body: GetBuilder<YourNovelListController>(
           builder: (controller) {
             if (!controller.isLoading && controller.novelList.isEmpty) {
@@ -99,6 +111,17 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
       );
     } else {
       return Scaffold(
+        floatingActionButton: InkWell(
+          onTap: () {
+            Utility.printLog('tapped on floating action button');
+          },
+          child: Container(
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(color: appPrimaryColor, borderRadius: BorderRadius.circular(27.5)),
+            child: const Icon(color: mWhite, size: 30, Icons.add),
+          ),
+        ),
         body: GetBuilder<YourNovelListController>(
           builder: (controller) {
             if (!controller.isLoading && controller.novelList.isEmpty) {
