@@ -1,12 +1,12 @@
 /*
 * Created by Shrikunj Patel on 1/23/2023.
 */
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/getx_controller_model/drawer_selected_tab_controller.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
@@ -27,8 +27,7 @@ class DrawerScreen extends StatefulWidget {
 
 class _DrawerScreenState extends State<DrawerScreen> {
   late final DrawerRouterDelegate delegate;
-  String selectedPath = yourNovelListScreenRoute;
-  StreamController<String> selectedTabController = StreamController<String>.broadcast();
+  DrawerSelectedTabController selectedTabController = Get.put(DrawerSelectedTabController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   String getAppBarTitle(String selectedValue) {
@@ -166,17 +165,12 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   void initState() {
     delegate = DrawerRouterDelegate();
-    selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
+        selectedTabController.updateSelectedPath(drawerStateProvider.selectedPageConfig.path);
         drawerStateProvider.addListener(
           () {
-            selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
-          },
-        );
-        selectedTabController.stream.listen(
-          (event) {
-            selectedPath = event;
+            selectedTabController.updateSelectedPath(drawerStateProvider.selectedPageConfig.path);
           },
         );
       },
@@ -205,10 +199,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
               ),
               centerTitle: true,
-              title: StreamBuilder<String>(
-                stream: selectedTabController.stream,
-                builder: (context, snapshot) {
-                  return TextView(label: getAppBarTitle(selectedPath));
+              title: GetBuilder<DrawerSelectedTabController>(
+                builder: (controller) {
+                  return TextView(label: getAppBarTitle(controller.selectedPath));
                 },
               ),
             )
@@ -282,38 +275,40 @@ class _DrawerScreenState extends State<DrawerScreen> {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Expanded(
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      shrinkWrap: true,
-                      itemCount: drawerItemTitleText.length,
-                      itemBuilder: (context, index) {
-                        if (selectedPath == drawerItemPathList[index]) {
-                          return DrawerSelectedItemButton(
-                            icon: Utility.getSelectedDrawerItemIcon(
-                              icon: selectedDrawerItemIcon[index],
-                              iconSize: selectedIconSizeList[index],
-                            ),
-                            onTap: () {
-                              onDrawerItemTap(context, index);
-                            },
-                            title: drawerItemTitleText[index],
-                          );
-                        } else {
-                          return DrawerItemButton(
-                            icon: Utility.getDefaultDrawerItemIcon(
-                              icon: drawerItemIcon[index],
-                              iconSize: iconSizeList[index],
-                            ),
-                            onTap: () {
-                              onDrawerItemTap(context, index);
-                            },
-                            title: drawerItemTitleText[index],
-                          );
-                        }
-                      },
-                    ),
-                  ),
+                  GetBuilder<DrawerSelectedTabController>(builder: (controller) {
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: drawerItemTitleText.length,
+                        itemBuilder: (context, index) {
+                          if (controller.selectedPath == drawerItemPathList[index]) {
+                            return DrawerSelectedItemButton(
+                              icon: Utility.getSelectedDrawerItemIcon(
+                                icon: selectedDrawerItemIcon[index],
+                                iconSize: selectedIconSizeList[index],
+                              ),
+                              onTap: () {
+                                onDrawerItemTap(context, index);
+                              },
+                              title: drawerItemTitleText[index],
+                            );
+                          } else {
+                            return DrawerItemButton(
+                              icon: Utility.getDefaultDrawerItemIcon(
+                                icon: drawerItemIcon[index],
+                                iconSize: iconSizeList[index],
+                              ),
+                              onTap: () {
+                                onDrawerItemTap(context, index);
+                              },
+                              title: drawerItemTitleText[index],
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  }),
                 ],
               ),
             )
@@ -321,9 +316,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
       body: Row(
         children: [
           width > 600
-              ? StreamBuilder<String>(
-                  stream: selectedTabController.stream,
-                  builder: (context, snapshot) {
+              ? GetBuilder<DrawerSelectedTabController>(
+                  builder: (controller) {
                     return Drawer(
                       backgroundColor: appPrimaryColor,
                       child: SizedBox(
@@ -385,7 +379,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 shrinkWrap: true,
                                 itemCount: drawerItemTitleText.length,
                                 itemBuilder: (context, index) {
-                                  if (selectedPath == drawerItemPathList[index]) {
+                                  if (controller.selectedPath == drawerItemPathList[index]) {
                                     return DrawerSelectedItemButton(
                                       icon: Utility.getSelectedDrawerItemIcon(
                                         icon: selectedDrawerItemIcon[index],
@@ -419,9 +413,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 )
               : const SizedBox(),
           Expanded(
-            child: StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
+            child: GetBuilder<DrawerSelectedTabController>(
+              builder: (controller) {
                 return Router(
                   routerDelegate: delegate,
                 );

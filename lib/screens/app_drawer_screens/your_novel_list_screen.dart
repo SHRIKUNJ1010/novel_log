@@ -32,14 +32,14 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
-        if (Get.find<YourNovelListController>().novelList.isEmpty) {
-          Get.find<YourNovelListController>().refreshList(widget.userId);
+        if (yourNovelListController.novelList.isEmpty) {
+          yourNovelListController.refreshList(widget.userId);
         }
         novelListController.addListener(
           () {
             if (novelListController.position.pixels == novelListController.position.maxScrollExtent) {
-              if (Get.find<YourNovelListController>().isLoading) return;
-              Get.find<YourNovelListController>().addNextData(widget.userId);
+              if (yourNovelListController.isLoading) return;
+              yourNovelListController.addNextData(widget.userId);
             }
           },
         );
