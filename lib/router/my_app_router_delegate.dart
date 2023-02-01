@@ -381,7 +381,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       }
     }
     if (pageStateProvider.config.isEmpty) {
-      addPage(PageConfiguration(key: '', path: ''));
+      addPage(PageConfigList.getSplashScreen());
     }
     return List.of(pages);
   }
@@ -391,19 +391,21 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   @override
   Future<void> setNewRoutePath(configuration) {
-    pageStateProvider.addAllPages(configuration);
-    return SynchronousFuture(null);
-  }
-
-  @override
-  Future<void> setInitialRoutePath(configuration) {
     if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
-    } else {
-      pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
     }
     return SynchronousFuture(null);
   }
+
+// @override
+// Future<void> setInitialRoutePath(configuration) {
+//   if (configuration.isNotEmpty) {
+//     pageStateProvider.addAllPages(configuration);
+//   } else {
+//     pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+//   }
+//   return SynchronousFuture(null);
+// }
 
 //end of file
 }

@@ -23,7 +23,6 @@ FlashController? flashController;
 PageStateProvider pageStateProvider = PageStateProvider();
 DrawerStateProvider drawerStateProvider = DrawerStateProvider();
 GlobalKey<NavigatorState> navigateKey = GlobalKey<NavigatorState>();
-GlobalKey<NavigatorState> drawerNavigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

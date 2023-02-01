@@ -26,7 +26,7 @@ class DrawerScreen extends StatefulWidget {
 }
 
 class _DrawerScreenState extends State<DrawerScreen> {
-  final DrawerRouterDelegate delegate = DrawerRouterDelegate();
+  late final DrawerRouterDelegate delegate;
   String selectedPath = yourNovelListScreenRoute;
   StreamController<String> selectedTabController = StreamController<String>.broadcast();
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -165,6 +165,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   @override
   void initState() {
+    delegate = DrawerRouterDelegate();
     selectedTabController.add(drawerStateProvider.selectedPageConfig.path);
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
@@ -322,18 +323,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
               ),
             )
           : null,
-      body: width < 600
-          ? StreamBuilder<String>(
-              stream: selectedTabController.stream,
-              builder: (context, snapshot) {
-                return Router(
-                  routerDelegate: delegate,
-                );
-              },
-            )
-          : Row(
-              children: [
-                StreamBuilder<String>(
+      body: Row(
+        children: [
+          width > 600
+              ? StreamBuilder<String>(
                   stream: selectedTabController.stream,
                   builder: (context, snapshot) {
                     return Drawer(
@@ -428,19 +421,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       ),
                     );
                   },
-                ),
-                Expanded(
-                  child: StreamBuilder<String>(
-                    stream: selectedTabController.stream,
-                    builder: (context, snapshot) {
-                      return Router(
-                        routerDelegate: delegate,
-                      );
-                    },
-                  ),
-                ),
-              ],
+                )
+              : const SizedBox(),
+          Expanded(
+            child: StreamBuilder<String>(
+              stream: selectedTabController.stream,
+              builder: (context, snapshot) {
+                return Router(
+                  routerDelegate: delegate,
+                );
+              },
             ),
+          ),
+        ],
+      ),
     );
   }
 }

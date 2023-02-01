@@ -78,9 +78,6 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     if (show404) {
       return [PageConfigList.getSplashScreen()];
     } else {
-      if (tempConfig.isEmpty) {
-        return [PageConfigList.getSplashScreen()];
-      }
       return tempConfig;
     }
   }
