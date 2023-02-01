@@ -185,18 +185,13 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   @override
-  void dispose() {
-    selectedTabController.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
     //final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       key: scaffoldKey,
+      restorationId: 'drawer_scaffold',
       appBar: width < 600
           ? AppBar(
               leading: InkWell(
