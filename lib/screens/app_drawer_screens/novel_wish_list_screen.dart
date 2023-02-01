@@ -24,44 +24,27 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    if (width > 600) {
-      return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const TextView(label: 'Wish List'),
+    return Scaffold(
+      appBar: width > 600
+          ? AppBar(
+              centerTitle: true,
+              title: const TextView(label: 'Wish List'),
+            )
+          : null,
+      floatingActionButton: InkWell(
+        onTap: () {
+          pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId));
+        },
+        child: Container(
+          width: 55,
+          height: 55,
+          decoration: BoxDecoration(color: appPrimaryColor, borderRadius: BorderRadius.circular(27.5)),
+          child: const Icon(color: mWhite, size: 30, Icons.add),
         ),
-        floatingActionButton: InkWell(
-          onTap: () {
-            pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId));
-          },
-          child: Container(
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(color: appPrimaryColor, borderRadius: BorderRadius.circular(27.5)),
-            child: const Icon(color: mWhite, size: 30, Icons.add),
-          ),
-        ),
-        body: Container(
-          color: Colors.red,
-        ),
-      );
-    } else {
-      return Scaffold(
-        floatingActionButton: InkWell(
-          onTap: () {
-            pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId));
-          },
-          child: Container(
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(color: appPrimaryColor, borderRadius: BorderRadius.circular(27.5)),
-            child: const Icon(color: mWhite, size: 30, Icons.add),
-          ),
-        ),
-        body: Container(
-          color: Colors.red,
-        ),
-      );
-    }
+      ),
+      body: Container(
+        color: Colors.red,
+      ),
+    );
   }
 }

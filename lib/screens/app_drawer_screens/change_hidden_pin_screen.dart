@@ -21,22 +21,16 @@ class _ChangeHiddenPinScreenState extends State<ChangeHiddenPinScreen> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    if (width > 600) {
-      return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const TextView(label: 'Change Pin'),
-        ),
-        body: Container(
-          color: Colors.blueGrey,
-        ),
-      );
-    } else {
-      return Scaffold(
-        body: Container(
-          color: Colors.blueGrey,
-        ),
-      );
-    }
+    return Scaffold(
+      appBar: width > 600
+          ? AppBar(
+              centerTitle: true,
+              title: const TextView(label: 'Change Pin'),
+            )
+          : null,
+      body: Container(
+        color: Colors.blueGrey,
+      ),
+    );
   }
 }

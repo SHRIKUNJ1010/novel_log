@@ -22,22 +22,16 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    if (width > 600) {
-      return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const TextView(label: 'Change Password'),
-        ),
-        body: Container(
-          color: Colors.cyanAccent,
-        ),
-      );
-    } else {
-      return Scaffold(
-        body: Container(
-          color: Colors.cyanAccent,
-        ),
-      );
-    }
+    return Scaffold(
+      appBar: width > 600
+          ? AppBar(
+              centerTitle: true,
+              title: const TextView(label: 'Change Password'),
+            )
+          : null,
+      body: Container(
+        color: Colors.cyanAccent,
+      ),
+    );
   }
 }

@@ -192,251 +192,255 @@ class _DrawerScreenState extends State<DrawerScreen> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    if (width < 600) {
-      return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          leading: InkWell(
-            onTap: () {
-              scaffoldKey.currentState!.openDrawer();
-            },
-            child: const Icon(
-              Icons.menu,
-              color: mWhite,
-              size: 30,
-            ),
-          ),
-          centerTitle: true,
-          title: StreamBuilder<String>(
-            stream: selectedTabController.stream,
-            builder: (context, snapshot) {
-              return TextView(label: getAppBarTitle(selectedPath));
-            },
-          ),
-        ),
-        drawer: Drawer(
-          backgroundColor: appPrimaryColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 170 + MediaQuery.of(context).padding.top,
-                    decoration: const BoxDecoration(
-                      color: appPrimaryColor,
-                      image: DecorationImage(
-                        image: AssetImage(drawerLibraryBackground),
-                        fit: BoxFit.cover,
-                        opacity: 0.6,
-                      ),
-                    ),
-                  ),
-                  SafeArea(
-                    child: InkWell(
-                      onTap: () {
-                        scaffoldKey.currentState!.closeDrawer();
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.only(left: 15, top: 10),
-                        child: Icon(
-                          Icons.menu,
-                          color: mWhite,
-                          size: 30,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 5 + MediaQuery.of(context).padding.top,
-                    left: 0,
-                    right: 0,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          nlIconImage,
-                          width: 70,
-                          height: 70,
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    top: 75 + MediaQuery.of(context).padding.top,
-                    left: 0,
-                    right: 0,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        TextView(
-                          label: 'Welcome',
-                          color: mWhite,
-                          fontSize: 20,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 5),
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: drawerItemTitleText.length,
-                  itemBuilder: (context, index) {
-                    if (selectedPath == drawerItemPathList[index]) {
-                      return DrawerSelectedItemButton(
-                        icon: Utility.getSelectedDrawerItemIcon(
-                          icon: selectedDrawerItemIcon[index],
-                          iconSize: selectedIconSizeList[index],
-                        ),
-                        onTap: () {
-                          onDrawerItemTap(context, index);
-                        },
-                        title: drawerItemTitleText[index],
-                      );
-                    } else {
-                      return DrawerItemButton(
-                        icon: Utility.getDefaultDrawerItemIcon(
-                          icon: drawerItemIcon[index],
-                          iconSize: iconSizeList[index],
-                        ),
-                        onTap: () {
-                          onDrawerItemTap(context, index);
-                        },
-                        title: drawerItemTitleText[index],
-                      );
-                    }
-                  },
+    //final double height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: width < 600
+          ? AppBar(
+              leading: InkWell(
+                onTap: () {
+                  scaffoldKey.currentState!.openDrawer();
+                },
+                child: const Icon(
+                  Icons.menu,
+                  color: mWhite,
+                  size: 30,
                 ),
               ),
-            ],
-          ),
-        ),
-        body: StreamBuilder<String>(
-          stream: selectedTabController.stream,
-          builder: (context, snapshot) {
-            return Router(
-              routerDelegate: delegate,
-            );
-          },
-        ),
-      );
-    } else {
-      return Row(
-        children: [
-          StreamBuilder<String>(
-            stream: selectedTabController.stream,
-            builder: (context, snapshot) {
-              return Drawer(
-                backgroundColor: appPrimaryColor,
-                child: SizedBox(
-                  width: 300,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              centerTitle: true,
+              title: StreamBuilder<String>(
+                stream: selectedTabController.stream,
+                builder: (context, snapshot) {
+                  return TextView(label: getAppBarTitle(selectedPath));
+                },
+              ),
+            )
+          : null,
+      drawer: width < 600
+          ? Drawer(
+              backgroundColor: appPrimaryColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
                     children: [
-                      Stack(
-                        children: [
-                          Container(
-                            height: 170 + MediaQuery.of(context).padding.top,
-                            decoration: const BoxDecoration(
-                              color: appPrimaryColor,
-                              image: DecorationImage(
-                                image: AssetImage(drawerLibraryBackground),
-                                fit: BoxFit.cover,
-                                opacity: 0.6,
-                              ),
-                            ),
+                      Container(
+                        height: 170 + MediaQuery.of(context).padding.top,
+                        decoration: const BoxDecoration(
+                          color: appPrimaryColor,
+                          image: DecorationImage(
+                            image: AssetImage(drawerLibraryBackground),
+                            fit: BoxFit.cover,
+                            opacity: 0.6,
                           ),
-                          Positioned(
-                            top: 5 + MediaQuery.of(context).padding.top,
-                            left: 0,
-                            right: 0,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  nlIconImage,
-                                  width: 70,
-                                  height: 70,
-                                ),
-                              ],
-                            ),
-                          ),
-                          Positioned(
-                            top: 75 + MediaQuery.of(context).padding.top,
-                            left: 0,
-                            right: 0,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                TextView(
-                                  label: 'Welcome',
-                                  color: mWhite,
-                                  fontSize: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      const SizedBox(height: 5),
-                      Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemCount: drawerItemTitleText.length,
-                          itemBuilder: (context, index) {
-                            if (selectedPath == drawerItemPathList[index]) {
-                              return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(
-                                  icon: selectedDrawerItemIcon[index],
-                                  iconSize: selectedIconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onHorizontalDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            } else {
-                              return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(
-                                  icon: drawerItemIcon[index],
-                                  iconSize: iconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onHorizontalDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            }
+                      SafeArea(
+                        child: InkWell(
+                          onTap: () {
+                            scaffoldKey.currentState!.closeDrawer();
                           },
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 15, top: 10),
+                            child: Icon(
+                              Icons.menu,
+                              color: mWhite,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 5 + MediaQuery.of(context).padding.top,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              nlIconImage,
+                              width: 70,
+                              height: 70,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 75 + MediaQuery.of(context).padding.top,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            TextView(
+                              label: 'Welcome',
+                              color: mWhite,
+                              fontSize: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              );
-            },
-          ),
-          Expanded(
-            child: StreamBuilder<String>(
+                  const SizedBox(height: 5),
+                  Expanded(
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemCount: drawerItemTitleText.length,
+                      itemBuilder: (context, index) {
+                        if (selectedPath == drawerItemPathList[index]) {
+                          return DrawerSelectedItemButton(
+                            icon: Utility.getSelectedDrawerItemIcon(
+                              icon: selectedDrawerItemIcon[index],
+                              iconSize: selectedIconSizeList[index],
+                            ),
+                            onTap: () {
+                              onDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        } else {
+                          return DrawerItemButton(
+                            icon: Utility.getDefaultDrawerItemIcon(
+                              icon: drawerItemIcon[index],
+                              iconSize: iconSizeList[index],
+                            ),
+                            onTap: () {
+                              onDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : null,
+      body: width < 600
+          ? StreamBuilder<String>(
               stream: selectedTabController.stream,
               builder: (context, snapshot) {
                 return Router(
                   routerDelegate: delegate,
                 );
               },
+            )
+          : Row(
+              children: [
+                StreamBuilder<String>(
+                  stream: selectedTabController.stream,
+                  builder: (context, snapshot) {
+                    return Drawer(
+                      backgroundColor: appPrimaryColor,
+                      child: SizedBox(
+                        width: 300,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 170 + MediaQuery.of(context).padding.top,
+                                  decoration: const BoxDecoration(
+                                    color: appPrimaryColor,
+                                    image: DecorationImage(
+                                      image: AssetImage(drawerLibraryBackground),
+                                      fit: BoxFit.cover,
+                                      opacity: 0.6,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 5 + MediaQuery.of(context).padding.top,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        nlIconImage,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 75 + MediaQuery.of(context).padding.top,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      TextView(
+                                        label: 'Welcome',
+                                        color: mWhite,
+                                        fontSize: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Expanded(
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: drawerItemTitleText.length,
+                                itemBuilder: (context, index) {
+                                  if (selectedPath == drawerItemPathList[index]) {
+                                    return DrawerSelectedItemButton(
+                                      icon: Utility.getSelectedDrawerItemIcon(
+                                        icon: selectedDrawerItemIcon[index],
+                                        iconSize: selectedIconSizeList[index],
+                                      ),
+                                      onTap: () {
+                                        onHorizontalDrawerItemTap(context, index);
+                                      },
+                                      title: drawerItemTitleText[index],
+                                    );
+                                  } else {
+                                    return DrawerItemButton(
+                                      icon: Utility.getDefaultDrawerItemIcon(
+                                        icon: drawerItemIcon[index],
+                                        iconSize: iconSizeList[index],
+                                      ),
+                                      onTap: () {
+                                        onHorizontalDrawerItemTap(context, index);
+                                      },
+                                      title: drawerItemTitleText[index],
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                Expanded(
+                  child: StreamBuilder<String>(
+                    stream: selectedTabController.stream,
+                    builder: (context, snapshot) {
+                      return Router(
+                        routerDelegate: delegate,
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      );
-    }
+    );
   }
 }
