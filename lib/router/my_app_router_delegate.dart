@@ -17,6 +17,7 @@ import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.da
 import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
   List<Page<dynamic>> pages = <Page<dynamic>>[];
@@ -364,7 +365,9 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   }
 
   List<Page> buildPages() {
+    Utility.printLog('build pages called -------------------------------------------------');
     //pages = [];
+    Utility.printLog(pageStateProvider.config.map((e) => e.path).toList());
     if (pageStateProvider.config.length < pages.length) {
       pages = [];
     }
@@ -381,6 +384,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       }
     }
     if (pageStateProvider.config.isEmpty) {
+      Utility.printLog('splash screen added ------------------------------------------');
       addPage(PageConfigList.getSplashScreen());
     }
     return List.of(pages);
@@ -391,21 +395,25 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   @override
   Future<void> setNewRoutePath(configuration) {
+    Utility.printLog('setNewRoutePath -----------------------------------------------');
+    Utility.printLog(configuration.map((e) => e.path).toList());
     if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     }
     return SynchronousFuture(null);
   }
 
-// @override
-// Future<void> setInitialRoutePath(configuration) {
-//   if (configuration.isNotEmpty) {
-//     pageStateProvider.addAllPages(configuration);
-//   } else {
-//     pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
-//   }
-//   return SynchronousFuture(null);
-// }
+  @override
+  Future<void> setInitialRoutePath(configuration) {
+    Utility.printLog('setInitialRoutePath --------------------------------');
+    Utility.printLog(configuration.map((e) => e.path).toList());
+    if (configuration.isNotEmpty) {
+      pageStateProvider.addAllPages(configuration);
+    } else {
+      pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+    }
+    return SynchronousFuture(null);
+  }
 
 //end of file
 }

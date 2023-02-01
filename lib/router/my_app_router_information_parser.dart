@@ -7,13 +7,16 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfiguration>> {
   @override
   Future<List<PageConfiguration>> parseRouteInformation(RouteInformation routeInformation) async {
+    Utility.printLog('parseRouteInformation -----------------------------------------------');
     final Uri uri = Uri.parse(routeInformation.location!);
     List<PageConfiguration> tempConfig = [];
     bool show404 = false;
+    Utility.printLog('Url Path: ${uri.path}');
     if (uri.pathSegments.isNotEmpty) {
       switch (uri.pathSegments[0]) {
         case loginScreenRoute:
@@ -78,12 +81,15 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     if (show404) {
       return [PageConfigList.getSplashScreen()];
     } else {
+      pageStateProvider.addAllPages(tempConfig);
       return tempConfig;
     }
   }
 
   @override
   RouteInformation? restoreRouteInformation(List<PageConfiguration> configuration) {
+    Utility.printLog('restoreRouteInformation -------------------------------------------------');
+    Utility.printLog(configuration.map((e) => e.path).toList());
     String url = '/';
     if (configuration.isNotEmpty) {
       switch (configuration[configuration.length - 1].path) {

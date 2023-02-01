@@ -2,17 +2,17 @@
 * Created by Shrikunj Patel on 1/12/2023.
 */
 
-const String splashScreenRoute = '';
-const String loginScreenRoute = 'login_screen';
-const String signUpScreenRoute = 'sign_up_screen';
-const String drawerScreenRoute = 'drawer_screen';
-const String yourNovelListScreenRoute = 'your_novel_list_screen';
-const String novelWishListScreenRoute = 'novel_wish_list_screen';
-const String novelHiddenListScreenRoute = 'novel_hidden_list_screen';
-const String profileScreenRoute = 'profile_screen';
-const String changePasswordScreenRoute = 'change_password_screen';
-const String changeHiddenPinScreenRoute = 'change_hidden_pin_screen';
-const String forgetPasswordScreenRoute = 'forget_password_screen';
-const String createNovelListItemScreenRoute = 'create_novel_list_item_screen';
-const String createNovelWishListItemScreenRoute = 'create_novel_wish_list_item_screen';
-const String createNovelHiddenListItemScreenRoute = 'create_novel_hidden_list_item_screen';
+const String splashScreenRoute = 'splash';
+const String loginScreenRoute = 'login';
+const String signUpScreenRoute = 'sign-up';
+const String drawerScreenRoute = 'drawer';
+const String yourNovelListScreenRoute = 'your-novel-list';
+const String novelWishListScreenRoute = 'novel-wish-list';
+const String novelHiddenListScreenRoute = 'novel-hidden-list';
+const String profileScreenRoute = 'profile';
+const String changePasswordScreenRoute = 'change-password';
+const String changeHiddenPinScreenRoute = 'change-hidden-pin';
+const String forgetPasswordScreenRoute = 'forget-password';
+const String createNovelListItemScreenRoute = 'create-novel-list-item';
+const String createNovelWishListItemScreenRoute = 'create_novel_wish-list-item';
+const String createNovelHiddenListItemScreenRoute = 'create-novel-hidden-list-item';

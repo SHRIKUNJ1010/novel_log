@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class PageStateProvider extends ChangeNotifier {
   List<PageConfiguration> config = [];
@@ -11,32 +12,43 @@ class PageStateProvider extends ChangeNotifier {
   PageStateProvider();
 
   void clearPages() {
+    Utility.printLog('clearPages ----------------------------------------------------');
     config = [];
+    Utility.printLog(config.map((e) => e.path).toList());
     notifyListeners();
   }
 
   void addAllPages(List<PageConfiguration> conf) {
+    Utility.printLog('addAllPages ----------------------------------------------------');
     config = conf;
+    Utility.printLog(config.map((e) => e.path).toList());
     notifyListeners();
   }
 
   void push(PageConfiguration configuration) {
+    Utility.printLog('push ----------------------------------------------------');
     config.add(configuration);
+    Utility.printLog(config.map((e) => e.path).toList());
     notifyListeners();
   }
 
   void pop() {
+    Utility.printLog('pop ----------------------------------------------------');
     config.removeLast();
+    Utility.printLog(config.map((e) => e.path).toList());
     notifyListeners();
   }
 
   void pushReplacement(PageConfiguration configuration) {
+    Utility.printLog('pushReplacement ----------------------------------------------------');
     if (config.isNotEmpty) config.removeLast();
     config.add(configuration);
+    Utility.printLog(config.map((e) => e.path).toList());
     notifyListeners();
   }
 
   void popUntil(PageConfiguration configuration) {
+    Utility.printLog('popUntil ----------------------------------------------------');
     int last = config.length - 1;
     if (last < 0) {
       last = 0;
@@ -49,6 +61,8 @@ class PageStateProvider extends ChangeNotifier {
       config.removeLast();
       last = config.length - 1;
     }
+    Utility.printLog(config.map((e) => e.path).toList());
+    notifyListeners();
   }
 
 //end of file
