@@ -109,7 +109,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     33,
   ];
 
-  onDrawerItemTap(BuildContext context, int index) {
+  changeDrawerItem(int index) {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
         drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
@@ -133,33 +133,15 @@ class _DrawerScreenState extends State<DrawerScreen> {
         //do logout
         break;
     }
+  }
+
+  onDrawerItemTap(BuildContext context, int index) {
+    changeDrawerItem(index);
     Navigator.of(context).pop();
   }
 
   onHorizontalDrawerItemTap(BuildContext context, int index) {
-    switch (drawerItemTitleText[index]) {
-      case 'Your Novels':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
-        break;
-      case 'Wish List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(Preference.getUserId()));
-        break;
-      case 'Hidden List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()));
-        break;
-      case 'Profile':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(Preference.getUserId()));
-        break;
-      case 'Change Password':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(Preference.getUserId()));
-        break;
-      case 'Change Pin':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()));
-        break;
-      case 'Logout':
-        //do logout
-        break;
-    }
+    changeDrawerItem(index);
   }
 
   @override
