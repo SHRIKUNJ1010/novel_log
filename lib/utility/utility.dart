@@ -207,19 +207,13 @@ class Utility {
     );
   }
 
-  static Future<bool> userLogoutAlert(BuildContext context) async {
+  static Future<bool> userLogoutAlert() async {
     bool value = await showDialog(
-      context: context,
+      context: navigateKey.currentContext!,
       builder: (BuildContext context) {
-        return LogoutAlertDialog(
+        return const LogoutAlertDialog(
           title: "Confirmation",
           message: "Are you sure you want to logout?",
-          onPositivePressed: () {
-            return false;
-          },
-          onNegativePressed: () {
-            return true;
-          },
           positiveBtnText: 'Yes',
           negativeBtnText: 'No',
         );

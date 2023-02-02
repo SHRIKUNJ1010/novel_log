@@ -7,8 +7,6 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/getx_controller_model/drawer_selected_tab_controller.dart';
-import 'package:novel_log/models/getx_controller_model/novel_hidden_list_controller.dart';
-import 'package:novel_log/models/getx_controller_model/novel_wish_list_controller.dart';
 import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
 import 'package:novel_log/utility/assets_path.dart';
@@ -113,7 +111,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     33,
   ];
 
-  changeDrawerItem(int index) {
+  Future<void> changeDrawerItem(int index) async {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
         drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
@@ -134,24 +132,21 @@ class _DrawerScreenState extends State<DrawerScreen> {
         drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()));
         break;
       case 'Logout':
-        handleLogoutDialog();
-        break;
+        bool value = await Utility.userLogoutAlert();
+        if (value) {
+          doUserLogout();
+        }
+        return;
     }
   }
 
-  handleLogoutDialog() async {
-    bool value = await Utility.userLogoutAlert(context);
-    if (value) {
-      doUserLogout();
-    }
-  }
-
-  onDrawerItemTap(BuildContext context, int index) {
-    changeDrawerItem(index);
+  onDrawerItemTap(BuildContext context, int index) async {
+    await changeDrawerItem(index);
+    if (!mounted) return;
     Navigator.of(context).pop();
   }
 
-  onHorizontalDrawerItemTap(BuildContext context, int index) {
+  onHorizontalDrawerItemTap(BuildContext context, int index) async {
     changeDrawerItem(index);
   }
 
@@ -159,8 +154,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
     FirebaseAuthService.signOut();
     pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
     Get.find<YourNovelListController>().clearList();
-    Get.find<NovelWishListController>().clearList();
-    Get.find<NovelHiddenListController>().clearList();
+    //Get.find<NovelWishListController>().clearList();
+    //Get.find<NovelHiddenListController>().clearList();
   }
 
   @override
@@ -184,254 +179,245 @@ class _DrawerScreenState extends State<DrawerScreen> {
     final double width = MediaQuery.of(context).size.width;
     //final double height = MediaQuery.of(context).size.height;
 
-    return WillPopScope(
-      onWillPop: () async {
-        bool value = await Utility.userLogoutAlert(context);
-        if (value) {
-          doUserLogout();
-        }
-        return value;
-      },
-      child: Scaffold(
-        key: scaffoldKey,
-        restorationId: 'drawer_scaffold',
-        appBar: width < 600
-            ? AppBar(
-                leading: InkWell(
-                  onTap: () {
-                    scaffoldKey.currentState!.openDrawer();
-                  },
-                  child: const Icon(
-                    Icons.menu,
-                    color: mWhite,
-                    size: 30,
-                  ),
+    return Scaffold(
+      key: scaffoldKey,
+      restorationId: 'drawer_scaffold',
+      appBar: width < 600
+          ? AppBar(
+              leading: InkWell(
+                onTap: () {
+                  scaffoldKey.currentState!.openDrawer();
+                },
+                child: const Icon(
+                  Icons.menu,
+                  color: mWhite,
+                  size: 30,
                 ),
-                centerTitle: true,
-                title: GetBuilder<DrawerSelectedTabController>(
-                  builder: (controller) {
-                    return TextView(label: getAppBarTitle(controller.selectedPath));
-                  },
-                ),
-              )
-            : null,
-        drawer: width < 600
-            ? Drawer(
-                backgroundColor: appPrimaryColor,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 170 + MediaQuery.of(context).padding.top,
-                          decoration: const BoxDecoration(
-                            color: appPrimaryColor,
-                            image: DecorationImage(
-                              image: AssetImage(drawerLibraryBackground),
-                              fit: BoxFit.cover,
-                              opacity: 0.6,
-                            ),
-                          ),
-                        ),
-                        SafeArea(
-                          child: InkWell(
-                            onTap: () {
-                              scaffoldKey.currentState!.closeDrawer();
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.only(left: 15, top: 10),
-                              child: Icon(
-                                Icons.menu,
-                                color: mWhite,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 5 + MediaQuery.of(context).padding.top,
-                          left: 0,
-                          right: 0,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                nlIconImage,
-                                width: 70,
-                                height: 70,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Positioned(
-                          top: 75 + MediaQuery.of(context).padding.top,
-                          left: 0,
-                          right: 0,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              TextView(
-                                label: 'Welcome',
-                                color: mWhite,
-                                fontSize: 20,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 5),
-                    GetBuilder<DrawerSelectedTabController>(builder: (controller) {
-                      return Expanded(
-                        child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          itemCount: drawerItemTitleText.length,
-                          itemBuilder: (context, index) {
-                            if (controller.selectedPath == drawerItemPathList[index]) {
-                              return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(
-                                  icon: selectedDrawerItemIcon[index],
-                                  iconSize: selectedIconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            } else {
-                              return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(
-                                  icon: drawerItemIcon[index],
-                                  iconSize: iconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            }
-                          },
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              )
-            : null,
-        body: Row(
-          children: [
-            width > 600
-                ? GetBuilder<DrawerSelectedTabController>(
-                    builder: (controller) {
-                      return Drawer(
-                        backgroundColor: appPrimaryColor,
-                        child: SizedBox(
-                          width: 300,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Stack(
-                                children: [
-                                  Container(
-                                    height: 170 + MediaQuery.of(context).padding.top,
-                                    decoration: const BoxDecoration(
-                                      color: appPrimaryColor,
-                                      image: DecorationImage(
-                                        image: AssetImage(drawerLibraryBackground),
-                                        fit: BoxFit.cover,
-                                        opacity: 0.6,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 5 + MediaQuery.of(context).padding.top,
-                                    left: 0,
-                                    right: 0,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Image.asset(
-                                          nlIconImage,
-                                          width: 70,
-                                          height: 70,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 75 + MediaQuery.of(context).padding.top,
-                                    left: 0,
-                                    right: 0,
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: const [
-                                        TextView(
-                                          label: 'Welcome',
-                                          color: mWhite,
-                                          fontSize: 20,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                              Expanded(
-                                child: ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  itemCount: drawerItemTitleText.length,
-                                  itemBuilder: (context, index) {
-                                    if (controller.selectedPath == drawerItemPathList[index]) {
-                                      return DrawerSelectedItemButton(
-                                        icon: Utility.getSelectedDrawerItemIcon(
-                                          icon: selectedDrawerItemIcon[index],
-                                          iconSize: selectedIconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    } else {
-                                      return DrawerItemButton(
-                                        icon: Utility.getDefaultDrawerItemIcon(
-                                          icon: drawerItemIcon[index],
-                                          iconSize: iconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    }
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  )
-                : const SizedBox(),
-            Expanded(
-              child: GetBuilder<DrawerSelectedTabController>(
+              ),
+              centerTitle: true,
+              title: GetBuilder<DrawerSelectedTabController>(
                 builder: (controller) {
-                  return Router(
-                    routerDelegate: delegate,
-                  );
+                  return TextView(label: getAppBarTitle(controller.selectedPath));
                 },
               ),
+            )
+          : null,
+      drawer: width < 600
+          ? Drawer(
+              backgroundColor: appPrimaryColor,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        height: 170 + MediaQuery.of(context).padding.top,
+                        decoration: const BoxDecoration(
+                          color: appPrimaryColor,
+                          image: DecorationImage(
+                            image: AssetImage(drawerLibraryBackground),
+                            fit: BoxFit.cover,
+                            opacity: 0.6,
+                          ),
+                        ),
+                      ),
+                      SafeArea(
+                        child: InkWell(
+                          onTap: () {
+                            scaffoldKey.currentState!.closeDrawer();
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 15, top: 10),
+                            child: Icon(
+                              Icons.menu,
+                              color: mWhite,
+                              size: 30,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        top: 5 + MediaQuery.of(context).padding.top,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              nlIconImage,
+                              width: 70,
+                              height: 70,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 75 + MediaQuery.of(context).padding.top,
+                        left: 0,
+                        right: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            TextView(
+                              label: 'Welcome',
+                              color: mWhite,
+                              fontSize: 20,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  GetBuilder<DrawerSelectedTabController>(builder: (controller) {
+                    return Expanded(
+                      child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: drawerItemTitleText.length,
+                        itemBuilder: (context, index) {
+                          if (controller.selectedPath == drawerItemPathList[index]) {
+                            return DrawerSelectedItemButton(
+                              icon: Utility.getSelectedDrawerItemIcon(
+                                icon: selectedDrawerItemIcon[index],
+                                iconSize: selectedIconSizeList[index],
+                              ),
+                              onTap: () {
+                                onDrawerItemTap(context, index);
+                              },
+                              title: drawerItemTitleText[index],
+                            );
+                          } else {
+                            return DrawerItemButton(
+                              icon: Utility.getDefaultDrawerItemIcon(
+                                icon: drawerItemIcon[index],
+                                iconSize: iconSizeList[index],
+                              ),
+                              onTap: () {
+                                onDrawerItemTap(context, index);
+                              },
+                              title: drawerItemTitleText[index],
+                            );
+                          }
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            )
+          : null,
+      body: Row(
+        children: [
+          width > 600
+              ? GetBuilder<DrawerSelectedTabController>(
+                  builder: (controller) {
+                    return Drawer(
+                      backgroundColor: appPrimaryColor,
+                      child: SizedBox(
+                        width: 300,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Stack(
+                              children: [
+                                Container(
+                                  height: 170 + MediaQuery.of(context).padding.top,
+                                  decoration: const BoxDecoration(
+                                    color: appPrimaryColor,
+                                    image: DecorationImage(
+                                      image: AssetImage(drawerLibraryBackground),
+                                      fit: BoxFit.cover,
+                                      opacity: 0.6,
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 5 + MediaQuery.of(context).padding.top,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        nlIconImage,
+                                        width: 70,
+                                        height: 70,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 75 + MediaQuery.of(context).padding.top,
+                                  left: 0,
+                                  right: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      TextView(
+                                        label: 'Welcome',
+                                        color: mWhite,
+                                        fontSize: 20,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 5),
+                            Expanded(
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                shrinkWrap: true,
+                                itemCount: drawerItemTitleText.length,
+                                itemBuilder: (context, index) {
+                                  if (controller.selectedPath == drawerItemPathList[index]) {
+                                    return DrawerSelectedItemButton(
+                                      icon: Utility.getSelectedDrawerItemIcon(
+                                        icon: selectedDrawerItemIcon[index],
+                                        iconSize: selectedIconSizeList[index],
+                                      ),
+                                      onTap: () {
+                                        onHorizontalDrawerItemTap(context, index);
+                                      },
+                                      title: drawerItemTitleText[index],
+                                    );
+                                  } else {
+                                    return DrawerItemButton(
+                                      icon: Utility.getDefaultDrawerItemIcon(
+                                        icon: drawerItemIcon[index],
+                                        iconSize: iconSizeList[index],
+                                      ),
+                                      onTap: () {
+                                        onHorizontalDrawerItemTap(context, index);
+                                      },
+                                      title: drawerItemTitleText[index],
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )
+              : const SizedBox(),
+          Expanded(
+            child: GetBuilder<DrawerSelectedTabController>(
+              builder: (controller) {
+                return Router(
+                  routerDelegate: delegate,
+                );
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

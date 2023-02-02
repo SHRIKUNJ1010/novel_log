@@ -12,8 +12,6 @@ class LogoutAlertDialog extends StatelessWidget {
   final String message;
   final String positiveBtnText;
   final String negativeBtnText;
-  final Function? onPositivePressed;
-  final Function? onNegativePressed;
   final double circularBorderRadius;
 
   const LogoutAlertDialog({
@@ -24,33 +22,33 @@ class LogoutAlertDialog extends StatelessWidget {
     this.bgColor = Colors.white,
     this.positiveBtnText = 'Yes',
     this.negativeBtnText = 'No',
-    this.onPositivePressed,
-    this.onNegativePressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: TextView(label: title, fontWeight: FontWeight.w600, fontSize: 16),
-      content: TextView(label: message),
+      title: TextView(
+        label: title,
+        fontWeight: FontWeight.w600,
+        fontSize: 16,
+        color: mBlack,
+      ),
+      content: TextView(
+        label: message,
+        color: mBlack,
+      ),
       backgroundColor: bgColor,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(circularBorderRadius)),
       actions: <Widget>[
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-            if (onNegativePressed != null) {
-              onNegativePressed!();
-            }
+            Navigator.of(context).pop(false);
           },
           child: TextView(label: negativeBtnText, color: appPrimaryColor),
         ),
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
-            if (onPositivePressed != null) {
-              onPositivePressed!();
-            }
+            Navigator.of(context).pop(true);
           },
           child: TextView(label: positiveBtnText, color: appPrimaryColor),
         ),
