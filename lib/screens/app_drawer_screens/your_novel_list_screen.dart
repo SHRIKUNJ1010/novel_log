@@ -109,6 +109,8 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                       return Future.value(null);
                     },
                     child: ListView.separated(
+                      key: const PageStorageKey<String>('yourNovelListView'),
+                      restorationId: 'yourNovelListView',
                       physics: const BouncingScrollPhysics(),
                       controller: novelListViewController,
                       itemCount: controller.novelList.length + 1,
@@ -150,8 +152,8 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                       return Future.value(null);
                     },
                     child: ListView(
-                      key: const PageStorageKey<String>('yourNovelListGridview'),
-                      restorationId: 'yourNovelListGridview',
+                      key: const PageStorageKey<String>('yourNovelGridView'),
+                      restorationId: 'yourNovelGridView',
                       physics: const BouncingScrollPhysics(),
                       controller: novelGridViewController,
                       children: [
