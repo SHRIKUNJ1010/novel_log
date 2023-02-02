@@ -48,5 +48,12 @@ class NovelHiddenListController extends GetxController {
     callIsNotLoading();
   }
 
+  clearList() {
+    lastData = null;
+    novelList = [];
+    remainingLength = 0;
+    update();
+  }
+
 //end of file
 }

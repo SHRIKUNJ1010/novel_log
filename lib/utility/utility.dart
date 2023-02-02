@@ -11,6 +11,7 @@ import 'package:flash/flash.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
+import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class Utility {
@@ -204,6 +205,27 @@ class Utility {
       size: iconSize,
       color: mBlack,
     );
+  }
+
+  static Future<bool> userLogoutAlert(BuildContext context) async {
+    bool value = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return LogoutAlertDialog(
+          title: "Confirmation",
+          message: "Are you sure you want to logout?",
+          onPositivePressed: () {
+            return false;
+          },
+          onNegativePressed: () {
+            return true;
+          },
+          positiveBtnText: 'Yes',
+          negativeBtnText: 'No',
+        );
+      },
+    );
+    return value;
   }
 
 //end of file

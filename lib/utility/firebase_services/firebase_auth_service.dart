@@ -12,8 +12,7 @@ class FirebaseAuthService {
   }
 
   //sign in with email in firebase auth
-  static Future<String> signInWithEmail(String email, String password,
-      [bool admin = false]) async {
+  static Future<String> signInWithEmail(String email, String password, [bool admin = false]) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
         email: email,
@@ -40,6 +39,11 @@ class FirebaseAuthService {
       Utility.toastMessage(mFA5D5D, 'Firebase Error', e.toString());
       return '';
     }
+  }
+
+  //sign out user
+  static Future<void> signOut() async {
+    await auth.signOut();
   }
 
 //end of file
