@@ -43,9 +43,12 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       });
     } else {
-      Timer(const Duration(milliseconds: 3000), () {
-        pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
-      });
+      Timer(
+        const Duration(milliseconds: 3000),
+        () {
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
+        },
+      );
     }
   }
 
