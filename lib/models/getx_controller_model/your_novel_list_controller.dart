@@ -9,6 +9,8 @@ import 'package:novel_log/utility/firebase_services/database_services/novel_serv
 import 'package:novel_log/utility/utility.dart';
 
 class YourNovelListController extends GetxController {
+  double gridScrollPosition = 0;
+  double listScrollPosition = 0;
   List<NovelListItemModel> novelList = [];
   QueryDocumentSnapshot<Map<String, dynamic>>? lastData;
   int remainingLength = 0;
@@ -25,6 +27,7 @@ class YourNovelListController extends GetxController {
   }
 
   refreshList(String userId) async {
+    gridScrollPosition = 0;
     lastData = null;
     novelList = [];
     remainingLength = 0;
@@ -46,6 +49,16 @@ class YourNovelListController extends GetxController {
     remainingLength = data['remaining_length'];
     Utility.printLog(novelList);
     callIsNotLoading();
+  }
+
+  updateGridScrollPosition(double scrollPosition) {
+    gridScrollPosition = scrollPosition;
+    update();
+  }
+
+  updateListScrollPosition(double scrollPosition) {
+    listScrollPosition = scrollPosition;
+    update();
   }
 
   clearList() {

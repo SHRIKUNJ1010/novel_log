@@ -10,6 +10,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
+import 'package:novel_log/widgets/your_novel_list_screen_widgets/your_novel_list_card.dart';
 import 'package:novel_log/widgets/your_novel_list_screen_widgets/your_novel_list_tile.dart';
 
 class YourNovelListScreen extends StatefulWidget {
@@ -26,18 +27,31 @@ class YourNovelListScreen extends StatefulWidget {
 
 class _YourNovelListScreenState extends State<YourNovelListScreen> {
   YourNovelListController yourNovelListController = Get.put(YourNovelListController());
-  ScrollController novelListController = ScrollController();
+  late ScrollController novelGridViewController;
+  late ScrollController novelListViewController;
 
   @override
   void initState() {
+    novelGridViewController = ScrollController(initialScrollOffset: yourNovelListController.gridScrollPosition);
+    novelListViewController = ScrollController(initialScrollOffset: yourNovelListController.listScrollPosition);
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         if (yourNovelListController.novelList.isEmpty) {
           yourNovelListController.refreshList(widget.userId);
         }
-        novelListController.addListener(
+        novelGridViewController.addListener(
           () {
-            if (novelListController.position.pixels == novelListController.position.maxScrollExtent) {
+            yourNovelListController.updateGridScrollPosition(novelGridViewController.position.pixels);
+            if (novelGridViewController.position.pixels == novelGridViewController.position.maxScrollExtent) {
+              if (yourNovelListController.isLoading) return;
+              yourNovelListController.addNextData(widget.userId);
+            }
+          },
+        );
+        novelListViewController.addListener(
+          () {
+            yourNovelListController.updateListScrollPosition(novelListViewController.position.pixels);
+            if (novelListViewController.position.pixels == novelListViewController.position.maxScrollExtent) {
               if (yourNovelListController.isLoading) return;
               yourNovelListController.addNextData(widget.userId);
             }
@@ -61,6 +75,13 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           : null,
       floatingActionButton: InkWell(
         onTap: () {
+          // NovelDescriptionModel tempNovel = NovelDescriptionModel(
+          //   userId: widget.userId,
+          //   novelName: 'Testing Novel ${yourNovelListController.novelList.length}',
+          //   novelLinkUrl: 'https://testing_example.com',
+          // );
+          // NovelServices.createNovel(tempNovel.toJson());
+          // yourNovelListController.refreshList(widget.userId);
           pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId));
         },
         child: Container(
@@ -70,47 +91,94 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           child: const Icon(color: mWhite, size: 30, Icons.add),
         ),
       ),
-      body: GetBuilder<YourNovelListController>(
-        builder: (controller) {
-          if (!controller.isLoading && controller.novelList.isEmpty) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                controller.refreshList(widget.userId);
-                return Future.value(null);
+      body: width < 600
+          ? GetBuilder<YourNovelListController>(
+              builder: (controller) {
+                if (!controller.isLoading && controller.novelList.isEmpty) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      controller.refreshList(widget.userId);
+                      return Future.value(null);
+                    },
+                    child: Utility.noDataLoadedText(),
+                  );
+                } else {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      controller.refreshList(widget.userId);
+                      return Future.value(null);
+                    },
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      controller: novelListViewController,
+                      itemCount: controller.novelList.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index == controller.novelList.length) {
+                          return Utility.getLoadingView(isLoading: controller.isLoading);
+                        } else {
+                          return YourNovelListTile(
+                            novelName: controller.novelList[index].novelName ?? '',
+                            novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
+                            novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
+                            totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
+                            readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
+                            isNovel: controller.novelList[index].isNovel ?? true,
+                            novelReadingStatus: controller.novelList[index].novelReadingStatus ?? NovelReadingStatus.reading,
+                          );
+                        }
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(height: 10),
+                    ),
+                  );
+                }
               },
-              child: Utility.noDataLoadedText(),
-            );
-          } else {
-            return RefreshIndicator(
-              onRefresh: () async {
-                controller.refreshList(widget.userId);
-                return Future.value(null);
+            )
+          : GetBuilder<YourNovelListController>(
+              builder: (controller) {
+                if (!controller.isLoading && controller.novelList.isEmpty) {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      controller.refreshList(widget.userId);
+                      return Future.value(null);
+                    },
+                    child: Utility.noDataLoadedText(),
+                  );
+                } else {
+                  return RefreshIndicator(
+                    onRefresh: () async {
+                      controller.refreshList(widget.userId);
+                      return Future.value(null);
+                    },
+                    child: ListView(
+                      key: const PageStorageKey<String>('yourNovelListGridview'),
+                      restorationId: 'yourNovelListGridview',
+                      physics: const BouncingScrollPhysics(),
+                      controller: novelGridViewController,
+                      children: [
+                        Wrap(
+                          direction: Axis.horizontal,
+                          children: [
+                            for (int index = 0; index < controller.novelList.length + 1; index++) ...[
+                              index == controller.novelList.length
+                                  ? Utility.getLoadingView(isLoading: controller.isLoading)
+                                  : YourNovelListCard(
+                                      novelName: controller.novelList[index].novelName ?? '',
+                                      novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
+                                      novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
+                                      totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
+                                      readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
+                                      isNovel: controller.novelList[index].isNovel ?? true,
+                                      novelReadingStatus: controller.novelList[index].novelReadingStatus ?? NovelReadingStatus.reading,
+                                    ),
+                            ]
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
-              child: ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                controller: novelListController,
-                itemCount: controller.novelList.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == controller.novelList.length) {
-                    return Utility.getLoadingView(isLoading: controller.isLoading);
-                  } else {
-                    return YourNovelListTile(
-                      novelName: controller.novelList[index].novelName ?? '',
-                      novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
-                      novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
-                      totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
-                      readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
-                      isNovel: controller.novelList[index].isNovel ?? true,
-                      novelReadingStatus: controller.novelList[index].novelReadingStatus ?? NovelReadingStatus.reading,
-                    );
-                  }
-                },
-                separatorBuilder: (context, index) => const SizedBox(height: 10),
-              ),
-            );
-          }
-        },
-      ),
+            ),
     );
   }
 }

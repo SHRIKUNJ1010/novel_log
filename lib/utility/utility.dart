@@ -11,6 +11,7 @@ import 'package:flash/flash.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
@@ -220,6 +221,76 @@ class Utility {
       },
     );
     return value;
+  }
+
+  static int widthToGridCount(double width) {
+    int gridCount = 0;
+    if (width > 600) {
+      gridCount = 1;
+      if (width > 840) {
+        gridCount = 2;
+        if (width > 1110) {
+          gridCount = 3;
+          if (width > 1380) {
+            gridCount = 4;
+            if (width > 1650) {
+              gridCount = 5;
+            }
+          }
+        }
+      }
+    }
+    return gridCount;
+  }
+
+  static double widthToGridCrossAxisSpacing(double width) {
+    double crossAxisSpacing = 0;
+    if (width > 600) {
+      crossAxisSpacing = width - 570;
+      if (width > 840) {
+        crossAxisSpacing = width - 840;
+        if (width > 1110) {
+          crossAxisSpacing = width - 1110;
+          if (width > 1380) {
+            crossAxisSpacing = width - 1380;
+            if (width > 1650) {
+              crossAxisSpacing = width - 1650;
+            }
+          }
+        }
+      }
+    }
+    return crossAxisSpacing;
+  }
+
+  static String novelReadingStatusLabel(NovelReadingStatus status) {
+    switch (status) {
+      case NovelReadingStatus.notStarted:
+        return 'Not Started';
+      case NovelReadingStatus.reading:
+        return 'Reading';
+      case NovelReadingStatus.hiatusCompleted:
+        return 'Partial';
+      case NovelReadingStatus.completed:
+        return 'Completed';
+    }
+  }
+
+  static Color novelReadingStatusColor(NovelReadingStatus status) {
+    switch (status) {
+      case NovelReadingStatus.notStarted:
+        return mPurpleLight;
+      case NovelReadingStatus.reading:
+        return mGreen;
+      case NovelReadingStatus.hiatusCompleted:
+        return m747474;
+      case NovelReadingStatus.completed:
+        return kYankeesBlue;
+    }
+  }
+
+  static String getFirstLetterCapital(String value) {
+    return (value.substring(0, 1).toUpperCase() + value.substring(1));
   }
 
 //end of file

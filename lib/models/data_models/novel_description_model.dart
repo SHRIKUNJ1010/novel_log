@@ -18,21 +18,21 @@ class NovelDescriptionModel {
   bool? isInWishList;
 
   NovelDescriptionModel({
-    this.novelId,
-    this.userId,
-    this.novelName,
-    this.novelAuthorName,
-    this.novelGenre,
-    this.novelDescription,
-    this.novelImageUrl,
-    this.isNovel,
-    this.totalNovelChapterCount,
-    this.readNovelChapterCount,
-    this.novelLinkUrl,
-    String novelStatus = '',
-    String novelReadingStatus = '',
-    this.isHidden,
-    this.isInWishList,
+    this.novelId = '',
+    this.userId = '',
+    this.novelName = '',
+    this.novelAuthorName = '',
+    this.novelGenre = '',
+    this.novelDescription = '',
+    this.novelImageUrl = '',
+    this.isNovel = true,
+    this.totalNovelChapterCount = 0,
+    this.readNovelChapterCount = 0,
+    this.novelLinkUrl = '',
+    String novelStatus = 'production',
+    String novelReadingStatus = 'reading',
+    this.isHidden = false,
+    this.isInWishList = false,
   }) {
     switch (novelStatus) {
       case 'production':
@@ -116,7 +116,6 @@ class NovelDescriptionModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['novel_id'] = novelId;
     data['user_id'] = userId;
     data['novel_name'] = novelName;
     data['novel_author_name'] = novelAuthorName;
