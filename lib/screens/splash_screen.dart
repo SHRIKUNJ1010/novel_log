@@ -29,13 +29,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void manageHomeNavigation() async {
     prefs = await SharedPreferences.getInstance();
     isLoggedIn = await FirebaseAuthService.isAlreadyLoggedIn();
+    Preference.setIsUserLoggedIn(isLoggedIn);
     if (isLoggedIn) {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();
         if (tempUserId != '') {
           drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
-          UserProfileModel tempUser =
-              await UserServices.getUserData(tempUserId);
+          UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
           pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
         } else {

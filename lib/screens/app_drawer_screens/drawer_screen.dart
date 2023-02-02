@@ -156,6 +156,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     Get.find<YourNovelListController>().clearList();
     //Get.find<NovelWishListController>().clearList();
     //Get.find<NovelHiddenListController>().clearList();
+    Preference.setIsUserLoggedIn(false);
   }
 
   @override

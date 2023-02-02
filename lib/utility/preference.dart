@@ -14,6 +14,14 @@ class Preference {
     return prefs.getString(prefUserId) ?? '';
   }
 
+  static bool getIsUserLoggedIn() {
+    return prefs.getBool(prefIsUserLoggedIn) ?? false;
+  }
+
+  static setIsUserLoggedIn(bool isUserLoggedIn) {
+    prefs.setBool(prefIsUserLoggedIn, isUserLoggedIn);
+  }
+
   static setUserId(String userId) {
     prefs.setString(prefUserId, userId);
   }

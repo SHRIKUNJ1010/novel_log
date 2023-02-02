@@ -11,3 +11,4 @@ const String novelCollection = 'novels';
 
 //Preference Data
 const String prefUserId = 'PREF_USER_ID';
+const String prefIsUserLoggedIn = 'PREF_IS_USER_LOGGED_IN';
