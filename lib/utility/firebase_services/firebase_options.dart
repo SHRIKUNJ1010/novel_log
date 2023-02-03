@@ -34,15 +34,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.macOS:
         return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return linux;
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -88,5 +82,21 @@ class DefaultFirebaseOptions {
     //androidClientId: '406099696497-17qn06u8a0dc717u8ul7s49ampk13lul.apps.googleusercontent.com',
     //iosClientId: '406099696497-irb7edfevfkhi6t5s9kbuq1mt1og95rg.apps.googleusercontent.com',
     //iosBundleId: 'io.flutter.plugins.firebase.messaging',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCeuHO1_gaZv1XVSqvTzi7r-Jl1MTSbAYI',
+    appId: '1:385937273331:android:85daee233c4537b275e286',
+    messagingSenderId: '385937273331',
+    projectId: 'novel-log-33dd4',
+    storageBucket: 'novel-log-33dd4.appspot.com',
+  );
+
+  static const FirebaseOptions linux = FirebaseOptions(
+    apiKey: 'AIzaSyCeuHO1_gaZv1XVSqvTzi7r-Jl1MTSbAYI',
+    appId: '1:385937273331:android:85daee233c4537b275e286',
+    messagingSenderId: '385937273331',
+    projectId: 'novel-log-33dd4',
+    storageBucket: 'novel-log-33dd4.appspot.com',
   );
 }
