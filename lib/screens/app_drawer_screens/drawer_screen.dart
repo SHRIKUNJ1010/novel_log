@@ -32,25 +32,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
   DrawerSelectedTabController selectedTabController = Get.put(DrawerSelectedTabController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  String getAppBarTitle(String selectedValue) {
-    switch (selectedValue) {
-      case yourNovelListScreenRoute:
-        return 'Your Novels';
-      case novelWishListScreenRoute:
-        return 'Wish List';
-      case novelHiddenListScreenRoute:
-        return 'Hidden List';
-      case profileScreenRoute:
-        return 'Profile';
-      case changePasswordScreenRoute:
-        return 'Change Password';
-      case changeHiddenPinScreenRoute:
-        return 'Change Pin';
-      default:
-        return 'Drawer Screen';
-    }
-  }
-
   List<String> drawerItemTitleText = [
     'Your Novels',
     'Wish List',
@@ -110,6 +91,25 @@ class _DrawerScreenState extends State<DrawerScreen> {
     31,
     33,
   ];
+
+  String getAppBarTitle(String selectedValue) {
+    switch (selectedValue) {
+      case yourNovelListScreenRoute:
+        return 'Your Novels';
+      case novelWishListScreenRoute:
+        return 'Wish List';
+      case novelHiddenListScreenRoute:
+        return 'Hidden List';
+      case profileScreenRoute:
+        return 'Profile';
+      case changePasswordScreenRoute:
+        return 'Change Password';
+      case changeHiddenPinScreenRoute:
+        return 'Change Pin';
+      default:
+        return 'Drawer Screen';
+    }
+  }
 
   Future<void> changeDrawerItem(int index) async {
     switch (drawerItemTitleText[index]) {
