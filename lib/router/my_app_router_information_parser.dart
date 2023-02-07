@@ -5,6 +5,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 import 'package:novel_log/utility/utility.dart';

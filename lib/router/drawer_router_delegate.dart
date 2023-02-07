@@ -24,7 +24,7 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
   List<Page<dynamic>> pages = <Page<dynamic>>[];
 
   @override
-  GlobalKey<NavigatorState>? get navigatorKey => GlobalKey<NavigatorState>();
+  GlobalKey<NavigatorState>? get navigatorKey => drawerNavigatorKey;
 
   DrawerRouterDelegate() : super() {
     drawerStateProvider.addListener(notifyListeners);
