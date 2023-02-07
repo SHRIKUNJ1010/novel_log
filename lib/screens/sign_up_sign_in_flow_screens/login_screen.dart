@@ -57,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (tempUserId != '') {
       UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
       Utility.printLog(tempUser.toJson());
-      drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
+      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         flex: 1,
                                         child: CommonRoundedButton(
                                           onTap: () {
-                                            pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen());
+                                            pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen(), TransitionType.slideDownTransition);
                                           },
                                           height: 50,
                                           text: 'Sign Up',
@@ -290,7 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const SizedBox(height: 20),
                                       CommonRoundedButton(
                                         onTap: () {
-                                          pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen());
+                                          pageStateProvider.pushReplacement(PageConfigList.getSignUpScreen(), TransitionType.slideDownTransition);
                                         },
                                         height: 50,
                                         text: 'Sign Up',
@@ -308,7 +308,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  pageStateProvider.push(PageConfigList.getForgetPasswordScreen());
+                                  pageStateProvider.push(PageConfigList.getForgetPasswordScreen(), TransitionType.slideDownTransition);
                                 },
                                 child: const TextView(
                                   label: 'forgot password?',

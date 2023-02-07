@@ -9,6 +9,7 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
@@ -77,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
+      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
       final tempUser = UserProfileModel.create(
         userId: tempUserId,
         userName: nameEditingController.text,
@@ -86,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await UserServices.createUser(tempUserId, tempUser.toJson());
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
-      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
+      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
       emailEditingController.clear();
       nameEditingController.clear();
       passwordEditingController.clear();
@@ -315,7 +316,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
+                                  pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
                                 },
                                 child: const TextView(
                                   label: 'have an account? login here.',

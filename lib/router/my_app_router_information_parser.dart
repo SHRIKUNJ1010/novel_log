@@ -42,22 +42,22 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           tempConfig.add(PageConfigList.getDrawerScreen());
           switch (uri.pathSegments[1]) {
             case yourNovelListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(uri.pathSegments[2]));
               break;
             case novelWishListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(uri.pathSegments[2]));
               break;
             case novelHiddenListScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(uri.pathSegments[2]));
               break;
             case profileScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(uri.pathSegments[2]));
               break;
             case changePasswordScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(uri.pathSegments[2]));
               break;
             case changeHiddenPinScreenRoute:
-              drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(uri.pathSegments[2]));
+              drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(uri.pathSegments[2]));
               break;
             default:
               show404 = true;
@@ -111,25 +111,28 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           break;
         case drawerScreenRoute:
           url += drawerScreenRoute;
-          switch (drawerStateProvider.selectedPageConfig.path) {
-            case yourNovelListScreenRoute:
-              url += "/$yourNovelListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
-            case novelWishListScreenRoute:
-              url += "/$novelWishListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
-            case novelHiddenListScreenRoute:
-              url += "/$novelHiddenListScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
-            case profileScreenRoute:
-              url += "/$profileScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
-            case changePasswordScreenRoute:
-              url += "/$changePasswordScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
-            case changeHiddenPinScreenRoute:
-              url += "/$changeHiddenPinScreenRoute/${drawerStateProvider.selectedPageConfig.arguments}";
-              break;
+          final int tempIndex = drawerStateProvider.config.length - 1;
+          if (tempIndex != -1) {
+            switch (drawerStateProvider.config[tempIndex].path) {
+              case yourNovelListScreenRoute:
+                url += "/$yourNovelListScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case novelWishListScreenRoute:
+                url += "/$novelWishListScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case novelHiddenListScreenRoute:
+                url += "/$novelHiddenListScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case profileScreenRoute:
+                url += "/$profileScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case changePasswordScreenRoute:
+                url += "/$changePasswordScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case changeHiddenPinScreenRoute:
+                url += "/$changeHiddenPinScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+            }
           }
           break;
         case createNovelListItemScreenRoute:

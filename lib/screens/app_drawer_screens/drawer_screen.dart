@@ -11,6 +11,7 @@ import 'package:novel_log/models/getx_controller_model/your_novel_list_controlle
 import 'package:novel_log/router/drawer_router_delegate.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -114,22 +115,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Future<void> changeDrawerItem(int index) async {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Wish List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelWishListScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Hidden List':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Profile':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getProfileScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Change Password':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangePasswordScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Change Pin':
-        drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()));
+        drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()), TransitionType.slideDownTransition);
         break;
       case 'Logout':
         bool value = await Utility.userLogoutAlert();
@@ -164,10 +165,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
     delegate = DrawerRouterDelegate();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        selectedTabController.updateSelectedPath(drawerStateProvider.selectedPageConfig.path);
+        selectedTabController.updateSelectedPath(drawerStateProvider.config[0].path);
         drawerStateProvider.addListener(
           () {
-            selectedTabController.updateSelectedPath(drawerStateProvider.selectedPageConfig.path);
+            selectedTabController.updateSelectedPath(drawerStateProvider.config[0].path);
           },
         );
       },
@@ -410,12 +411,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 )
               : const SizedBox(),
           Expanded(
-            child: GetBuilder<DrawerSelectedTabController>(
-              builder: (controller) {
-                return Router(
-                  routerDelegate: delegate,
-                );
-              },
+            child: Router(
+              routerDelegate: delegate,
             ),
           ),
         ],

@@ -82,7 +82,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           // );
           // NovelServices.createNovel(tempNovel.toJson());
           // yourNovelListController.refreshList(widget.userId);
-          pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId));
+          pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
         },
         child: Container(
           width: 55,

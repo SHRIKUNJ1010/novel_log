@@ -143,7 +143,11 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     }
   }
 
-  void addCommonPage({int? index, required PageConfiguration pageConfig, TransitionType transitionType = TransitionType.defaultTransition}) {
+  void addCommonPage({
+    int? index,
+    required PageConfiguration pageConfig,
+    TransitionType transitionType = TransitionType.defaultTransition,
+  }) {
     switch (pageConfig.path) {
       case splashScreenRoute:
         _addCommonPage(
@@ -481,6 +485,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   @override
   Future<bool> popRoute() {
+    Utility.printLog('pop route called ---------------------------------------------------');
     if (canPop()) {
       pageStateProvider.pop();
       return Future.value(true);
@@ -489,6 +494,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   }
 
   bool _onPopPage(Route<dynamic> route, result) {
+    Utility.printLog('on pop page called --------------------------------------------------');
     final didPop = route.didPop(result);
     if (!didPop) {
       return false;
@@ -504,7 +510,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   List<Page> buildPages() {
     Utility.printLog('build pages called -------------------------------------------------');
     //pages = [];
-    Utility.printLog(pageStateProvider.config.map((e) => e.path).toList());
+    Utility.printLog("app page config list : ${pageStateProvider.config.map((e) => e.path).toList()}");
     if (pageStateProvider.config.length < pages.length) {
       pages = [];
     }
@@ -524,6 +530,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       Utility.printLog('splash screen added ------------------------------------------');
       addCommonPage(pageConfig: PageConfigList.getSplashScreen());
     }
+    Utility.printLog("pages list : ${pages.map((e) => e.name).toList()}");
     return List.of(pages);
   }
 
@@ -533,7 +540,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   @override
   Future<void> setNewRoutePath(configuration) {
     Utility.printLog('setNewRoutePath -----------------------------------------------');
-    Utility.printLog(configuration.map((e) => e.path).toList());
+    Utility.printLog("set new route path page config list : ${configuration.map((e) => e.path).toList()}");
     if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     }
@@ -543,7 +550,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   @override
   Future<void> setInitialRoutePath(configuration) {
     Utility.printLog('setInitialRoutePath --------------------------------');
-    Utility.printLog(configuration.map((e) => e.path).toList());
+    Utility.printLog("set initial route path for drawer page config list : ${configuration.map((e) => e.path).toList()}");
     if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     } else {

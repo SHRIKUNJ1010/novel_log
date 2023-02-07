@@ -14,46 +14,50 @@ class PageStateProvider extends ChangeNotifier {
   PageStateProvider();
 
   void clearPages() {
-    Utility.printLog('clearPages ----------------------------------------------------');
+    Utility.printLog('clearPages for page state provider ----------------------------------------------------');
     config = [];
     transitionList = [];
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 
   void addAllPages(List<PageConfiguration> conf) {
-    Utility.printLog('addAllPages ----------------------------------------------------');
+    Utility.printLog('addAllPages for page state provider ----------------------------------------------------');
     config = conf;
     transitionList = [];
     for (int i = 0; i < conf.length; i++) {
       transitionList.add(TransitionType.defaultTransition);
     }
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 
   void push(PageConfiguration configuration, [TransitionType? transitionType]) {
-    Utility.printLog('push ----------------------------------------------------');
+    Utility.printLog('push for page state provider ----------------------------------------------------');
     config.add(configuration);
     if (transitionType != null) {
       transitionList.add(transitionType);
     } else {
       transitionList.add(TransitionType.defaultTransition);
     }
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 
   void pop() {
-    Utility.printLog('pop ----------------------------------------------------');
+    Utility.printLog('pop for page state provider ----------------------------------------------------');
     config.removeLast();
     transitionList.removeLast();
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 
   void pushReplacement(PageConfiguration configuration, [TransitionType? transitionType]) {
-    Utility.printLog('pushReplacement ----------------------------------------------------');
+    Utility.printLog('pushReplacement for page state provider ----------------------------------------------------');
     if (config.isNotEmpty) config.removeLast();
     if (transitionList.isNotEmpty) transitionList.removeLast();
     config.add(configuration);
@@ -62,12 +66,13 @@ class PageStateProvider extends ChangeNotifier {
     } else {
       transitionList.add(TransitionType.defaultTransition);
     }
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 
   void popUntil(PageConfiguration configuration) {
-    Utility.printLog('popUntil ----------------------------------------------------');
+    Utility.printLog('popUntil for page state provider ----------------------------------------------------');
     int last = config.length - 1;
     if (last < 0) {
       last = 0;
@@ -81,7 +86,8 @@ class PageStateProvider extends ChangeNotifier {
       transitionList.removeLast();
       last = config.length - 1;
     }
-    Utility.printLog(config.map((e) => e.path).toList());
+    Utility.printLog("page state provider page config list ${config.map((e) => e.path).toList()}");
+    Utility.printLog("page state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
   }
 

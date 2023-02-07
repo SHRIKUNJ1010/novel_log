@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
@@ -33,7 +34,7 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
           : null,
       floatingActionButton: InkWell(
         onTap: () {
-          pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId));
+          pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
         },
         child: Container(
           width: 55,

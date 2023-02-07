@@ -21,16 +21,22 @@ class SlideDownPage extends Page {
       pageBuilder: (context, animation, secondaryAnimation) {
         const begin = Offset(0.0, -1.0);
         const end = Offset.zero;
+        const curve = Curves.easeIn;
+
         final tween = Tween(begin: begin, end: end);
-        final offsetAnimation = animation.drive(tween);
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
+        /*final offsetAnimation = animation.drive(tween);*/
 
         return SlideTransition(
-          position: offsetAnimation,
+          position: tween.animate(curvedAnimation),
           child: child,
         );
       },
-      transitionDuration: const Duration(milliseconds: 2000),
-      reverseTransitionDuration: const Duration(milliseconds: 2000),
+      transitionDuration: const Duration(milliseconds: 1500),
+      reverseTransitionDuration: const Duration(milliseconds: 1500),
       maintainState: true,
     );
   }
