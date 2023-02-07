@@ -10,3 +10,9 @@ enum NovelReadingStatus {
   hiatusCompleted,
   completed,
 }
+
+enum TransitionType {
+  defaultTransition,
+  fadeTransition,
+  slideDownTransition,
+}

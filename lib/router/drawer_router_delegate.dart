@@ -5,7 +5,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/router_models/fade_page.dart';
+import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_hidden_pin_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_password_screen.dart';

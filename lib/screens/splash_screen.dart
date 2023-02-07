@@ -8,6 +8,7 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_config_list.dart';
@@ -37,16 +38,16 @@ class _SplashScreenState extends State<SplashScreen> {
           drawerStateProvider.changeCurrentSelectedPage(PageConfigList.getYourNovelListScreen(tempUserId));
           UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
-          pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen());
+          pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
         } else {
-          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
         }
       });
     } else {
       Timer(
         const Duration(milliseconds: 3000),
         () {
-          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen());
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
         },
       );
     }

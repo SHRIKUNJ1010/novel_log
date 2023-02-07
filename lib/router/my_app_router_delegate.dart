@@ -5,8 +5,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/router_models/fade_page.dart';
+import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
+import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
 import 'package:novel_log/screens/create_edit_screens/create_novel_hidden_list_item_screen.dart';
 import 'package:novel_log/screens/create_edit_screens/create_novel_list_item_screen.dart';
@@ -15,6 +16,7 @@ import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_s
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.dart';
 import 'package:novel_log/screens/splash_screen.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 import 'package:novel_log/utility/utility.dart';
@@ -58,7 +60,16 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     );
   }
 
-  void _addFadePage(Widget child, PageConfiguration pageConfig) {
+  SlideDownPage _createSlidePage(Widget child, PageConfiguration pageConfig) {
+    return SlideDownPage(
+      child: child,
+      key: ValueKey(pageConfig.key),
+      name: pageConfig.path,
+      arguments: pageConfig.arguments,
+    );
+  }
+
+  /*void _addFadePage(Widget child, PageConfiguration pageConfig) {
     pages.add(
       _createFadePage(child, pageConfig),
     );
@@ -82,8 +93,134 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       index,
       _createPage(child, pageConfig),
     );
+  }*/
+
+  void _addCommonPage({
+    int? index,
+    required Widget child,
+    required PageConfiguration pageConfiguration,
+    TransitionType transitionType = TransitionType.defaultTransition,
+  }) {
+    if (index != null) {
+      switch (transitionType) {
+        case TransitionType.defaultTransition:
+          pages.insert(
+            index,
+            _createPage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.fadeTransition:
+          pages.insert(
+            index,
+            _createFadePage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.slideDownTransition:
+          pages.insert(
+            index,
+            _createSlidePage(child, pageConfiguration),
+          );
+          break;
+      }
+    } else {
+      switch (transitionType) {
+        case TransitionType.defaultTransition:
+          pages.add(
+            _createPage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.fadeTransition:
+          pages.add(
+            _createFadePage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.slideDownTransition:
+          pages.add(
+            _createSlidePage(child, pageConfiguration),
+          );
+          break;
+      }
+    }
   }
 
+  void addCommonPage({int? index, required PageConfiguration pageConfig, TransitionType transitionType = TransitionType.defaultTransition}) {
+    switch (pageConfig.path) {
+      case splashScreenRoute:
+        _addCommonPage(
+          index: index,
+          child: const SplashScreen(),
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+        );
+        break;
+      case loginScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const LoginScreen(),
+        );
+        break;
+      case signUpScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const SignUpScreen(),
+        );
+        break;
+      case drawerScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const DrawerScreen(),
+        );
+        break;
+      case createNovelListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelListItemScreen(),
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelWishListItemScreen(),
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelHiddenListItemScreen(),
+        );
+        break;
+      case forgetPasswordScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const ForgetPasswordScreen(),
+        );
+        break;
+      default:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const SplashScreen(),
+        );
+        break;
+    }
+  }
+
+/*
   void addPageAtIndex(int index, PageConfiguration pageConfig) {
     switch (pageConfig.path) {
       case splashScreenRoute:
@@ -336,7 +473,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
         );
         break;
     }
-  }
+  }*/
 
   bool canPop() {
     return pageStateProvider.config.length > 1;
@@ -377,15 +514,15 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           //do nothing
         } else {
           pages.removeAt(i);
-          addPageAtIndex(i, pageStateProvider.config[i]);
+          addCommonPage(index: i, pageConfig: pageStateProvider.config[i], transitionType: pageStateProvider.transitionList[i]);
         }
       } else {
-        addPage(pageStateProvider.config[i]);
+        addCommonPage(pageConfig: pageStateProvider.config[i], transitionType: pageStateProvider.transitionList[i]);
       }
     }
     if (pageStateProvider.config.isEmpty) {
       Utility.printLog('splash screen added ------------------------------------------');
-      addPage(PageConfigList.getSplashScreen());
+      addCommonPage(pageConfig: PageConfigList.getSplashScreen());
     }
     return List.of(pages);
   }
