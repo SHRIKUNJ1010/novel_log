@@ -8,13 +8,11 @@ import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/firebase_services/firebase_options.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'models/router_models/router_state_provider/drawer_state_provider.dart';
 import 'models/router_models/router_state_provider/page_state_provider.dart';
 
 Future<void> main() async {
-  //usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

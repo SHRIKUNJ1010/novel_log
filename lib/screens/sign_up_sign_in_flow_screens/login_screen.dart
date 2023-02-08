@@ -59,6 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Utility.printLog(tempUser.toJson());
       drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
       Preference.setUserId(tempUserId);
+      Preference.setIsUserLoggedIn(true);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
       emailEditingController.clear();

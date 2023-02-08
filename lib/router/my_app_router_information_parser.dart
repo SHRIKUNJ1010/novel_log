@@ -7,6 +7,7 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfiguration>> {
@@ -22,47 +23,78 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     if (urlSegments.isNotEmpty) {
       switch (urlSegments[1]) {
         case loginScreenRoute:
-          tempConfig.add(PageConfigList.getLoginScreen());
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getDrawerScreen());
+            drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getLoginScreen());
+          }
           break;
         case signUpScreenRoute:
-          tempConfig.add(PageConfigList.getSignUpScreen());
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getDrawerScreen());
+            drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getSignUpScreen());
+          }
           break;
         case forgetPasswordScreenRoute:
-          tempConfig.add(PageConfigList.getForgetPasswordScreen());
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getDrawerScreen());
+            drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getForgetPasswordScreen());
+          }
           break;
         case createNovelListItemScreenRoute:
-          tempConfig.add(PageConfigList.getCreateNovelListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getCreateNovelListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getLoginScreen());
+          }
           break;
         case createNovelWishListItemScreenRoute:
-          tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getLoginScreen());
+          }
           break;
         case createNovelHiddenListItemScreenRoute:
-          tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+          } else {
+            tempConfig.add(PageConfigList.getLoginScreen());
+          }
           break;
         case drawerScreenRoute:
-          tempConfig.add(PageConfigList.getDrawerScreen());
-          switch (urlSegments.length > 2 ? urlSegments[2] : yourNovelListScreenRoute) {
-            case yourNovelListScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            case novelWishListScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            case novelHiddenListScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            case profileScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            case changePasswordScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            case changeHiddenPinScreenRoute:
-              drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
-              break;
-            default:
-              show404 = true;
-              break;
+          if (Preference.getIsUserLoggedIn()) {
+            tempConfig.add(PageConfigList.getDrawerScreen());
+            switch (urlSegments.length > 2 ? urlSegments[2] : yourNovelListScreenRoute) {
+              case yourNovelListScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              case novelWishListScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              case novelHiddenListScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              case profileScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              case changePasswordScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              case changeHiddenPinScreenRoute:
+                drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                break;
+              default:
+                show404 = true;
+                break;
+            }
+          } else {
+            tempConfig.add(PageConfigList.getLoginScreen());
           }
           break;
         default:

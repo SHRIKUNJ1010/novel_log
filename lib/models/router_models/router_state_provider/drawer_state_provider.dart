@@ -13,14 +13,7 @@ class DrawerStateProvider extends ChangeNotifier {
   List<PageConfiguration> config = [PageConfigList.getYourNovelListScreen(Preference.getUserId())];
   List<TransitionType> transitionList = [TransitionType.defaultTransition];
 
-  //PageConfiguration selectedPageConfig = PageConfigList.getYourNovelListScreen(Preference.getUserId());
-
   DrawerStateProvider();
-
-  /*void changeCurrentSelectedPage(PageConfiguration configuration) {
-    selectedPageConfig = configuration;
-    notifyListeners();
-  }*/
 
   void clearPages() {
     Utility.printLog('clearPages for drawer state provider ----------------------------------------------------');
