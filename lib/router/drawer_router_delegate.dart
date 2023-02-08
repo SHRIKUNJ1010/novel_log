@@ -5,9 +5,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_hidden_pin_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_password_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/novel_hidden_list_screen.dart';
@@ -18,6 +16,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
 import 'package:novel_log/utility/preference.dart';
+import 'package:novel_log/utility/transition_list.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -39,47 +38,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     );
   }
 
-  bool _onPopPage(Route<dynamic> route, result) {
-    Utility.printLog('on pop page called for drawer --------------------------------------------------------');
-    final didPop = route.didPop(result);
-    if (!didPop) {
-      return false;
-    }
-    if (canPop()) {
-      drawerStateProvider.pop();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  MaterialPage _createPage(Widget child, PageConfiguration pageConfig) {
-    return MaterialPage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  FadePage _createFadePage(Widget child, PageConfiguration pageConfig) {
-    return FadePage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  SlideDownPage _createSlidePage(Widget child, PageConfiguration pageConfig) {
-    return SlideDownPage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
   void _addCommonPage({
     int? index,
     required Widget child,
@@ -91,19 +49,19 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
         case TransitionType.defaultTransition:
           pages.insert(
             index,
-            _createPage(child, pageConfiguration),
+            TransitionList.createPage(child, pageConfiguration),
           );
           break;
         case TransitionType.fadeTransition:
           pages.insert(
             index,
-            _createFadePage(child, pageConfiguration),
+            TransitionList.createFadePage(child, pageConfiguration),
           );
           break;
         case TransitionType.slideDownTransition:
           pages.insert(
             index,
-            _createSlidePage(child, pageConfiguration),
+            TransitionList.createSlidePage(child, pageConfiguration),
           );
           break;
       }
@@ -111,35 +69,22 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
       switch (transitionType) {
         case TransitionType.defaultTransition:
           pages.add(
-            _createPage(child, pageConfiguration),
+            TransitionList.createPage(child, pageConfiguration),
           );
           break;
         case TransitionType.fadeTransition:
           pages.add(
-            _createFadePage(child, pageConfiguration),
+            TransitionList.createFadePage(child, pageConfiguration),
           );
           break;
         case TransitionType.slideDownTransition:
           pages.add(
-            _createSlidePage(child, pageConfiguration),
+            TransitionList.createSlidePage(child, pageConfiguration),
           );
           break;
       }
     }
   }
-
-  /*void _addPageData(Widget child, PageConfiguration pageConfig) {
-    pages.add(
-      _createPage(child, pageConfig),
-    );
-  }
-
-  void _addPageAtIndex(int index, Widget child, PageConfiguration pageConfig) {
-    pages.insert(
-      index,
-      _createPage(child, pageConfig),
-    );
-  }*/
 
   void addCommonPage({int? index, required PageConfiguration pageConfig, TransitionType transitionType = TransitionType.defaultTransition}) {
     switch (pageConfig.path) {
@@ -216,218 +161,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     }
   }
 
-  /*void addPage(PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case yourNovelListScreenRoute:
-        _addPageData(
-          YourNovelListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelWishListScreenRoute:
-        _addPageData(
-          NovelWishListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelHiddenListScreenRoute:
-        _addPageData(
-          NovelHiddenListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case profileScreenRoute:
-        _addPageData(
-          ProfileScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changePasswordScreenRoute:
-        _addPageData(
-          ChangePasswordScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changeHiddenPinScreenRoute:
-        _addPageData(
-          ChangeHiddenPinScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      default:
-        _addPageData(
-          YourNovelListScreen(
-            userId: Preference.getUserId(),
-          ),
-          pageConfig,
-        );
-        break;
-    }
-  }
-
-  FadePage _createFadePage(Widget child, PageConfiguration pageConfig) {
-    return FadePage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  void _addFadePage(Widget child, PageConfiguration pageConfig) {
-    pages.add(
-      _createFadePage(child, pageConfig),
-    );
-  }
-
-  void _addFadePageAtIndex(int index, Widget child, PageConfiguration pageConfig) {
-    pages.insert(
-      index,
-      _createFadePage(child, pageConfig),
-    );
-  }
-
-  void addFadePageAtIndex(int index, PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case yourNovelListScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          YourNovelListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelWishListScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          NovelWishListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelHiddenListScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          NovelHiddenListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case profileScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          ProfileScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changePasswordScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          ChangePasswordScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changeHiddenPinScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          ChangeHiddenPinScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      default:
-        _addFadePageAtIndex(
-          index,
-          YourNovelListScreen(
-            userId: Preference.getUserId(),
-          ),
-          pageConfig,
-        );
-        break;
-    }
-  }
-
-  void addFadePage(PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case yourNovelListScreenRoute:
-        _addFadePage(
-          YourNovelListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelWishListScreenRoute:
-        _addFadePage(
-          NovelWishListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case novelHiddenListScreenRoute:
-        _addFadePage(
-          NovelHiddenListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case profileScreenRoute:
-        _addFadePage(
-          ProfileScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changePasswordScreenRoute:
-        _addFadePage(
-          ChangePasswordScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      case changeHiddenPinScreenRoute:
-        _addFadePage(
-          ChangeHiddenPinScreen(
-            userId: pageConfig.arguments as String,
-          ),
-          pageConfig,
-        );
-        break;
-      default:
-        _addFadePage(
-          YourNovelListScreen(
-            userId: Preference.getUserId(),
-          ),
-          pageConfig,
-        );
-        break;
-    }
-  }*/
-
   bool canPop() {
     return drawerStateProvider.config.length > 1;
   }
@@ -442,9 +175,22 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     return Future.value(false);
   }
 
+  bool _onPopPage(Route<dynamic> route, result) {
+    Utility.printLog('on pop page called for drawer --------------------------------------------------------');
+    final didPop = route.didPop(result);
+    if (!didPop) {
+      return false;
+    }
+    if (canPop()) {
+      drawerStateProvider.pop();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   List<Page> buildPages() {
     Utility.printLog('build pages called for drawer -------------------------------------------------');
-    //pages = [];
     Utility.printLog("drawer page config list : ${drawerStateProvider.config.map((e) => e.path).toList()}");
     if (drawerStateProvider.config.length < pages.length) {
       pages = [];

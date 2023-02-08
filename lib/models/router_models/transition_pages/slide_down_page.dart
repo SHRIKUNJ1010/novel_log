@@ -35,8 +35,8 @@ class SlideDownPage extends Page {
           child: child,
         );
       },
-      transitionDuration: const Duration(milliseconds: 1500),
-      reverseTransitionDuration: const Duration(milliseconds: 1500),
+      transitionDuration: const Duration(milliseconds: 500),
+      reverseTransitionDuration: const Duration(milliseconds: 500),
       maintainState: true,
     );
   }

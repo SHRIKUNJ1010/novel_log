@@ -5,9 +5,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
 import 'package:novel_log/screens/create_edit_screens/create_novel_hidden_list_item_screen.dart';
 import 'package:novel_log/screens/create_edit_screens/create_novel_list_item_screen.dart';
@@ -19,6 +17,7 @@ import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/transition_list.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -41,60 +40,6 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     );
   }
 
-  //create material for page
-  MaterialPage _createPage(Widget child, PageConfiguration pageConfig) {
-    return MaterialPage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  FadePage _createFadePage(Widget child, PageConfiguration pageConfig) {
-    return FadePage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  SlideDownPage _createSlidePage(Widget child, PageConfiguration pageConfig) {
-    return SlideDownPage(
-      child: child,
-      key: ValueKey(pageConfig.key),
-      name: pageConfig.path,
-      arguments: pageConfig.arguments,
-    );
-  }
-
-  /*void _addFadePage(Widget child, PageConfiguration pageConfig) {
-    pages.add(
-      _createFadePage(child, pageConfig),
-    );
-  }
-
-  void _addFadePageAtIndex(int index, Widget child, PageConfiguration pageConfig) {
-    pages.insert(
-      index,
-      _createFadePage(child, pageConfig),
-    );
-  }
-
-  void _addPageData(Widget child, PageConfiguration pageConfig) {
-    pages.add(
-      _createPage(child, pageConfig),
-    );
-  }
-
-  void _addPageAtIndex(int index, Widget child, PageConfiguration pageConfig) {
-    pages.insert(
-      index,
-      _createPage(child, pageConfig),
-    );
-  }*/
-
   void _addCommonPage({
     int? index,
     required Widget child,
@@ -106,19 +51,19 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
         case TransitionType.defaultTransition:
           pages.insert(
             index,
-            _createPage(child, pageConfiguration),
+            TransitionList.createPage(child, pageConfiguration),
           );
           break;
         case TransitionType.fadeTransition:
           pages.insert(
             index,
-            _createFadePage(child, pageConfiguration),
+            TransitionList.createFadePage(child, pageConfiguration),
           );
           break;
         case TransitionType.slideDownTransition:
           pages.insert(
             index,
-            _createSlidePage(child, pageConfiguration),
+            TransitionList.createSlidePage(child, pageConfiguration),
           );
           break;
       }
@@ -126,17 +71,17 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       switch (transitionType) {
         case TransitionType.defaultTransition:
           pages.add(
-            _createPage(child, pageConfiguration),
+            TransitionList.createPage(child, pageConfiguration),
           );
           break;
         case TransitionType.fadeTransition:
           pages.add(
-            _createFadePage(child, pageConfiguration),
+            TransitionList.createFadePage(child, pageConfiguration),
           );
           break;
         case TransitionType.slideDownTransition:
           pages.add(
-            _createSlidePage(child, pageConfiguration),
+            TransitionList.createSlidePage(child, pageConfiguration),
           );
           break;
       }
@@ -224,261 +169,6 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     }
   }
 
-/*
-  void addPageAtIndex(int index, PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case splashScreenRoute:
-        _addPageAtIndex(
-          index,
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-      case loginScreenRoute:
-        _addPageAtIndex(
-          index,
-          const LoginScreen(),
-          pageConfig,
-        );
-        break;
-      case signUpScreenRoute:
-        _addPageAtIndex(
-          index,
-          const SignUpScreen(),
-          pageConfig,
-        );
-        break;
-      case drawerScreenRoute:
-        _addPageAtIndex(
-          index,
-          const DrawerScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelListItemScreenRoute:
-        _addPageAtIndex(
-          index,
-          const CreateNovelListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelWishListItemScreenRoute:
-        _addPageAtIndex(
-          index,
-          const CreateNovelWishListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelHiddenListItemScreenRoute:
-        _addPageAtIndex(
-          index,
-          const CreateNovelHiddenListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case forgetPasswordScreenRoute:
-        _addPageAtIndex(
-          index,
-          const ForgetPasswordScreen(),
-          pageConfig,
-        );
-        break;
-      default:
-        _addPageAtIndex(
-          index,
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-    }
-  }
-
-  void addFadePageAtIndex(int index, PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case splashScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-      case loginScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const LoginScreen(),
-          pageConfig,
-        );
-        break;
-      case signUpScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const SignUpScreen(),
-          pageConfig,
-        );
-        break;
-      case drawerScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const DrawerScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelListItemScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const CreateNovelListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelWishListItemScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const CreateNovelWishListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelHiddenListItemScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const CreateNovelHiddenListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case forgetPasswordScreenRoute:
-        _addFadePageAtIndex(
-          index,
-          const ForgetPasswordScreen(),
-          pageConfig,
-        );
-        break;
-      default:
-        _addFadePageAtIndex(
-          index,
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-    }
-  }
-
-  void addPage(PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case splashScreenRoute:
-        _addPageData(
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-      case loginScreenRoute:
-        _addPageData(
-          const LoginScreen(),
-          pageConfig,
-        );
-        break;
-      case signUpScreenRoute:
-        _addPageData(
-          const SignUpScreen(),
-          pageConfig,
-        );
-        break;
-      case drawerScreenRoute:
-        _addPageData(
-          const DrawerScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelListItemScreenRoute:
-        _addPageData(
-          const CreateNovelListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelWishListItemScreenRoute:
-        _addPageData(
-          const CreateNovelWishListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelHiddenListItemScreenRoute:
-        _addPageData(
-          const CreateNovelHiddenListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case forgetPasswordScreenRoute:
-        _addPageData(
-          const ForgetPasswordScreen(),
-          pageConfig,
-        );
-        break;
-      default:
-        _addPageData(
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-    }
-  }
-
-  void addFadePage(PageConfiguration pageConfig) {
-    switch (pageConfig.path) {
-      case splashScreenRoute:
-        _addFadePage(
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-      case loginScreenRoute:
-        _addFadePage(
-          const LoginScreen(),
-          pageConfig,
-        );
-        break;
-      case signUpScreenRoute:
-        _addFadePage(
-          const SignUpScreen(),
-          pageConfig,
-        );
-        break;
-      case drawerScreenRoute:
-        _addFadePage(
-          const DrawerScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelListItemScreenRoute:
-        _addFadePage(
-          const CreateNovelListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelWishListItemScreenRoute:
-        _addFadePage(
-          const CreateNovelWishListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case createNovelHiddenListItemScreenRoute:
-        _addFadePage(
-          const CreateNovelHiddenListItemScreen(),
-          pageConfig,
-        );
-        break;
-      case forgetPasswordScreenRoute:
-        _addFadePage(
-          const ForgetPasswordScreen(),
-          pageConfig,
-        );
-        break;
-      default:
-        _addFadePage(
-          const SplashScreen(),
-          pageConfig,
-        );
-        break;
-    }
-  }*/
-
   bool canPop() {
     return pageStateProvider.config.length > 1;
   }
@@ -509,7 +199,6 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
 
   List<Page> buildPages() {
     Utility.printLog('build pages called -------------------------------------------------');
-    //pages = [];
     Utility.printLog("app page config list : ${pageStateProvider.config.map((e) => e.path).toList()}");
     if (pageStateProvider.config.length < pages.length) {
       pages = [];

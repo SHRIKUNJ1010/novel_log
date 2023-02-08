@@ -18,6 +18,8 @@ class FadePage extends Page {
         opacity: animation,
         child: child,
       ),
+      transitionDuration: const Duration(milliseconds: 500),
+      reverseTransitionDuration: const Duration(milliseconds: 500),
       maintainState: true,
     );
   }
