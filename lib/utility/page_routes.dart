@@ -14,5 +14,5 @@ const String changePasswordScreenRoute = 'change-password';
 const String changeHiddenPinScreenRoute = 'change-hidden-pin';
 const String forgetPasswordScreenRoute = 'forget-password';
 const String createNovelListItemScreenRoute = 'create-novel-list-item';
-const String createNovelWishListItemScreenRoute = 'create_novel_wish-list-item';
+const String createNovelWishListItemScreenRoute = 'create-novel-wish-list-item';
 const String createNovelHiddenListItemScreenRoute = 'create-novel-hidden-list-item';

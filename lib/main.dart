@@ -14,7 +14,7 @@ import 'models/router_models/router_state_provider/drawer_state_provider.dart';
 import 'models/router_models/router_state_provider/page_state_provider.dart';
 
 Future<void> main() async {
-  usePathUrlStrategy();
+  //usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

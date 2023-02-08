@@ -411,10 +411,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 )
               : const SizedBox(),
           Expanded(
-            child: Router(
-              routerDelegate: delegate,
-
-            ),
+            child: GetBuilder<DrawerSelectedTabController>(builder: (controller) {
+              return Router(
+                routerDelegate: delegate,
+              );
+            }),
           ),
         ],
       ),

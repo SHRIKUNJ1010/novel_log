@@ -12,6 +12,7 @@ import 'package:novel_log/screens/app_drawer_screens/novel_hidden_list_screen.da
 import 'package:novel_log/screens/app_drawer_screens/novel_wish_list_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/profile_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/your_novel_list_screen.dart';
+import 'package:novel_log/utility/drawer_transition_delegate.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
 import 'package:novel_log/utility/page_routes.dart';
@@ -35,6 +36,7 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
       key: navigatorKey,
       pages: buildPages(),
       onPopPage: _onPopPage,
+      transitionDelegate: const DrawerTransitionDelegate(),
     );
   }
 
