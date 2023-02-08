@@ -180,7 +180,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       pageStateProvider.pop();
       return Future.value(true);
     }
-    return Future.value(false);
+    return confirmAppExit();
   }
 
   bool _onPopPage(Route<dynamic> route, result) {
@@ -189,12 +189,31 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     if (!didPop) {
       return false;
     }
-    if (canPop()) {
-      pageStateProvider.pop();
-      return true;
-    } else {
-      return false;
-    }
+    popRoute();
+    return true;
+  }
+
+  Future<bool> confirmAppExit() async {
+    final bool? isExit = await showDialog<bool>(
+      context: navigateKey.currentContext!,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Exit App'),
+          content: const Text('Are you sure you want to exit the app?'),
+          actions: [
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context, true),
+            ),
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () => Navigator.pop(context, false),
+            ),
+          ],
+        );
+      },
+    );
+    return isExit ?? true;
   }
 
   List<Page> buildPages() {

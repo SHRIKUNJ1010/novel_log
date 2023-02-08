@@ -183,12 +183,8 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     if (!didPop) {
       return false;
     }
-    if (canPop()) {
-      drawerStateProvider.pop();
-      return true;
-    } else {
-      return false;
-    }
+    popRoute();
+    return true;
   }
 
   List<Page> buildPages() {
