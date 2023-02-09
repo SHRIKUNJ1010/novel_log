@@ -143,9 +143,9 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   Future<void> setNewRoutePath(configuration) {
     Utility.printLog('setNewRoutePath -----------------------------------------------');
     Utility.printLog("set new route path page config list : ${configuration.map((e) => e.path).toList()}");
-    if (configuration.isNotEmpty) {
+    /*if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
-    }
+    }*/
     return SynchronousFuture(null);
   }
 
@@ -153,11 +153,11 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   Future<void> setInitialRoutePath(configuration) {
     Utility.printLog('setInitialRoutePath --------------------------------');
     Utility.printLog("set initial route path for drawer page config list : ${configuration.map((e) => e.path).toList()}");
-    if (configuration.isNotEmpty) {
+    /*if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     } else {
       pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
-    }
+    }*/
     return SynchronousFuture(null);
   }
 

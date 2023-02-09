@@ -1,6 +1,7 @@
 /*
 * Created by Shrikunj Patel on 1/23/2023.
 */
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
@@ -82,7 +83,11 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           // );
           // NovelServices.createNovel(tempNovel.toJson());
           // yourNovelListController.refreshList(widget.userId);
-          pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          if (kIsWeb) {
+            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          } else {
+            pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          }
         },
         child: Container(
           width: 55,

@@ -1,6 +1,7 @@
 /*
 * Created by Shrikunj Patel on 1/23/2023.
 */
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
@@ -34,7 +35,11 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
           : null,
       floatingActionButton: InkWell(
         onTap: () {
-          pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          if (kIsWeb) {
+            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          } else {
+            pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
+          }
         },
         child: Container(
           width: 55,
