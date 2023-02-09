@@ -149,17 +149,17 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     return SynchronousFuture(null);
   }
 
-  @override
+  /*@override
   Future<void> setInitialRoutePath(configuration) {
     Utility.printLog('setInitialRoutePath --------------------------------');
-    Utility.printLog("set initial route path for drawer page config list : ${configuration.map((e) => e.path).toList()}");
-    /*if (configuration.isNotEmpty) {
+    Utility.printLog("set initial route path page config list : ${configuration.map((e) => e.path).toList()}");
+    *//*if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     } else {
       pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
-    }*/
+    }*//*
     return SynchronousFuture(null);
-  }
+  }*/
 
 //end of file
 }

@@ -115,13 +115,16 @@ class YourNovelListTile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
+                      Utility.launchInBrowser('https://pub.dev/packages/url_launcher');
                       //TODO: launch novel link url
                     },
                     child: TextView(
-                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 10),
+                      padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
                       label: novelLinkUrl,
                       fontSize: 18,
                       color: m0A77E8,
+                      decorationColor: m0A77E8,
+                      decorationThickness: 2,
                       textDecoration: TextDecoration.underline,
                       fontWeight: FontWeight.bold,
                     ),

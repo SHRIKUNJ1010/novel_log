@@ -5,11 +5,12 @@
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class PageStateProvider extends ChangeNotifier {
-  List<PageConfiguration> config = [];
-  List<TransitionType> transitionList = [];
+  List<PageConfiguration> config = [PageConfigList.getSplashScreen()];
+  List<TransitionType> transitionList = [TransitionType.slideDownTransition];
 
   PageStateProvider();
 

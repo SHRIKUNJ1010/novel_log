@@ -126,17 +126,17 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     return SynchronousFuture(null);
   }
 
-  @override
+  /*@override
   Future<void> setInitialRoutePath(List<PageConfiguration> configuration) {
     Utility.printLog('set initial route path called for drawer -------------------------------------------');
     Utility.printLog("set initial route path for drawer page config list : ${configuration.map((e) => e.path).toList()}");
-    /*if (configuration.isNotEmpty) {
+    *//*if (configuration.isNotEmpty) {
       drawerStateProvider.addAllPages(configuration);
     } else {
       drawerStateProvider.addAllPages([PageConfigList.getYourNovelListScreen(Preference.getUserId())]);
-    }*/
+    }*//*
     return SynchronousFuture(null);
-  }
+  }*/
 
 //end of file
 }

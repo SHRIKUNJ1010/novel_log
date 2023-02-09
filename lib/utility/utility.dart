@@ -14,6 +14,7 @@ import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Utility {
   //printing log when app is in debug mode
@@ -291,6 +292,14 @@ class Utility {
 
   static String getFirstLetterCapital(String value) {
     return (value.substring(0, 1).toUpperCase() + value.substring(1));
+  }
+
+  static Future<void> launchInBrowser(String url) async {
+    if (kIsWeb) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
   }
 
 //end of file

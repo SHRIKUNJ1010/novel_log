@@ -35,10 +35,10 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();
         if (tempUserId != '') {
-          drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
           UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
           pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
+          drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
         } else {
           pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
         }

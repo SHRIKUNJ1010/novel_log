@@ -2,6 +2,7 @@
 * Created by Shrikunj Patel on 2/2/2023.
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
@@ -106,6 +107,7 @@ class YourNovelListCard extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                    Utility.launchInBrowser('https://pub.dev/packages/url_launcher');
                     //TODO: launch novel link url
                   },
                   child: TextView(
@@ -113,6 +115,8 @@ class YourNovelListCard extends StatelessWidget {
                     label: novelLinkUrl,
                     fontSize: 18,
                     color: m0A77E8,
+                    decorationColor: m0A77E8,
+                    decorationThickness: 2,
                     textDecoration: TextDecoration.underline,
                     fontWeight: FontWeight.bold,
                   ),

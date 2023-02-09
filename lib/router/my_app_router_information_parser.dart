@@ -107,7 +107,11 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     if (show404) {
       return [PageConfigList.getSplashScreen()];
     } else {
-      pageStateProvider.addAllPages(tempConfig);
+      if (pageStateProvider.config.isNotEmpty) {
+        pageStateProvider.addAllPages(tempConfig);
+      } else {
+        pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+      }
       if (drawerConfig.isNotEmpty) {
         drawerStateProvider.addAllPages(drawerConfig);
       }
