@@ -6,18 +6,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
-import 'package:novel_log/screens/create_edit_screens/create_novel_hidden_list_item_screen.dart';
-import 'package:novel_log/screens/create_edit_screens/create_novel_list_item_screen.dart';
-import 'package:novel_log/screens/create_edit_screens/create_novel_wish_list_item_screen.dart';
-import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_screen.dart';
-import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
-import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.dart';
-import 'package:novel_log/screens/splash_screen.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
-import 'package:novel_log/utility/page_routes.dart';
-import 'package:novel_log/utility/transition_list.dart';
+import 'package:novel_log/utility/transition_to_page.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -38,135 +29,6 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
       pages: buildPages(),
       onPopPage: _onPopPage,
     );
-  }
-
-  void _addCommonPage({
-    int? index,
-    required Widget child,
-    required PageConfiguration pageConfiguration,
-    TransitionType transitionType = TransitionType.defaultTransition,
-  }) {
-    if (index != null) {
-      switch (transitionType) {
-        case TransitionType.defaultTransition:
-          pages.insert(
-            index,
-            TransitionList.createPage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.fadeTransition:
-          pages.insert(
-            index,
-            TransitionList.createFadePage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.slideDownTransition:
-          pages.insert(
-            index,
-            TransitionList.createSlidePage(child, pageConfiguration),
-          );
-          break;
-      }
-    } else {
-      switch (transitionType) {
-        case TransitionType.defaultTransition:
-          pages.add(
-            TransitionList.createPage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.fadeTransition:
-          pages.add(
-            TransitionList.createFadePage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.slideDownTransition:
-          pages.add(
-            TransitionList.createSlidePage(child, pageConfiguration),
-          );
-          break;
-      }
-    }
-  }
-
-  void addCommonPage({
-    int? index,
-    required PageConfiguration pageConfig,
-    TransitionType transitionType = TransitionType.defaultTransition,
-  }) {
-    switch (pageConfig.path) {
-      case splashScreenRoute:
-        _addCommonPage(
-          index: index,
-          child: const SplashScreen(),
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-        );
-        break;
-      case loginScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const LoginScreen(),
-        );
-        break;
-      case signUpScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const SignUpScreen(),
-        );
-        break;
-      case drawerScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const DrawerScreen(),
-        );
-        break;
-      case createNovelListItemScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const CreateNovelListItemScreen(),
-        );
-        break;
-      case createNovelWishListItemScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const CreateNovelWishListItemScreen(),
-        );
-        break;
-      case createNovelHiddenListItemScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const CreateNovelHiddenListItemScreen(),
-        );
-        break;
-      case forgetPasswordScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const ForgetPasswordScreen(),
-        );
-        break;
-      default:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: const SplashScreen(),
-        );
-        break;
-    }
   }
 
   bool canPop() {
@@ -216,6 +78,29 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
     return isExit ?? true;
   }
 
+  void addCommonPage({
+    int? index,
+    required PageConfiguration pageConfiguration,
+    TransitionType transitionType = TransitionType.defaultTransition,
+  }) {
+    if (index != null) {
+      pages.insert(
+        index,
+        TransitionToPage.getPage(
+          transitionType,
+          pageConfiguration,
+        ),
+      );
+    } else {
+      pages.add(
+        TransitionToPage.getPage(
+          transitionType,
+          pageConfiguration,
+        ),
+      );
+    }
+  }
+
   List<Page> buildPages() {
     Utility.printLog('build pages called -------------------------------------------------');
     Utility.printLog("app page config list : ${pageStateProvider.config.map((e) => e.path).toList()}");
@@ -228,15 +113,24 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
           //do nothing
         } else {
           pages.removeAt(i);
-          addCommonPage(index: i, pageConfig: pageStateProvider.config[i], transitionType: pageStateProvider.transitionList[i]);
+          addCommonPage(
+            index: i,
+            pageConfiguration: pageStateProvider.config[i],
+            transitionType: pageStateProvider.transitionList[i],
+          );
         }
       } else {
-        addCommonPage(pageConfig: pageStateProvider.config[i], transitionType: pageStateProvider.transitionList[i]);
+        addCommonPage(
+          pageConfiguration: pageStateProvider.config[i],
+          transitionType: pageStateProvider.transitionList[i],
+        );
       }
     }
     if (pageStateProvider.config.isEmpty) {
       Utility.printLog('splash screen added ------------------------------------------');
-      addCommonPage(pageConfig: PageConfigList.getSplashScreen());
+      addCommonPage(
+        pageConfiguration: PageConfigList.getSplashScreen(),
+      );
     }
     Utility.printLog("pages list : ${pages.map((e) => e.name).toList()}");
     return List.of(pages);

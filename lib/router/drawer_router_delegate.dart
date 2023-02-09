@@ -6,17 +6,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/screens/app_drawer_screens/change_hidden_pin_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/change_password_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/novel_hidden_list_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/novel_wish_list_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/profile_screen.dart';
-import 'package:novel_log/screens/app_drawer_screens/your_novel_list_screen.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_config_list.dart';
-import 'package:novel_log/utility/page_routes.dart';
 import 'package:novel_log/utility/preference.dart';
-import 'package:novel_log/utility/transition_list.dart';
+import 'package:novel_log/utility/transition_to_page.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -36,129 +29,6 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
       pages: buildPages(),
       onPopPage: _onPopPage,
     );
-  }
-
-  void _addCommonPage({
-    int? index,
-    required Widget child,
-    required PageConfiguration pageConfiguration,
-    TransitionType transitionType = TransitionType.defaultTransition,
-  }) {
-    if (index != null) {
-      switch (transitionType) {
-        case TransitionType.defaultTransition:
-          pages.insert(
-            index,
-            TransitionList.createPage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.fadeTransition:
-          pages.insert(
-            index,
-            TransitionList.createFadePage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.slideDownTransition:
-          pages.insert(
-            index,
-            TransitionList.createSlidePage(child, pageConfiguration),
-          );
-          break;
-      }
-    } else {
-      switch (transitionType) {
-        case TransitionType.defaultTransition:
-          pages.add(
-            TransitionList.createPage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.fadeTransition:
-          pages.add(
-            TransitionList.createFadePage(child, pageConfiguration),
-          );
-          break;
-        case TransitionType.slideDownTransition:
-          pages.add(
-            TransitionList.createSlidePage(child, pageConfiguration),
-          );
-          break;
-      }
-    }
-  }
-
-  void addCommonPage({int? index, required PageConfiguration pageConfig, TransitionType transitionType = TransitionType.defaultTransition}) {
-    switch (pageConfig.path) {
-      case yourNovelListScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: YourNovelListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      case novelWishListScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: NovelWishListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      case novelHiddenListScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: NovelHiddenListScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      case profileScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: ProfileScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      case changePasswordScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: ChangePasswordScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      case changeHiddenPinScreenRoute:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: ChangeHiddenPinScreen(
-            userId: pageConfig.arguments as String,
-          ),
-        );
-        break;
-      default:
-        _addCommonPage(
-          index: index,
-          pageConfiguration: pageConfig,
-          transitionType: transitionType,
-          child: YourNovelListScreen(
-            userId: Preference.getUserId(),
-          ),
-        );
-        break;
-    }
   }
 
   bool canPop() {
@@ -185,6 +55,29 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
     return true;
   }
 
+  void addCommonPage({
+    int? index,
+    required PageConfiguration pageConfiguration,
+    TransitionType transitionType = TransitionType.defaultTransition,
+  }) {
+    if (index != null) {
+      pages.insert(
+        index,
+        TransitionToPage.getPage(
+          transitionType,
+          pageConfiguration,
+        ),
+      );
+    } else {
+      pages.add(
+        TransitionToPage.getPage(
+          transitionType,
+          pageConfiguration,
+        ),
+      );
+    }
+  }
+
   List<Page> buildPages() {
     Utility.printLog('build pages called for drawer -------------------------------------------------');
     Utility.printLog("drawer page config list : ${drawerStateProvider.config.map((e) => e.path).toList()}");
@@ -197,15 +90,24 @@ class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with 
           //do nothing
         } else {
           pages.removeAt(i);
-          addCommonPage(index: i, pageConfig: drawerStateProvider.config[i], transitionType: drawerStateProvider.transitionList[i]);
+          addCommonPage(
+            index: i,
+            pageConfiguration: drawerStateProvider.config[i],
+            transitionType: drawerStateProvider.transitionList[i],
+          );
         }
       } else {
-        addCommonPage(pageConfig: drawerStateProvider.config[i], transitionType: drawerStateProvider.transitionList[i]);
+        addCommonPage(
+          pageConfiguration: drawerStateProvider.config[i],
+          transitionType: drawerStateProvider.transitionList[i],
+        );
       }
     }
     if (drawerStateProvider.config.isEmpty) {
       Utility.printLog('your novel screen added when empty config got ------------------------------------------');
-      addCommonPage(pageConfig: PageConfigList.getYourNovelListScreen(Preference.getUserId()));
+      addCommonPage(
+        pageConfiguration: PageConfigList.getYourNovelListScreen(Preference.getUserId()),
+      );
     }
     Utility.printLog("pages list drawer: ${pages.map((e) => e.name).toList()}");
     return List.of(pages);

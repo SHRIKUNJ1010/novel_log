@@ -6,29 +6,30 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
+import 'package:novel_log/utility/page_config_to_widget.dart';
 
 class TransitionList {
-  static MaterialPage createPage(Widget child, PageConfiguration pageConfig) {
+  static MaterialPage createPage(PageConfiguration pageConfig) {
     return MaterialPage(
-      child: child,
+      child: PageConfigToWidget.getWidget(pageConfig),
       key: ValueKey(pageConfig.key),
       name: pageConfig.path,
       arguments: pageConfig.arguments,
     );
   }
 
-  static FadePage createFadePage(Widget child, PageConfiguration pageConfig) {
+  static FadePage createFadePage(PageConfiguration pageConfig) {
     return FadePage(
-      child: child,
+      child: PageConfigToWidget.getWidget(pageConfig),
       key: ValueKey(pageConfig.key),
       name: pageConfig.path,
       arguments: pageConfig.arguments,
     );
   }
 
-  static SlideDownPage createSlidePage(Widget child, PageConfiguration pageConfig) {
+  static SlideDownPage createSlidePage(PageConfiguration pageConfig) {
     return SlideDownPage(
-      child: child,
+      child: PageConfigToWidget.getWidget(pageConfig),
       key: ValueKey(pageConfig.key),
       name: pageConfig.path,
       arguments: pageConfig.arguments,

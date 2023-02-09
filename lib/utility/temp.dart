@@ -375,3 +375,198 @@
         break;
     }
   }*/
+
+/*switch (transitionType) {
+        case TransitionType.defaultTransition:
+          pages.insert(
+            index,
+            TransitionList.createPage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.fadeTransition:
+          pages.insert(
+            index,
+            TransitionList.createFadePage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.slideDownTransition:
+          pages.insert(
+            index,
+            TransitionList.createSlidePage(child, pageConfiguration),
+          );
+          break;
+      }*/
+
+/*switch (transitionType) {
+        case TransitionType.defaultTransition:
+          pages.add(
+            TransitionList.createPage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.fadeTransition:
+          pages.add(
+            TransitionList.createFadePage(child, pageConfiguration),
+          );
+          break;
+        case TransitionType.slideDownTransition:
+          pages.add(
+            TransitionList.createSlidePage(child, pageConfiguration),
+          );
+          break;
+      }*/
+
+/*void addCommonPage({int? index, required PageConfiguration pageConfig, TransitionType transitionType = TransitionType.defaultTransition}) {
+    switch (pageConfig.path) {
+      case yourNovelListScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: YourNovelListScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      case novelWishListScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: NovelWishListScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      case novelHiddenListScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: NovelHiddenListScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      case profileScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: ProfileScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      case changePasswordScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: ChangePasswordScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      case changeHiddenPinScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: ChangeHiddenPinScreen(
+            userId: pageConfig.arguments as String,
+          ),
+        );
+        break;
+      default:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: YourNovelListScreen(
+            userId: Preference.getUserId(),
+          ),
+        );
+        break;
+    }
+  }*/
+
+/*void addCommonPage({
+    int? index,
+    required PageConfiguration pageConfig,
+    TransitionType transitionType = TransitionType.defaultTransition,
+  }) {
+    switch (pageConfig.path) {
+      case splashScreenRoute:
+        _addCommonPage(
+          index: index,
+          child: const SplashScreen(),
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+        );
+        break;
+      case loginScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const LoginScreen(),
+        );
+        break;
+      case signUpScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const SignUpScreen(),
+        );
+        break;
+      case drawerScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const DrawerScreen(),
+        );
+        break;
+      case createNovelListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelListItemScreen(),
+        );
+        break;
+      case createNovelWishListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelWishListItemScreen(),
+        );
+        break;
+      case createNovelHiddenListItemScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const CreateNovelHiddenListItemScreen(),
+        );
+        break;
+      case forgetPasswordScreenRoute:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const ForgetPasswordScreen(),
+        );
+        break;
+      default:
+        _addCommonPage(
+          index: index,
+          pageConfiguration: pageConfig,
+          transitionType: transitionType,
+          child: const SplashScreen(),
+        );
+        break;
+    }
+  }*/
