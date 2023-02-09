@@ -148,7 +148,7 @@ class YourNovelListCard extends StatelessWidget {
                           fontSize: 14,
                         ),
                       ),
-                    ]
+                    ],
                   ],
                 ),
                 const SizedBox(height: 25),

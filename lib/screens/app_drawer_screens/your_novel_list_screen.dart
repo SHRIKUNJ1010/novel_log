@@ -128,6 +128,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                           return YourNovelListTile(
                             novelName: controller.novelList[index].novelName ?? '',
                             novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
+                            novelGenre: controller.novelList[index].novelGenre ?? [],
                             novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
                             totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
                             readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
