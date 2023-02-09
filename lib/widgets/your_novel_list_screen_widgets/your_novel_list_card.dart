@@ -2,7 +2,6 @@
 * Created by Shrikunj Patel on 2/2/2023.
 */
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
