@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
 import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
-import 'package:novel_log/utility/page_config_to_widget.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_to_widget.dart';
 
 class TransitionList {
   static MaterialPage createPage(PageConfiguration pageConfig) {

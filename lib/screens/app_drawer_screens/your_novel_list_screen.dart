@@ -7,7 +7,7 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/your_novel_list_screen_widgets/your_novel_list_card.dart';

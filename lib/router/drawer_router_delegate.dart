@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
-import 'package:novel_log/utility/transition_to_page.dart';
+import 'package:novel_log/utility/page_and_transition_services/transition_to_page.dart';
 import 'package:novel_log/utility/utility.dart';
 
 class DrawerRouterDelegate extends RouterDelegate<List<PageConfiguration>> with ChangeNotifier, PopNavigatorRouterDelegateMixin {

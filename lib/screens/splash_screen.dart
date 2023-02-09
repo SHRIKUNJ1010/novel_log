@@ -11,7 +11,7 @@ import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
-import 'package:novel_log/utility/page_config_list.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

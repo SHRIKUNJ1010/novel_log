@@ -18,7 +18,7 @@ import 'package:novel_log/screens/sign_up_sign_in_flow_screens/forget_password_s
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/login_screen.dart';
 import 'package:novel_log/screens/sign_up_sign_in_flow_screens/sign_up_screen.dart';
 import 'package:novel_log/screens/splash_screen.dart';
-import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_routes.dart';
 
 class PageConfigToWidget {
   static Widget getWidget(PageConfiguration pageConfig) {

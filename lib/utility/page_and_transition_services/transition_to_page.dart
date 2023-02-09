@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/transition_list.dart';
+import 'package:novel_log/utility/page_and_transition_services/transition_list.dart';
 
 class TransitionToPage {
   static Page getPage(TransitionType transitionType, PageConfiguration pageConfiguration) {

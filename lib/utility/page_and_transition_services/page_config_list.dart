@@ -3,7 +3,7 @@
 */
 
 import 'package:novel_log/models/router_models/page_config.dart';
-import 'package:novel_log/utility/page_routes.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_routes.dart';
 
 class PageConfigList {
   static PageConfiguration getSplashScreen() {
