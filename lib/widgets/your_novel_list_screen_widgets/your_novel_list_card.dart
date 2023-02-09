@@ -8,10 +8,14 @@ import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
+import 'package:readmore/readmore.dart';
 
 class YourNovelListCard extends StatelessWidget {
   final String novelName;
   final String novelImageUrl;
+  final List<String> novelGenre;
+  final String novelAuthorName;
+  final String novelDescription;
   final int totalNovelChapterCount;
   final int readNovelChapterCount;
   final String novelLinkUrl;
@@ -26,6 +30,9 @@ class YourNovelListCard extends StatelessWidget {
     this.totalNovelChapterCount = 0,
     this.readNovelChapterCount = 0,
     this.isNovel = true,
+    this.novelGenre = const [],
+    this.novelAuthorName = '',
+    this.novelDescription = '',
     this.novelReadingStatus = NovelReadingStatus.reading,
   }) : super(key: key);
 
@@ -37,7 +44,6 @@ class YourNovelListCard extends StatelessWidget {
         children: [
           Container(
             width: 300,
-            height: 350,
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [appThemeColor[50]!, appThemeColor[100]!],
@@ -103,7 +109,7 @@ class YourNovelListCard extends StatelessWidget {
                     //TODO: launch novel link url
                   },
                   child: TextView(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                     label: novelLinkUrl,
                     fontSize: 18,
                     color: m0A77E8,
@@ -111,6 +117,38 @@ class YourNovelListCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                novelAuthorName != ''
+                    ? TextView(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        label: Utility.getFirstLetterCapital(novelAuthorName),
+                        fontSize: 17,
+                        color: mBlack,
+                      )
+                    : const SizedBox(),
+                //const SizedBox(height: 10),
+                novelDescription != '' ? ReadMoreText(novelDescription) : const SizedBox(),
+                const SizedBox(height: 8),
+                Wrap(
+                  direction: Axis.horizontal,
+                  spacing: 10,
+                  children: [
+                    for (int index = 0; index < novelGenre.length; index++) ...[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: appPrimaryColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                        child: TextView(
+                          label: novelGenre[index],
+                          color: mWhite,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ]
+                  ],
+                ),
+                const SizedBox(height: 25),
               ],
             ),
           ),

@@ -5,6 +5,9 @@ class NovelListItemModel {
   String? userId;
   String? novelName;
   String? novelImageUrl;
+  String? novelAuthorName;
+  String? novelDescription;
+  List<String>? novelGenre;
   int? totalNovelChapterCount;
   int? readNovelChapterCount;
   String? novelLinkUrl;
@@ -15,6 +18,9 @@ class NovelListItemModel {
     this.novelId,
     this.userId,
     this.novelName,
+    this.novelAuthorName,
+    this.novelDescription,
+    this.novelGenre,
     this.novelImageUrl,
     this.totalNovelChapterCount,
     this.readNovelChapterCount,
@@ -45,6 +51,9 @@ class NovelListItemModel {
     novelId = givenId;
     userId = json['user_id'];
     novelName = json['novel_name'];
+    novelAuthorName = json['novel_author_name'];
+    novelDescription = json['novel_description'];
+    novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
     novelImageUrl = json['novel_image_url'];
     totalNovelChapterCount = int.parse(json['total_novel_chapter_count']);
     readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
@@ -74,6 +83,9 @@ class NovelListItemModel {
     data['novel_id'] = novelId;
     data['user_id'] = userId;
     data['novel_name'] = novelName;
+    data['novel_author_name'] = novelAuthorName;
+    data['novel_genre'] = novelGenre;
+    data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
     data['total_novel_chapter_count'] = totalNovelChapterCount.toString();
     data['read_novel_chapter_count'] = readNovelChapterCount.toString();

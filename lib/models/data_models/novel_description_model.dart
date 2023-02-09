@@ -5,7 +5,7 @@ class NovelDescriptionModel {
   String? userId;
   String? novelName;
   String? novelAuthorName;
-  String? novelGenre;
+  List<String>? novelGenre;
   String? novelDescription;
   String? novelImageUrl;
   bool? isNovel;
@@ -22,7 +22,7 @@ class NovelDescriptionModel {
     this.userId = '',
     this.novelName = '',
     this.novelAuthorName = '',
-    this.novelGenre = '',
+    this.novelGenre = const [],
     this.novelDescription = '',
     this.novelImageUrl = '',
     this.isNovel = true,

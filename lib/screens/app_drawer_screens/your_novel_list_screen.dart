@@ -80,6 +80,10 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           //   userId: widget.userId,
           //   novelName: 'Testing Novel ${yourNovelListController.novelList.length}',
           //   novelLinkUrl: 'https://testing_example.com',
+          //   novelAuthorName: 'testing author name',
+          //   novelDescription:
+          //       'this is testing description for novel although it is not necessary to have this discription but it helps manage ui lets use this and see if it really makes ui better',
+          //   novelGenre: ['testing 1', 'testing 2', 'testing 3'],
           // );
           // NovelServices.createNovel(tempNovel.toJson());
           // yourNovelListController.refreshList(widget.userId);
@@ -172,6 +176,9 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                                       readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
                                       isNovel: controller.novelList[index].isNovel ?? true,
                                       novelReadingStatus: controller.novelList[index].novelReadingStatus ?? NovelReadingStatus.reading,
+                                      novelAuthorName: controller.novelList[index].novelAuthorName ?? '',
+                                      novelDescription: controller.novelList[index].novelDescription ?? '',
+                                      novelGenre: controller.novelList[index].novelGenre ?? [],
                                     ),
                             ]
                           ],
