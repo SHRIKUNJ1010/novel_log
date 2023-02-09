@@ -50,21 +50,21 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           break;
         case createNovelListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            drawerConfig.add(PageConfigList.getCreateNovelListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            tempConfig.add(PageConfigList.getCreateNovelListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }
           break;
         case createNovelWishListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            drawerConfig.add(PageConfigList.getCreateNovelWishListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }
           break;
         case createNovelHiddenListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            drawerConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }

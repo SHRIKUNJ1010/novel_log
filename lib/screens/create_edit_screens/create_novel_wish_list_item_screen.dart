@@ -74,6 +74,23 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  /*InkWell(
+                    onTap: () {
+                      if (kIsWeb) {
+                        OnlyWebFunctions.historyPop();
+                      } else {
+                        pageStateProvider.pop();
+                      }
+                    },
+                    child: Container(
+                      color: mPurpleLight,
+                      padding: const EdgeInsets.all(20),
+                      child: const TextView(
+                        label: 'Go back',
+                        color: mBlack,
+                      ),
+                    ),
+                  ),*/
                   if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
                   if (!kIsWeb)
                     Platform.isAndroid || Platform.isIOS
