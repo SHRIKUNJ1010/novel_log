@@ -15,6 +15,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class Utility {
   //printing log when app is in debug mode
@@ -33,17 +34,30 @@ class Utility {
 
   //checking if internet connection is available by lookup google.com
   static Future<bool> checkInterNetConnection() async {
-    try {
-      final result = await InternetAddress.lookup('google.com');
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        printLog('connected');
-        return true;
-      } else {
+    if (kIsWeb) {
+      try {
+        final result = await http.get(Uri.parse('www.google.com'));
+        if (result.statusCode == 200) {
+          return true;
+        } else {
+          return false;
+        }
+      } on SocketException catch (_) {
         return false;
       }
-    } on SocketException catch (_) {
-      printLog('not connected');
-      return false;
+    } else {
+      try {
+        final result = await InternetAddress.lookup('google.com');
+        if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+          Utility.printLog('connected');
+          return true;
+        } else {
+          return false;
+        }
+      } on SocketException catch (_) {
+        Utility.printLog('not connected');
+        return false;
+      }
     }
   }
 
