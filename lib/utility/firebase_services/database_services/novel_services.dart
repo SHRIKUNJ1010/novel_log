@@ -91,7 +91,7 @@ class NovelServices {
 
   //next page for novel hidden list
   static Future<Map<String, dynamic>> getNovelHiddenListNextPages(
-      QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
+    QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
         .where("is_hidden", isEqualTo: "1")
