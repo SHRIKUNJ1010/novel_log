@@ -84,6 +84,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           //   novelDescription:
           //       'this is testing description for novel although it is not necessary to have this discription but it helps manage ui lets use this and see if it really makes ui better',
           //   novelGenre: ['testing 1', 'testing 2', 'testing 3'],
+          //   isHidden: true,
           // );
           // NovelServices.createNovel(tempNovel.toJson());
           // yourNovelListController.refreshList(widget.userId);
@@ -100,7 +101,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           child: const Icon(color: mWhite, size: 30, Icons.add),
         ),
       ),
-      body: width < 600
+      body: width < 620
           ? GetBuilder<YourNovelListController>(
               builder: (controller) {
                 if (!controller.isLoading && controller.novelList.isEmpty) {

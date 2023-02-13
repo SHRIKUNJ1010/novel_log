@@ -4,12 +4,14 @@ class NovelWishListItemModel {
   String? novelId;
   String? userId;
   String? novelName;
-  String? novelAuthorName;
-  String? novelGenre;
   String? novelImageUrl;
-  bool? isNovel;
+  String? novelAuthorName;
+  String? novelDescription;
+  List<String>? novelGenre;
   int? totalNovelChapterCount;
+  int? readNovelChapterCount;
   String? novelLinkUrl;
+  bool? isNovel;
   NovelStatus? novelStatus;
 
   NovelWishListItemModel({
@@ -17,11 +19,13 @@ class NovelWishListItemModel {
     this.userId,
     this.novelName,
     this.novelAuthorName,
+    this.novelDescription,
     this.novelGenre,
     this.novelImageUrl,
-    this.isNovel,
     this.totalNovelChapterCount,
+    this.readNovelChapterCount,
     this.novelLinkUrl,
+    this.isNovel,
     String novelStatus = '',
   }) {
     switch (novelStatus) {
@@ -45,11 +49,13 @@ class NovelWishListItemModel {
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
-    novelGenre = json['novel_genre'];
+    novelDescription = json['novel_description'];
+    novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
     novelImageUrl = json['novel_image_url'];
-    isNovel = json['is_novel'] == '1' ? true : false;
     totalNovelChapterCount = int.parse(json['total_novel_chapter_count']);
+    readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
     novelLinkUrl = json['novel_link_url'];
+    isNovel = json['is_novel'] == '1' ? true : false;
     switch (json['novel_status']) {
       case 'production':
         novelStatus = NovelStatus.production;
@@ -73,10 +79,12 @@ class NovelWishListItemModel {
     data['novel_name'] = novelName;
     data['novel_author_name'] = novelAuthorName;
     data['novel_genre'] = novelGenre;
+    data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
-    data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     data['total_novel_chapter_count'] = totalNovelChapterCount.toString();
+    data['read_novel_chapter_count'] = readNovelChapterCount.toString();
     data['novel_link_url'] = novelLinkUrl;
+    data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     switch (novelStatus) {
       case NovelStatus.production:
         data['novel_status'] = 'production';

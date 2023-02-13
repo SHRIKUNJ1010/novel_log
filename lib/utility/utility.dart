@@ -304,6 +304,28 @@ class Utility {
     }
   }
 
+  static String novelStatusLabel(NovelStatus status) {
+    switch (status) {
+      case NovelStatus.production:
+        return 'Production';
+      case NovelStatus.hiatus:
+        return 'Hiatus';
+      case NovelStatus.completed:
+        return 'Completed';
+    }
+  }
+
+  static Color novelStatusColor(NovelStatus status) {
+    switch (status) {
+      case NovelStatus.production:
+        return mGreen;
+      case NovelStatus.hiatus:
+        return m747474;
+      case NovelStatus.completed:
+        return kYankeesBlue;
+    }
+  }
+
   static String getFirstLetterCapital(String value) {
     return (value.substring(0, 1).toUpperCase() + value.substring(1));
   }

@@ -313,7 +313,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           : null,
       body: Row(
         children: [
-          width > 600
+          width > 620
               ? GetBuilder<DrawerSelectedTabController>(
                   builder: (controller) {
                     return Drawer(
