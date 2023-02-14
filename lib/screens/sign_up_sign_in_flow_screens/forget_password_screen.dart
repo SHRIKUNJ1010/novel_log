@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/utility.dart';
@@ -27,20 +28,21 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
   }
 
   checkValidation() async {
-    if (emailEditingController.text.trim().isEmpty) {
+    /*if (emailEditingController.text.trim().isEmpty) {
       Utility.toastMessage(mFA5D5D, 'Email Address Field', "Email Address field can't be left empty!");
       return;
     }
     if (!Utility.validateEmail(emailEditingController.text.trim())) {
       Utility.toastMessage(mFA5D5D, 'Email Address Field', "Invalid Email Address!");
       return;
-    }
+    }*/
+    pageStateProvider.pop('returning value does works');
     //TODO: check how to do forget password activity
-    Utility.toastMessage(
+    /*Utility.toastMessage(
       mFA5D5D,
       'Not Implemented',
       'This function is not implemented yet.',
-    );
+    );*/
   }
 
   @override

@@ -36,7 +36,7 @@ class DrawerStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void push(PageConfiguration configuration, [TransitionType? transitionType]) {
+  Future<dynamic> push(PageConfiguration configuration, [TransitionType? transitionType]) {
     Utility.printLog('push for drawer state provider ----------------------------------------------------');
     config.add(configuration);
     if (transitionType != null) {
@@ -47,10 +47,12 @@ class DrawerStateProvider extends ChangeNotifier {
     Utility.printLog("drawer state provider page config list ${config.map((e) => e.path).toList()}");
     Utility.printLog("drawer state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
+    return configuration.popped.future;
   }
 
-  void pop() {
+  void pop<T extends Object?>([T? result]) {
     Utility.printLog('pop for drawer state provider ----------------------------------------------------');
+    config[config.length - 1].popped.complete(result);
     config.removeLast();
     transitionList.removeLast();
     Utility.printLog("drawer state provider page config list ${config.map((e) => e.path).toList()}");
@@ -58,7 +60,7 @@ class DrawerStateProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void pushReplacement(PageConfiguration configuration, [TransitionType? transitionType]) {
+  Future<dynamic> pushReplacement(PageConfiguration configuration, [TransitionType? transitionType]) {
     Utility.printLog('pushReplacement for drawer state provider ----------------------------------------------------');
     if (config.isNotEmpty) config.removeLast();
     if (transitionList.isNotEmpty) transitionList.removeLast();
@@ -71,6 +73,7 @@ class DrawerStateProvider extends ChangeNotifier {
     Utility.printLog("drawer state provider page config list ${config.map((e) => e.path).toList()}");
     Utility.printLog("drawer state provider transition list ${transitionList.map((e) => e.toString()).toList()}");
     notifyListeners();
+    return configuration.popped.future;
   }
 
   void popUntil(PageConfiguration configuration) {
@@ -84,6 +87,7 @@ class DrawerStateProvider extends ChangeNotifier {
       i = 0;
     }
     while (last != i) {
+      config[config.length - 1].popped.complete();
       config.removeLast();
       transitionList.removeLast();
       last = config.length - 1;
