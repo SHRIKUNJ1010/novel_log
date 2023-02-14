@@ -309,9 +309,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  pageStateProvider
+                                  pageStateProvider.push(PageConfigList.getForgetPasswordScreen(), TransitionType.slideDownTransition);
+                                  /*pageStateProvider
                                       .push(PageConfigList.getForgetPasswordScreen(), TransitionType.slideDownTransition)
-                                      .then((value) => Utility.printLog('returning value : $value  -------------------------------------------------------'));
+                                      .then((value) => Utility.printLog('returning value : $value  -------------------------------------------------------'));*/
                                 },
                                 child: const TextView(
                                   label: 'forgot password?',
