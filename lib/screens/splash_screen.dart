@@ -37,17 +37,17 @@ class _SplashScreenState extends State<SplashScreen> {
         if (tempUserId != '') {
           UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
           Utility.printLog(tempUser.toJson());
-          pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
-          drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
+          pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+          drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
         } else {
-          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.foldTransition);
         }
       });
     } else {
       Timer(
         const Duration(milliseconds: 3000),
         () {
-          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
+          pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.foldTransition);
         },
       );
     }

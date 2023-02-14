@@ -78,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.slideDownTransition);
+      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       final tempUser = UserProfileModel.create(
         userId: tempUserId,
         userName: nameEditingController.text,
@@ -87,7 +87,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await UserServices.createUser(tempUserId, tempUser.toJson());
       Preference.setUserId(tempUserId);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
-      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.slideDownTransition);
+      pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
       emailEditingController.clear();
       nameEditingController.clear();
       passwordEditingController.clear();
@@ -316,7 +316,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.slideDownTransition);
+                                  pageStateProvider.pushReplacement(PageConfigList.getLoginScreen(), TransitionType.foldTransition);
                                 },
                                 child: const TextView(
                                   label: 'have an account? login here.',

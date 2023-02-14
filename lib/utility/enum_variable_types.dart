@@ -15,4 +15,5 @@ enum TransitionType {
   defaultTransition,
   fadeTransition,
   slideDownTransition,
+  foldTransition,
 }

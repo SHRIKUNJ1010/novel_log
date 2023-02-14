@@ -16,6 +16,8 @@ class TransitionToPage {
         return TransitionList.createFadePage(pageConfiguration);
       case TransitionType.slideDownTransition:
         return TransitionList.createSlidePage(pageConfiguration);
+      case TransitionType.foldTransition:
+        return TransitionList.createFoldPage(pageConfiguration);
     }
   }
 }

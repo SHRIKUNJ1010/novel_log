@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/models/router_models/transition_pages/fade_page.dart';
+import 'package:novel_log/models/router_models/transition_pages/folding_page.dart';
 import 'package:novel_log/models/router_models/transition_pages/slide_down_page.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_to_widget.dart';
 
@@ -29,6 +30,15 @@ class TransitionList {
 
   static SlideDownPage createSlidePage(PageConfiguration pageConfig) {
     return SlideDownPage(
+      child: PageConfigToWidget.getWidget(pageConfig),
+      key: ValueKey(pageConfig.key),
+      name: pageConfig.path,
+      arguments: pageConfig.arguments,
+    );
+  }
+
+  static FoldingPage createFoldPage(PageConfiguration pageConfig) {
+    return FoldingPage(
       child: PageConfigToWidget.getWidget(pageConfig),
       key: ValueKey(pageConfig.key),
       name: pageConfig.path,

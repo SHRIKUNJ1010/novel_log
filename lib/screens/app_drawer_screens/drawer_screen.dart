@@ -115,22 +115,22 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Future<void> changeDrawerItem(int index) async {
     switch (drawerItemTitleText[index]) {
       case 'Your Novels':
-        drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Wish List':
-        drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Hidden List':
-        drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Profile':
-        drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Change Password':
-        drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Change Pin':
-        drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()), TransitionType.slideDownTransition);
+        drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case 'Logout':
         bool value = await Utility.userLogoutAlert();
