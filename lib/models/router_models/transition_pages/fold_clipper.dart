@@ -51,15 +51,25 @@ class FoldClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     width = size.width;
     height = size.height;
-    if (width > height) {
+    x1 = offset.dx * width;
+    y1 = offset.dy * height;
+    /*if (width > height) {
       offsetX = width - height;
       width = height;
     } else if (height > width) {
       offsetY = height - width;
       height = width;
-    }
-    x1 = offset.dx * width;
-    y1 = offset.dy * height;
+    }*/
+    /* if (width > height) {
+      x1 = offset.dx * height + (width - height);
+      y1 = offset.dy * height;
+    } else if (height > width) {
+      x1 = offset.dx * width;
+      y1 = offset.dy * width + (height - width);
+    } else {
+      x1 = offset.dx * width;
+      y1 = offset.dy * height;
+    }*/
 
     //add offset to given point
     x1 = x1 + offsetX;
@@ -67,9 +77,6 @@ class FoldClipper extends CustomClipper<Path> {
     //end point of the quadrilateral shape / original widget
     x2 = width + offsetX;
     y2 = height + offsetY;
-
-    offsetX = 0;
-    offsetY = 0;
 
     if (x2 < x1) {
       x1 = x2 - (0.05 * x2);
@@ -82,12 +89,14 @@ class FoldClipper extends CustomClipper<Path> {
     dx = (sqrt(pow((y2 - y1), 2) + pow((x2 - x1), 2))) / (2 * cos(atan(((y2 - y1) / (x2 - x1))).abs()));
     dy = (sqrt(pow((y2 - y1), 2) + pow((x2 - x1), 2))) / (2 * sin(atan(((y2 - y1) / (x2 - x1))).abs()));
 
+    //Utility.printLog('x1: $x1 ,y1: $y1 ,x2: $x2 ,y2: $y2');
+
     if (dy == y2) {
       var unfoldedPath = Path()
-        ..moveTo(offsetX, offsetY)
+        ..moveTo(x2, y2)
         ..lineTo(x2, offsetY)
         ..lineTo(x2 - dx, y2)
-        ..lineTo(offsetX, y2);
+        ..lineTo(x2, y2);
 
       return unfoldedPath;
     }
@@ -95,22 +104,23 @@ class FoldClipper extends CustomClipper<Path> {
     else if (dy < y2) {
       if (dx < x2) {
         var unfoldedPath = Path()
-          ..moveTo(offsetX, offsetY)
-          ..lineTo(x2, offsetY)
+          ..moveTo(x2, y2)
+          //..lineTo(x2, offsetY)
           ..lineTo(x2, y2 - dy)
           ..lineTo(x2 - dx, y2)
-          ..lineTo(offsetX, y2);
+          ..lineTo(x2, y2);
 
         return unfoldedPath;
 
-        //folding quadrilateral on diffrent side
+        //folding quadrilateral on different side
       } else {
         var unfoldedPath = Path()
-          ..moveTo(offsetX, offsetY)
-          ..lineTo(x2, offsetY)
+          ..moveTo(x2, y2)
+          //..lineTo(x2, offsetY)
           ..lineTo(x2, y2 - dy)
-          ..lineTo(offsetX, y2 - ((dy * (dx - x2)) / dx));
-        //..lineTo(offsetX, y2);
+          ..lineTo(offsetX, y2 - ((dy * (dx - x2)) / dx))
+          ..lineTo(offsetX, y2)
+          ..lineTo(x2, y2);
 
         return unfoldedPath;
       }
@@ -121,20 +131,23 @@ class FoldClipper extends CustomClipper<Path> {
       //same as upper condition
       if (dx < x2) {
         var unfoldedPath = Path()
-          ..moveTo(offsetX, offsetY)
+          ..moveTo(x2, y2)
+          ..lineTo(x2, offsetY)
           ..lineTo(x2 - ((dx * (dy - y2)) / dy), offsetY)
           ..lineTo(x2 - dx, y2)
-          ..lineTo(offsetX, y2);
+          ..lineTo(x2, y2);
 
         return unfoldedPath;
       }
       // when fold area is greater than unfolded page
       else {
         var unfoldedPath = Path()
-          ..moveTo(offsetX, offsetY)
+          ..moveTo(x2, y2)
+          ..lineTo(x2, offsetY)
           ..lineTo(x2 - ((dx * (dy - y2)) / dy), offsetY)
           ..lineTo(offsetX, y2 - ((dy * (dx - x2)) / dx))
-          ..lineTo(offsetX, y2);
+          ..lineTo(offsetX, y2)
+          ..lineTo(x2, y2);
 
         return unfoldedPath;
       }

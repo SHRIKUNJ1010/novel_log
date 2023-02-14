@@ -53,15 +53,25 @@ class FoldPainter extends CustomPainter {
     //size of widget or page
     width = size.width;
     height = size.height;
-    if (width > height) {
+    x1 = offset.dx * width;
+    y1 = offset.dy * height;
+    /*if (width > height) {
       offsetX = width - height;
       width = height;
     } else if (height > width) {
       offsetY = height - width;
       height = width;
-    }
-    x1 = offset.dx * width;
-    y1 = offset.dy * height;
+    }*/
+    /*if (width > height) {
+      x1 = offset.dx * height + (width - height);
+      y1 = offset.dy * height;
+    } else if (height > width) {
+      x1 = offset.dx * width;
+      y1 = offset.dy * width + (height - width);
+    } else {
+      x1 = offset.dx * width;
+      y1 = offset.dy * height;
+    }*/
     //add offset to given point
     x1 = x1 + offsetX;
     y1 = y1 + offsetY;
@@ -88,7 +98,9 @@ class FoldPainter extends CustomPainter {
       ..color = Colors.transparent
       ..strokeWidth = 2.0;
 
-    //condition which seperates the case of quadrilateral fold
+    //Utility.printLog('x1: $x1 ,y1: $y1 ,x2: $x2 ,y2: $y2');
+
+    //condition which separates the case of quadrilateral fold
     //from triangle fold
     if (dy == y2) {
       var unfoldedPath = Path()

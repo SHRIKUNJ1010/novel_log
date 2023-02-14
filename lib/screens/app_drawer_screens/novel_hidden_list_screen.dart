@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/getx_controller_model/novel_hidden_list_controller.dart';
-import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
@@ -91,7 +90,7 @@ class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
         ),
       ),
       body: width < 620
-          ? GetBuilder<YourNovelListController>(
+          ? GetBuilder<NovelHiddenListController>(
               builder: (controller) {
                 if (!controller.isLoading && controller.novelList.isEmpty) {
                   return RefreshIndicator(

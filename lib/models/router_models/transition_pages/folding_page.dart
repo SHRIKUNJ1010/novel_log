@@ -22,10 +22,11 @@ class FoldingPage extends Page {
     return PageRouteBuilder(
       settings: this,
       pageBuilder: (context, animation, secondaryAnimation) {
-        const begin = Offset(0.0, 0.0);
-        const end = Offset(1.0, 1.0);
+        const begin = Offset(1.0, 1.0);
+        const end = Offset(-0.8, -0.8);
         final tween = Tween(begin: begin, end: end);
-        final offsetAnimation = animation.drive(tween);
+        final offsetCurveAnimation = CurvedAnimation(parent: animation, curve: Curves.easeInCubic);
+        final offsetAnimation = offsetCurveAnimation.drive(tween);
         /*final offsetAnimation = animation.drive(tween);*/
 
         return AnimatedBuilder(
@@ -34,20 +35,22 @@ class FoldingPage extends Page {
             if (offsetAnimation.isCompleted) {
               return child;
             } else {
-              return CustomPaint(
-                foregroundPainter: FoldPainter(
-                  context: context,
-                  offset: offsetAnimation.value,
-                ),
-                child: ClipPath(
-                  clipper: FoldClipper(
+              return ClipRect(
+                child: CustomPaint(
+                  foregroundPainter: FoldPainter(
                     context: context,
                     offset: offsetAnimation.value,
                   ),
                   child: Stack(
                     children: [
-                      child,
                       Container(color: mBlack.withOpacity(0.5)),
+                      ClipPath(
+                        clipper: FoldClipper(
+                          context: context,
+                          offset: offsetAnimation.value,
+                        ),
+                        child: child,
+                      ),
                     ],
                   ),
                 ),
