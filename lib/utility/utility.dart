@@ -238,6 +238,73 @@ class Utility {
     return value;
   }
 
+  static Future<String> addGenreDialog(BuildContext context) async {
+    TextEditingController genreController = TextEditingController();
+    String genre = await showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          insetPadding: EdgeInsets.zero,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop('');
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        size: 30,
+                        color: appThemeColor,
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: const TextView(
+                          label: 'Add Genre',
+                          color: mBlack,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop(genreController.text);
+                      },
+                      child: const Icon(
+                        Icons.check,
+                        size: 30,
+                        color: appThemeColor,
+                      ),
+                    ),
+                  ],
+                ),
+                TextField(
+                  controller: genreController,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Genre',
+                    hintStyle: Utility.getRichTextStyle(
+                      fontSize: 16,
+                      color: mBlack,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    return genre;
+  }
+
   static int widthToGridCount(double width) {
     int gridCount = 0;
     if (width > 600) {

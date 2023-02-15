@@ -1,12 +1,12 @@
 /*
 * Created by Shrikunj Patel on 1/30/2023.
 */
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:novel_log/utility/assets_path.dart';
+import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class CreateNovelListItemScreen extends StatefulWidget {
@@ -17,135 +17,433 @@ class CreateNovelListItemScreen extends StatefulWidget {
 }
 
 class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
-  late Image smallBackgroundImage;
-  late Image bigBackgroundImage;
+  TextEditingController novelNameController = TextEditingController();
+  TextEditingController readChapterController = TextEditingController();
+  TextEditingController totalChapterController = TextEditingController();
+  TextEditingController novelLinkUrlController = TextEditingController();
+  TextEditingController authorNameController = TextEditingController();
+  TextEditingController novelDescriptionController = TextEditingController();
 
-  @override
-  void initState() {
-    bigBackgroundImage = Image.asset(
-      libraryBackgroundImageForBigScreen,
-      gaplessPlayback: true,
-    );
-    smallBackgroundImage = Image.asset(
-      libraryBackgroundImage,
-      gaplessPlayback: true,
-    );
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    precacheImage(bigBackgroundImage.image, context);
-    precacheImage(smallBackgroundImage.image, context);
-    super.didChangeDependencies();
-  }
+  //List<String> novelGenres = ['Action', 'Adventure', 'Comedy', 'Classics', 'Mystery', 'Horror', 'SCi-Fi', 'Thriller', 'Romance', 'Magical Realism'];
+  List<String> novelGenres = [];
+  bool isNovel = true;
+  NovelReadingStatus novelReadingStatus = NovelReadingStatus.reading;
+  NovelStatus novelStatus = NovelStatus.production;
 
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
+    //final double height = MediaQuery.of(context).size.height;
 
-    return Stack(
-      children: [
-        width > 600
-            ? FadeInImage(
-                width: width,
-                height: height,
-                fadeInDuration: const Duration(milliseconds: 10),
-                fadeOutDuration: const Duration(milliseconds: 10),
-                placeholder: smallBackgroundImage.image,
-                image: bigBackgroundImage.image,
-                fit: BoxFit.cover,
-              )
-            : FadeInImage(
-                width: width,
-                height: height,
-                fadeInDuration: const Duration(milliseconds: 10),
-                fadeOutDuration: const Duration(milliseconds: 10),
-                placeholder: bigBackgroundImage.image,
-                image: smallBackgroundImage.image,
-                fit: BoxFit.cover,
-              ),
-        Scaffold(
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
-                  if (!kIsWeb)
-                    Platform.isAndroid || Platform.isIOS
-                        ? Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                nlIconImage,
-                                width: width / 4,
-                                height: width / 4,
-                              ),
-                            ],
-                          )
-                        : Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                nlIconImage,
-                                width: 100,
-                                height: 100,
-                              ),
-                            ],
-                          ),
-                  if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 15) : const SizedBox(height: 30),
-                  if (kIsWeb)
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          nlIconImage,
-                          width: 100,
-                          height: 100,
-                        ),
-                      ],
-                    ),
-                  Material(
-                    borderRadius: BorderRadius.circular(10),
-                    color: appThemeColor[100],
-                    child: SizedBox(
-                      width: width > 840
-                          ? width * (3 / 4)
-                          : width < 600
-                              ? width - 40
-                              : width - 80,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
-                              TextView(
-                                label: 'Create Novel',
-                                color: mWhite,
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 800,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        leading: InkWell(
+          onTap: () {
+            pageStateProvider.pop();
+          },
+          child: const Icon(
+            Icons.close,
+            color: mWhite,
+            size: 30,
+          ),
+        ),
+        title: const TextView(
+          label: 'Create Novel',
+          fontSize: 26,
+          color: mWhite,
+        ),
+        centerTitle: true,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: InkWell(
+              onTap: () {
+                //TODO: api calling
+                pageStateProvider.pop();
+              },
+              child: const Icon(
+                Icons.check,
+                color: mWhite,
+                size: 30,
               ),
             ),
           ),
+        ],
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: width < 600 ? width : 600,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: novelNameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Novel Name',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: novelLinkUrlController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Novel Link URL',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                              child: TextField(
+                                controller: readChapterController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const TextView(
+                            label: 'Read Chapter',
+                            color: mBlack,
+                            fontSize: 16,
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 8, 8, 8),
+                              child: TextField(
+                                controller: totalChapterController,
+                                textInputAction: TextInputAction.next,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  isDense: true,
+                                  border: OutlineInputBorder(),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const TextView(
+                            label: 'Total Chapter',
+                            color: mBlack,
+                            fontSize: 16,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: authorNameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Author Name',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: novelDescriptionController,
+                        textInputAction: TextInputAction.next,
+                        maxLines: 5,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Novel Description',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      const Divider(),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const SizedBox(width: 8),
+                          const TextView(
+                            label: 'Manga',
+                            color: mBlack,
+                            fontSize: 18,
+                          ),
+                          const SizedBox(width: 5),
+                          CupertinoSwitch(
+                            value: isNovel,
+                            onChanged: (value) => setState(() => isNovel = value),
+                          ),
+                          const SizedBox(width: 5),
+                          const TextView(
+                            label: 'Novel',
+                            color: mBlack,
+                            fontSize: 18,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      const Divider(),
+                      const SizedBox(height: 4),
+                      const TextView(
+                        label: 'Novel Reading Status:',
+                        color: mBlack,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      const SizedBox(height: 0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelReadingStatus.notStarted,
+                                  groupValue: novelReadingStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelReadingStatus = value ?? NovelReadingStatus.reading,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Not Started',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelReadingStatus.reading,
+                                  groupValue: novelReadingStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelReadingStatus = value ?? NovelReadingStatus.reading,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Reading',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelReadingStatus.hiatusCompleted,
+                                  groupValue: novelReadingStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelReadingStatus = value ?? NovelReadingStatus.reading,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Hiatus Completed',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelReadingStatus.completed,
+                                  groupValue: novelReadingStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelReadingStatus = value ?? NovelReadingStatus.reading,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Completed',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      const Divider(),
+                      const SizedBox(height: 4),
+                      const TextView(
+                        label: 'Novel Status:',
+                        color: mBlack,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      const SizedBox(height: 0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelStatus.production,
+                                  groupValue: novelStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelStatus = value ?? NovelStatus.production,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Production',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelStatus.hiatus,
+                                  groupValue: novelStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelStatus = value ?? NovelStatus.hiatus,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Hiatus',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Transform.scale(
+                                scale: 1.3,
+                                child: Radio(
+                                  value: NovelStatus.completed,
+                                  groupValue: novelStatus,
+                                  onChanged: (value) {
+                                    setState(
+                                      () => novelStatus = value ?? NovelStatus.completed,
+                                    );
+                                  },
+                                ),
+                              ),
+                              const TextView(
+                                label: 'Completed',
+                                color: mBlack,
+                                fontSize: 17,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      const Divider(),
+                      const SizedBox(height: 4),
+                      Wrap(
+                        children: [
+                          for (int i = 0; i < novelGenres.length; i++) ...[
+                            Container(
+                              decoration: BoxDecoration(
+                                color: appPrimaryColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 5, 5),
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              child: TextView(
+                                label: novelGenres[i],
+                                color: mWhite,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                          InkWell(
+                            onTap: () async {
+                              String genre = await Utility.addGenreDialog(context);
+                              if (genre != '') {
+                                novelGenres.add(genre);
+                                setState(() {});
+                              }
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: appPrimaryColor,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              margin: const EdgeInsets.fromLTRB(0, 0, 5, 5),
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const [
+                                  Icon(
+                                    Icons.add,
+                                    color: mWhite,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 4),
+                                  TextView(
+                                    label: 'add genre',
+                                    color: mWhite,
+                                    fontSize: 16,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-      ],
+      ),
     );
   }
 }

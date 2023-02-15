@@ -77,9 +77,9 @@ class _NovelHiddenListScreenState extends State<NovelHiddenListScreen> {
       floatingActionButton: InkWell(
         onTap: () {
           if (kIsWeb) {
-            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId), TransitionType.foldTransition);
           } else {
-            pageStateProvider.push(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.push(PageConfigList.getCreateNovelHiddenListItemScreen(widget.userId), TransitionType.foldTransition);
           }
         },
         child: Container(

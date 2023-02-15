@@ -77,9 +77,9 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
       floatingActionButton: InkWell(
         onTap: () {
           if (kIsWeb) {
-            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.foldTransition);
           } else {
-            pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.push(PageConfigList.getCreateNovelWishListItemScreen(widget.userId), TransitionType.foldTransition);
           }
         },
         child: Container(

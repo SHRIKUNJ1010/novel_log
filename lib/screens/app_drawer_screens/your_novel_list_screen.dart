@@ -89,9 +89,9 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           // NovelServices.createNovel(tempNovel.toJson());
           // yourNovelListController.refreshList(widget.userId);
           if (kIsWeb) {
-            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.pushReplacement(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.foldTransition);
           } else {
-            pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.slideDownTransition);
+            pageStateProvider.push(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.foldTransition);
           }
         },
         child: Container(
