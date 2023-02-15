@@ -60,6 +60,7 @@ class FoldingPage extends Page {
         );
       },
       transitionDuration: const Duration(milliseconds: 1500),
+      reverseTransitionDuration: const Duration(milliseconds: 1500),
       maintainState: true,
     );
   }
