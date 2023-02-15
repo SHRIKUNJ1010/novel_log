@@ -5,6 +5,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:novel_log/utility/color.dart';
 
 class FoldPainter extends CustomPainter {
   //
@@ -91,7 +92,7 @@ class FoldPainter extends CustomPainter {
     dy = (sqrt(pow((y2 - y1), 2) + pow((x2 - x1), 2))) / (2 * sin(atan(((y2 - y1) / (x2 - x1))).abs()));
 
     var foldedPaint = Paint()
-      ..color = Colors.blue
+      ..color = appThemeColor[100]!
       ..strokeWidth = 2.0;
 
     var unfoldedPaint = Paint()
