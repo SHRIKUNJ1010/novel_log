@@ -2,22 +2,22 @@
 * Created by Shrikunj Patel on 1/12/2023.
 */
 import 'dart:async';
+import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/data_models/user_profile_model.dart';
+import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
-import 'dart:io' show Platform;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,6 +32,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordEditingController = TextEditingController();
   late Image smallBackgroundImage;
   late Image bigBackgroundImage;
+
+  UserDataController userController = Get.put(UserDataController());
 
   bool verifyFields() {
     return emailEditingController.text.isNotEmpty && passwordEditingController.text.isNotEmpty && Utility.validateEmail(emailEditingController.text);
@@ -55,8 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
-      Utility.printLog(tempUser.toJson());
+      userController.getUserData(tempUserId);
       drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       Preference.setUserId(tempUserId);
       Preference.setIsUserLoggedIn(true);

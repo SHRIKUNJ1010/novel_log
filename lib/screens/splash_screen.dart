@@ -4,18 +4,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
-import 'package:novel_log/models/data_models/user_profile_model.dart';
+import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../utility/utility.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -26,6 +24,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   bool isLoggedIn = false;
+  UserDataController userController = Get.put(UserDataController());
 
   void manageHomeNavigation() async {
     prefs = await SharedPreferences.getInstance();
@@ -35,8 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();
         if (tempUserId != '') {
-          UserProfileModel tempUser = await UserServices.getUserData(tempUserId);
-          Utility.printLog(tempUser.toJson());
+          userController.getUserData(tempUserId);
           pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
           drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
         } else {

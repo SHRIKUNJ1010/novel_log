@@ -3,6 +3,7 @@ class UserProfileModel {
   String? userName;
   String? email;
   String? userProfileImageUrl;
+  String? userHiddenPin;
   int? todayChapterReadCount;
   List<dynamic> weeklyChapterReadCount = List.filled(7, 0);
   List<dynamic> monthlyChapterReadCount = List.filled(31, 0);
@@ -27,6 +28,7 @@ class UserProfileModel {
     this.totalNovelReadCompleteWithNovelComplete,
     this.totalNovelReadCompleteWithNovelHiatus,
     this.totalStartedNovelCount,
+    this.userHiddenPin,
   }) {
     weeklyChapterReadCount.isEmpty ? this.weeklyChapterReadCount = List.filled(7, 0) : this.weeklyChapterReadCount = weeklyChapterReadCount;
     monthlyChapterReadCount.isEmpty ? this.monthlyChapterReadCount = List.filled(31, 0) : this.monthlyChapterReadCount = monthlyChapterReadCount;
@@ -44,6 +46,7 @@ class UserProfileModel {
     this.totalNovelReadCompleteWithNovelComplete = 0,
     this.totalChapterReadCount = 0,
     this.dailyAverageChapterReadCount = 0,
+    this.userHiddenPin = '',
     List<dynamic> weeklyChapterReadCount = const [],
     List<dynamic> monthlyChapterReadCount = const [],
     List<dynamic> yearlyChapterReadCount = const [],
@@ -67,6 +70,7 @@ class UserProfileModel {
     weeklyChapterReadCount = json['weekly_chapter_read_count'] ?? [];
     monthlyChapterReadCount = json['monthly_chapter_read_count'] ?? [];
     yearlyChapterReadCount = json['yearly_chapter_read_count'] ?? [];
+    userHiddenPin = json['user_hidden_pin'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +87,7 @@ class UserProfileModel {
     data['weekly_chapter_read_count'] = weeklyChapterReadCount;
     data['monthly_chapter_read_count'] = monthlyChapterReadCount;
     data['yearly_chapter_read_count'] = yearlyChapterReadCount;
+    data['user_hidden_pin'] = userHiddenPin;
     return data;
   }
 
@@ -98,6 +103,7 @@ class UserProfileModel {
     int? totalNovelReadCompleteWithNovelComplete,
     int? totalChapterReadCount,
     int? dailyAverageChapterReadCount,
+    String? userHiddenPin,
     List<dynamic> weeklyChapterReadCount = const [],
     List<dynamic> monthlyChapterReadCount = const [],
     List<dynamic> yearlyChapterReadCount = const [],
@@ -107,6 +113,7 @@ class UserProfileModel {
     this.email = email ?? oldModel.email;
     this.totalStartedNovelCount = totalStartedNovelCount ?? oldModel.totalStartedNovelCount;
     this.userProfileImageUrl = userProfileImageUrl ?? oldModel.userProfileImageUrl;
+    this.userHiddenPin = userHiddenPin ?? oldModel.userHiddenPin;
     this.todayChapterReadCount = todayChapterReadCount ?? oldModel.todayChapterReadCount;
     this.totalNovelReadCompleteWithNovelHiatus = totalNovelReadCompleteWithNovelHiatus ?? oldModel.totalNovelReadCompleteWithNovelHiatus;
     this.totalNovelReadCompleteWithNovelComplete = totalNovelReadCompleteWithNovelComplete ?? oldModel.totalNovelReadCompleteWithNovelComplete;
