@@ -52,14 +52,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: GetBuilder<UserDataController>(
         builder: (controller) {
           return Column(
+            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              CircleAvatar(
-                radius: 30,
-                child: Image.asset(
-                  avatarPlaceholderImage,
-                  fit: BoxFit.cover,
-                ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      image: const DecorationImage(
+                        image: AssetImage(avatarPlaceholderImage),
+                        fit: BoxFit.cover,
+                      ),
+                      borderRadius: BorderRadius.circular(60),
+                    ),
+                  ),
+                ],
               ),
               TextView(
                 label: controller.userData.userName ?? 'No Name',
@@ -71,6 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 fontSize: 24,
                 color: appPrimaryColor,
               ),
+              const SizedBox(height: 20),
               NovelStatisticWidget(
                 todayChapterReadCount: controller.userData.todayChapterReadCount ?? 0,
                 totalStartedNovelCount: controller.userData.totalStartedNovelCount ?? 0,
@@ -78,6 +91,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 totalNovelReadCompleteWithNovelComplete: controller.userData.totalNovelReadCompleteWithNovelComplete ?? 0,
                 totalNovelReadCompleteWithNovelHiatus: controller.userData.totalNovelReadCompleteWithNovelHiatus ?? 0,
                 dailyAverageChapterReadCount: controller.userData.dailyAverageChapterReadCount ?? 0,
+                fontSize: width > 720
+                    ? 22
+                    : width > 670
+                        ? 20
+                        : width > 645
+                            ? 18
+                            : width > 620
+                                ? 16
+                                : 18,
               ),
             ],
           );

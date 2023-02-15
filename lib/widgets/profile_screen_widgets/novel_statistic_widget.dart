@@ -13,6 +13,7 @@ class NovelStatisticWidget extends StatelessWidget {
   final int totalNovelReadCompleteWithNovelComplete;
   final int totalNovelReadCompleteWithNovelHiatus;
   final double dailyAverageChapterReadCount;
+  final double fontSize;
 
   const NovelStatisticWidget({
     Key? key,
@@ -22,50 +23,103 @@ class NovelStatisticWidget extends StatelessWidget {
     required this.totalNovelReadCompleteWithNovelComplete,
     required this.totalNovelReadCompleteWithNovelHiatus,
     required this.dailyAverageChapterReadCount,
+    this.fontSize = 22,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: appThemeColor[300],
+      decoration: BoxDecoration(
+        color: appThemeColor[300],
+        borderRadius: BorderRadius.circular(10),
+      ),
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Today Chapter Read Count: $todayChapterReadCount',
-            color: mWhite,
-            fontSize: 22,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Today Chapter Read Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Total Novel Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Total Chapter Read Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Complete Novel Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Hiatus Novel Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Daily Average Chapter Read Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+            ],
           ),
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Total Novel Count: $totalStartedNovelCount',
-            color: mWhite,
-            fontSize: 22,
-          ),
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Total Chapter Read Count: $totalChapterReadCount',
-            color: mWhite,
-            fontSize: 22,
-          ),
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Complete Novel Count: $totalNovelReadCompleteWithNovelComplete',
-            color: mWhite,
-            fontSize: 22,
-          ),
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Hiatus Novel Count: $totalNovelReadCompleteWithNovelHiatus',
-            color: mWhite,
-            fontSize: 22,
-          ),
-          TextView(
-            padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-            label: 'Daily Average Chapter Read Count: $dailyAverageChapterReadCount',
-            color: mWhite,
-            fontSize: 22,
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$todayChapterReadCount',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$totalStartedNovelCount',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$totalChapterReadCount',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$totalNovelReadCompleteWithNovelComplete',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$totalNovelReadCompleteWithNovelHiatus',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$dailyAverageChapterReadCount',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+            ],
           ),
         ],
       ),
