@@ -44,7 +44,7 @@ class NovelDescriptionModel {
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
-    novelGenre = json['novel_genre'];
+    novelGenre = (json['novel_genre'] as List).map((e) => e.toString()).toList();
     novelDescription = json['novel_description'];
     novelImageUrl = json['novel_image_url'];
     isNovel = json['is_novel'] == '1' ? true : false;

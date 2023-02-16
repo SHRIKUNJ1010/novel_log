@@ -22,6 +22,7 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
 
     bool show404 = false;
     Utility.printLog('Url Path: ${uri.path}');
+    Utility.printLog('Is User Logged In : ${Preference.getIsUserLoggedIn()}');
     if (urlSegments.isNotEmpty) {
       switch (urlSegments[0]) {
         case loginScreenRoute:

@@ -41,7 +41,10 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Listener(
       onPointerDown: (_) {
-        FocusManager.instance.primaryFocus?.unfocus();
+        /*FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus!.unfocus();
+        }*/
       },
       child: GetMaterialApp.router(
         title: appName,
