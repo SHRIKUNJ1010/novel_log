@@ -94,27 +94,36 @@ class PageConfigList {
     );
   }
 
-  static PageConfiguration getCreateNovelListItemScreen(String userId) {
+  static PageConfiguration getCreateNovelListItemScreen(String? userId, [String? novelId]) {
     return PageConfiguration(
       key: 'create_novel_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
-      path: createNovelListItemScreenRoute,
-      arguments: userId,
+      path: novelId != null ? editNovelListItemScreenRoute : createNovelListItemScreenRoute,
+      arguments: {
+        'user_id': userId,
+        'novel_id': novelId,
+      },
     );
   }
 
-  static PageConfiguration getCreateNovelWishListItemScreen(String userId) {
+  static PageConfiguration getCreateNovelWishListItemScreen(String? userId, [String? novelId]) {
     return PageConfiguration(
       key: 'create_novel_wish_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
-      path: createNovelWishListItemScreenRoute,
-      arguments: userId,
+      path: novelId != null ? editNovelWishListItemScreenRoute : createNovelWishListItemScreenRoute,
+      arguments: {
+        'user_id': userId,
+        'novel_id': novelId,
+      },
     );
   }
 
-  static PageConfiguration getCreateNovelHiddenListItemScreen(String userId) {
+  static PageConfiguration getCreateNovelHiddenListItemScreen(String? userId, [String? novelId]) {
     return PageConfiguration(
       key: 'create_novel_hidden_list_item_screen${DateTime.now().microsecondsSinceEpoch}',
-      path: createNovelHiddenListItemScreenRoute,
-      arguments: userId,
+      path: novelId != null ? editNovelHiddenListItemScreenRoute : createNovelHiddenListItemScreenRoute,
+      arguments: {
+        'user_id': userId,
+        'novel_id': novelId,
+      },
     );
   }
 

@@ -5,18 +5,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
+import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
+import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class CreateNovelWishListItemScreen extends StatefulWidget {
-  const CreateNovelWishListItemScreen({Key? key}) : super(key: key);
+  final String? novelId;
+  final String? userId;
+
+  const CreateNovelWishListItemScreen({
+    Key? key,
+    this.novelId,
+    this.userId,
+  }) : super(key: key);
 
   @override
   State<CreateNovelWishListItemScreen> createState() => _CreateNovelWishListItemScreenState();
@@ -33,6 +43,151 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
   bool isNovel = true;
   NovelReadingStatus novelReadingStatus = NovelReadingStatus.reading;
   NovelStatus novelStatus = NovelStatus.production;
+
+  NovelDescriptionModel? oldNovelData;
+
+  @override
+  void initState() {
+    if (widget.novelId != null) {
+      initData();
+    }
+    super.initState();
+  }
+
+  initData() async {
+    oldNovelData = await NovelServices.getNovelData(widget.novelId!);
+    novelNameController.text = oldNovelData!.novelName ?? '';
+    novelLinkUrlController.text = oldNovelData!.novelLinkUrl ?? '';
+    authorNameController.text = oldNovelData!.novelAuthorName ?? '';
+    novelDescriptionController.text = oldNovelData!.novelDescription ?? '';
+    isNovel = oldNovelData!.isNovel ?? true;
+    novelGenres = oldNovelData!.novelGenre ?? [];
+    novelReadingStatus = oldNovelData!.novelReadingStatus ?? NovelReadingStatus.reading;
+    novelStatus = oldNovelData!.novelStatus ?? NovelStatus.production;
+  }
+
+  checkValidationAndCreateEditNovel() {
+    if (novelNameController.text.trim().isNotEmpty) {
+      if (widget.novelId != null) {
+        NovelServices.editNovel(
+          widget.novelId ?? '',
+          NovelDescriptionModel(
+            userId: widget.userId??Preference.getUserId(),
+            novelName: novelNameController.text,
+            novelAuthorName: authorNameController.text,
+            novelGenre: novelGenres,
+            novelDescription: novelDescriptionController.text,
+            novelImageUrl: '',
+            isNovel: isNovel,
+            totalNovelChapterCount: 0,
+            readNovelChapterCount: 0,
+            novelLinkUrl: novelLinkUrlController.text,
+            novelStatus: Utility.novelStatusToString(novelStatus),
+            novelReadingStatus: Utility.novelReadingStatusToString(novelReadingStatus),
+            isHidden: false,
+            isInWishList: true,
+          ).toJson(),
+        );
+        if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+          final tempUserController = Get.put(UserDataController());
+          switch (oldNovelData!.novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId??Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId??Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
+              );
+              break;
+            default:
+              break;
+          }
+          switch (novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId??Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId??Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+              );
+              break;
+            default:
+              break;
+          }
+        }
+      } else {
+        final tempUserController = Get.put(UserDataController());
+        NovelServices.createNovel(
+          NovelDescriptionModel(
+            userId: widget.userId??Preference.getUserId(),
+            novelName: novelNameController.text,
+            novelAuthorName: authorNameController.text,
+            novelGenre: novelGenres,
+            novelDescription: novelDescriptionController.text,
+            novelImageUrl: '',
+            isNovel: isNovel,
+            totalNovelChapterCount: 0,
+            readNovelChapterCount: 0,
+            novelLinkUrl: novelLinkUrlController.text,
+            novelStatus: Utility.novelStatusToString(novelStatus),
+            novelReadingStatus: Utility.novelReadingStatusToString(novelReadingStatus),
+            isHidden: false,
+            isInWishList: true,
+          ).toJson(),
+        );
+        switch (novelReadingStatus) {
+          case NovelReadingStatus.notStarted:
+          case NovelReadingStatus.reading:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId??Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
+            break;
+          case NovelReadingStatus.hiatusCompleted:
+            UserServices.changeHiatusNovelCountOfUser(
+              widget.userId??Preference.getUserId(),
+              tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+            );
+            break;
+          case NovelReadingStatus.completed:
+            UserServices.changeCompleteNovelCountOfUser(
+              widget.userId??Preference.getUserId(),
+              tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+            );
+            break;
+          default:
+            break;
+        }
+      }
+      if (kIsWeb) {
+        pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+      } else {
+        pageStateProvider.pop();
+      }
+    } else {
+      Utility.toastMessage(mFA5D5D, 'Invalid Field', 'Novel Name field can\'t be left empty');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,35 +220,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
           Padding(
             padding: const EdgeInsets.only(right: 15),
             child: InkWell(
-              onTap: () {
-                if (novelNameController.text.trim().isNotEmpty) {
-                  NovelServices.createNovel(
-                    NovelDescriptionModel(
-                      userId: Preference.getUserId(),
-                      novelName: novelNameController.text,
-                      novelAuthorName: authorNameController.text,
-                      novelGenre: novelGenres,
-                      novelDescription: novelDescriptionController.text,
-                      novelImageUrl: '',
-                      isNovel: isNovel,
-                      totalNovelChapterCount: 0,
-                      readNovelChapterCount: 0,
-                      novelLinkUrl: novelLinkUrlController.text,
-                      novelStatus: Utility.novelStatusToString(novelStatus),
-                      novelReadingStatus: Utility.novelReadingStatusToString(novelReadingStatus),
-                      isHidden: false,
-                      isInWishList: true,
-                    ).toJson(),
-                  );
-                  if (kIsWeb) {
-                    pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
-                  } else {
-                    pageStateProvider.pop();
-                  }
-                } else {
-                  Utility.toastMessage(mFA5D5D, 'Invalid Field', 'Novel Name field can\'t be left empty');
-                }
-              },
+              onTap: checkValidationAndCreateEditNovel,
               child: const Icon(
                 Icons.check,
                 color: mWhite,

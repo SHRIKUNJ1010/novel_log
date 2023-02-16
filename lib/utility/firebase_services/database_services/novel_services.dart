@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/models/data_models/novel_list_item_model.dart';
 import 'package:novel_log/models/data_models/novel_wish_list_item_model.dart';
 import 'package:novel_log/utility/firebase_services/database_services/firebase_database_services.dart';
@@ -7,6 +8,15 @@ class NovelServices {
   //function for creating novel data in server
   static Future<void> createNovel(Map<String, dynamic> data) async {
     await FirebaseDatabaseServices.novelCollectionReference.add(data);
+  }
+
+  static Future<void> editNovel(String novelId, Map<String, dynamic> data) async {
+    await FirebaseDatabaseServices.novelCollectionReference.doc(novelId).set(data);
+  }
+
+  static Future<NovelDescriptionModel> getNovelData(String novelId) async {
+    final temp = await FirebaseDatabaseServices.novelCollectionReference.doc(novelId).get();
+    return NovelDescriptionModel.fromJson(novelId, temp.data() ?? {});
   }
 
   //getting first page data for main page novel list

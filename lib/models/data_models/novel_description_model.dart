@@ -39,8 +39,8 @@ class NovelDescriptionModel {
     this.novelReadingStatus = Utility.stringToNovelReadingStatus(novelReadingStatus);
   }
 
-  NovelDescriptionModel.fromJson(Map<String, dynamic> json) {
-    novelId = json['novel_id'];
+  NovelDescriptionModel.fromJson(String tempNovelId, Map<String, dynamic> json) {
+    novelId = tempNovelId;
     userId = json['user_id'];
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];

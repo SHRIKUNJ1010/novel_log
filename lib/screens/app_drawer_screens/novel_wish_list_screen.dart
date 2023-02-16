@@ -114,16 +114,37 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                         if (index == controller.novelList.length) {
                           return Utility.getLoadingView(isLoading: controller.isLoading);
                         } else {
-                          return NovelWishListTile(
-                            novelName: controller.novelList[index].novelName ?? '',
-                            novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
-                            novelGenre: controller.novelList[index].novelGenre ?? [],
-                            novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
-                            novelAuthorName: controller.novelList[index].novelAuthorName ?? '',
-                            totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
-                            readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
-                            isNovel: controller.novelList[index].isNovel ?? true,
-                            novelStatus: controller.novelList[index].novelStatus ?? NovelStatus.production,
+                          return InkWell(
+                            onTap: () {
+                              if (kIsWeb) {
+                                pageStateProvider.pushReplacement(
+                                  PageConfigList.getCreateNovelWishListItemScreen(
+                                    widget.userId,
+                                    controller.novelList[index].novelId,
+                                  ),
+                                  TransitionType.foldTransition,
+                                );
+                              } else {
+                                pageStateProvider.push(
+                                  PageConfigList.getCreateNovelWishListItemScreen(
+                                    widget.userId,
+                                    controller.novelList[index].novelId,
+                                  ),
+                                  TransitionType.foldTransition,
+                                );
+                              }
+                            },
+                            child: NovelWishListTile(
+                              novelName: controller.novelList[index].novelName ?? '',
+                              novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
+                              novelGenre: controller.novelList[index].novelGenre ?? [],
+                              novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
+                              novelAuthorName: controller.novelList[index].novelAuthorName ?? '',
+                              totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
+                              readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
+                              isNovel: controller.novelList[index].isNovel ?? true,
+                              novelStatus: controller.novelList[index].novelStatus ?? NovelStatus.production,
+                            ),
                           );
                         }
                       },
@@ -159,19 +180,40 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                             for (int index = 0; index < controller.novelList.length + 1; index++) ...[
                               index == controller.novelList.length
                                   ? Utility.getLoadingView(isLoading: controller.isLoading)
-                                  : NovelWishListCard(
-                                      novelName: controller.novelList[index].novelName ?? '',
-                                      novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
-                                      novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
-                                      totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
-                                      readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
-                                      isNovel: controller.novelList[index].isNovel ?? true,
-                                      novelStatus: controller.novelList[index].novelStatus ?? NovelStatus.production,
-                                      novelAuthorName: controller.novelList[index].novelAuthorName ?? '',
-                                      novelDescription: controller.novelList[index].novelDescription ?? '',
-                                      novelGenre: controller.novelList[index].novelGenre ?? [],
+                                  : InkWell(
+                                      onTap: () {
+                                        if (kIsWeb) {
+                                          pageStateProvider.pushReplacement(
+                                            PageConfigList.getCreateNovelWishListItemScreen(
+                                              widget.userId,
+                                              controller.novelList[index].novelId,
+                                            ),
+                                            TransitionType.foldTransition,
+                                          );
+                                        } else {
+                                          pageStateProvider.push(
+                                            PageConfigList.getCreateNovelWishListItemScreen(
+                                              widget.userId,
+                                              controller.novelList[index].novelId,
+                                            ),
+                                            TransitionType.foldTransition,
+                                          );
+                                        }
+                                      },
+                                      child: NovelWishListCard(
+                                        novelName: controller.novelList[index].novelName ?? '',
+                                        novelLinkUrl: controller.novelList[index].novelLinkUrl ?? '',
+                                        novelImageUrl: controller.novelList[index].novelImageUrl ?? '',
+                                        totalNovelChapterCount: controller.novelList[index].totalNovelChapterCount ?? 0,
+                                        readNovelChapterCount: controller.novelList[index].readNovelChapterCount ?? 0,
+                                        isNovel: controller.novelList[index].isNovel ?? true,
+                                        novelStatus: controller.novelList[index].novelStatus ?? NovelStatus.production,
+                                        novelAuthorName: controller.novelList[index].novelAuthorName ?? '',
+                                        novelDescription: controller.novelList[index].novelDescription ?? '',
+                                        novelGenre: controller.novelList[index].novelGenre ?? [],
+                                      ),
                                     ),
-                            ]
+                            ],
                           ],
                         ),
                       ],

@@ -15,7 +15,7 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
   Future<List<PageConfiguration>> parseRouteInformation(RouteInformation routeInformation) async {
     Utility.printLog('parseRouteInformation -----------------------------------------------');
     final Uri uri = Uri.parse(routeInformation.location!);
-    final List<String> urlSegments = routeInformation.location!.split('/');
+    final List<String> urlSegments = uri.pathSegments;
     Utility.printLog('url path segments: $urlSegments');
     List<PageConfiguration> tempConfig = [];
     List<PageConfiguration> drawerConfig = [];
@@ -23,7 +23,7 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
     bool show404 = false;
     Utility.printLog('Url Path: ${uri.path}');
     if (urlSegments.isNotEmpty) {
-      switch (urlSegments[1]) {
+      switch (urlSegments[0]) {
         case loginScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
             tempConfig.add(PageConfigList.getDrawerScreen());
@@ -50,21 +50,24 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           break;
         case createNovelListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            tempConfig.add(PageConfigList.getCreateNovelListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            final data = uri.queryParameters;
+            tempConfig.add(PageConfigList.getCreateNovelListItemScreen(data['user_id'], data['novel_id']));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }
           break;
         case createNovelWishListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            final data = uri.queryParameters;
+            tempConfig.add(PageConfigList.getCreateNovelWishListItemScreen(data['user_id'], data['novel_id']));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }
           break;
         case createNovelHiddenListItemScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
-            tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(Preference.getUserId() != '' ? Preference.getUserId() : '123'));
+            final data = uri.queryParameters;
+            tempConfig.add(PageConfigList.getCreateNovelHiddenListItemScreen(data['user_id'], data['novel_id']));
           } else {
             tempConfig.add(PageConfigList.getLoginScreen());
           }
@@ -72,24 +75,24 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
         case drawerScreenRoute:
           if (Preference.getIsUserLoggedIn()) {
             tempConfig.add(PageConfigList.getDrawerScreen());
-            switch (urlSegments.length > 2 ? urlSegments[2] : yourNovelListScreenRoute) {
+            switch (urlSegments.length > 1 ? urlSegments[1] : yourNovelListScreenRoute) {
               case yourNovelListScreenRoute:
-                drawerConfig.add(PageConfigList.getYourNovelListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getYourNovelListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case novelWishListScreenRoute:
-                drawerConfig.add(PageConfigList.getNovelWishListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getNovelWishListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case novelHiddenListScreenRoute:
-                drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case profileScreenRoute:
-                drawerConfig.add(PageConfigList.getProfileScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getProfileScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case changePasswordScreenRoute:
-                drawerConfig.add(PageConfigList.getChangePasswordScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getChangePasswordScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case changeHiddenPinScreenRoute:
-                drawerConfig.add(PageConfigList.getChangeHiddenPinScreen(urlSegments.length > 3 ? urlSegments[3] : '123'));
+                drawerConfig.add(PageConfigList.getChangeHiddenPinScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               default:
                 show404 = true;
@@ -169,13 +172,25 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           }
           break;
         case createNovelListItemScreenRoute:
-          url += '$createNovelListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
+          url += '$createNovelListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}';
           break;
         case createNovelWishListItemScreenRoute:
-          url += '$createNovelWishListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
+          url += '$createNovelWishListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}';
           break;
         case createNovelHiddenListItemScreenRoute:
-          url += '$createNovelHiddenListItemScreenRoute/${configuration[configuration.length - 1].arguments}';
+          url += '$createNovelHiddenListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}';
+          break;
+        case editNovelListItemScreenRoute:
+          url +=
+              '$editNovelListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}&novel_id=${(configuration[configuration.length - 1].arguments as Map)['novel_id']}';
+          break;
+        case editNovelWishListItemScreenRoute:
+          url +=
+              '$editNovelWishListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}&novel_id=${(configuration[configuration.length - 1].arguments as Map)['novel_id']}';
+          break;
+        case editNovelHiddenListItemScreenRoute:
+          url +=
+              '$editNovelHiddenListItemScreenRoute?user_id=${(configuration[configuration.length - 1].arguments as Map)['user_id']}&novel_id=${(configuration[configuration.length - 1].arguments as Map)['novel_id']}';
           break;
         default:
           return const RouteInformation(location: '/');

@@ -34,11 +34,20 @@ class PageConfigToWidget {
       case drawerScreenRoute:
         return const DrawerScreen();
       case createNovelListItemScreenRoute:
-        return const CreateNovelListItemScreen();
+        return CreateNovelListItemScreen(
+          userId: (pageConfig.arguments as Map)['user_id'],
+          novelId: (pageConfig.arguments as Map)['novel_id'],
+        );
       case createNovelWishListItemScreenRoute:
-        return const CreateNovelWishListItemScreen();
+        return CreateNovelWishListItemScreen(
+          userId: (pageConfig.arguments as Map)['user_id'],
+          novelId: (pageConfig.arguments as Map)['novel_id'],
+        );
       case createNovelHiddenListItemScreenRoute:
-        return const CreateNovelHiddenListItemScreen();
+        return CreateNovelHiddenListItemScreen(
+          userId: (pageConfig.arguments as Map)['user_id'],
+          novelId: (pageConfig.arguments as Map)['novel_id'],
+        );
       case yourNovelListScreenRoute:
         return YourNovelListScreen(
           userId: pageConfig.arguments as String,
