@@ -4,8 +4,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
+import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
@@ -58,8 +61,29 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             padding: const EdgeInsets.only(right: 15),
             child: InkWell(
               onTap: () {
-                //TODO: api calling
-                pageStateProvider.pop();
+                if (novelNameController.text.trim().isNotEmpty) {
+                  NovelServices.createNovel(
+                    NovelDescriptionModel(
+                      userId: Preference.getUserId(),
+                      novelName: novelNameController.text,
+                      novelAuthorName: authorNameController.text,
+                      novelGenre: novelGenres,
+                      novelDescription: novelDescriptionController.text,
+                      novelImageUrl: '',
+                      isNovel: isNovel,
+                      totalNovelChapterCount: int.parse(totalChapterController.text),
+                      readNovelChapterCount: int.parse(readChapterController.text),
+                      novelLinkUrl: novelLinkUrlController.text,
+                      novelStatus: Utility.novelStatusToString(novelStatus),
+                      novelReadingStatus: Utility.novelReadingStatusToString(novelReadingStatus),
+                      isHidden: false,
+                      isInWishList: false,
+                    ).toJson(),
+                  );
+                  pageStateProvider.pop();
+                } else {
+                  Utility.toastMessage(mFA5D5D, 'Invalid Field', 'Novel Name field can\'t be left empty');
+                }
               },
               child: const Icon(
                 Icons.check,

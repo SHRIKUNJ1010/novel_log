@@ -1,4 +1,5 @@
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class NovelWishListItemModel {
   String? novelId;
@@ -28,20 +29,7 @@ class NovelWishListItemModel {
     this.isNovel,
     String novelStatus = '',
   }) {
-    switch (novelStatus) {
-      case 'production':
-        this.novelStatus = NovelStatus.production;
-        break;
-      case 'hiatus':
-        this.novelStatus = NovelStatus.hiatus;
-        break;
-      case 'completed':
-        this.novelStatus = NovelStatus.completed;
-        break;
-      default:
-        this.novelStatus = NovelStatus.production;
-        break;
-    }
+    this.novelStatus = Utility.stringToNovelStatus(novelStatus);
   }
 
   NovelWishListItemModel.fromJson(String givenId, Map<String, dynamic> json) {
@@ -56,20 +44,7 @@ class NovelWishListItemModel {
     readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
-    switch (json['novel_status']) {
-      case 'production':
-        novelStatus = NovelStatus.production;
-        break;
-      case 'hiatus':
-        novelStatus = NovelStatus.hiatus;
-        break;
-      case 'completed':
-        novelStatus = NovelStatus.completed;
-        break;
-      default:
-        novelStatus = NovelStatus.production;
-        break;
-    }
+    novelStatus = Utility.stringToNovelStatus(json['novel_status']);
   }
 
   Map<String, dynamic> toJson() {
@@ -85,20 +60,7 @@ class NovelWishListItemModel {
     data['read_novel_chapter_count'] = readNovelChapterCount.toString();
     data['novel_link_url'] = novelLinkUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
-    switch (novelStatus) {
-      case NovelStatus.production:
-        data['novel_status'] = 'production';
-        break;
-      case NovelStatus.hiatus:
-        data['novel_status'] = 'hiatus';
-        break;
-      case NovelStatus.completed:
-        data['novel_status'] = 'completed';
-        break;
-      default:
-        data['novel_status'] = 'production';
-        break;
-    }
+    data['novel_status'] = Utility.novelStatusToString(novelStatus!);
     return data;
   }
 

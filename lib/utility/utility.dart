@@ -393,6 +393,62 @@ class Utility {
     }
   }
 
+  static String novelReadingStatusToString(NovelReadingStatus status) {
+    switch (status) {
+      case NovelReadingStatus.notStarted:
+        return 'not_started';
+      case NovelReadingStatus.reading:
+        return 'reading';
+      case NovelReadingStatus.hiatusCompleted:
+        return 'hiatus_completed';
+      case NovelReadingStatus.completed:
+        return 'completed';
+      default:
+        return 'reading';
+    }
+  }
+
+  static NovelReadingStatus stringToNovelReadingStatus(String status) {
+    switch (status) {
+      case 'not_started':
+        return NovelReadingStatus.notStarted;
+      case 'reading':
+        return NovelReadingStatus.reading;
+      case 'hiatus_completed':
+        return NovelReadingStatus.hiatusCompleted;
+      case 'completed':
+        return NovelReadingStatus.completed;
+      default:
+        return NovelReadingStatus.reading;
+    }
+  }
+
+  static NovelStatus stringToNovelStatus(String status) {
+    switch (status) {
+      case 'production':
+        return NovelStatus.production;
+      case 'hiatus':
+        return NovelStatus.hiatus;
+      case 'completed':
+        return NovelStatus.completed;
+      default:
+        return NovelStatus.production;
+    }
+  }
+
+  static String novelStatusToString(NovelStatus status) {
+    switch (status) {
+      case NovelStatus.production:
+        return 'production';
+      case NovelStatus.hiatus:
+        return 'hiatus';
+      case NovelStatus.completed:
+        return 'completed';
+      default:
+        return 'production';
+    }
+  }
+
   static String getFirstLetterCapital(String value) {
     return (value.substring(0, 1).toUpperCase() + value.substring(1));
   }

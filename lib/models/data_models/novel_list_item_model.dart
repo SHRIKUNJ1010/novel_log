@@ -1,4 +1,5 @@
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class NovelListItemModel {
   String? novelId;
@@ -28,23 +29,7 @@ class NovelListItemModel {
     this.isNovel,
     String novelReadingStatus = '',
   }) {
-    switch (novelReadingStatus) {
-      case 'not_started':
-        this.novelReadingStatus = NovelReadingStatus.notStarted;
-        break;
-      case 'reading':
-        this.novelReadingStatus = NovelReadingStatus.reading;
-        break;
-      case 'hiatusCompleted':
-        this.novelReadingStatus = NovelReadingStatus.hiatusCompleted;
-        break;
-      case 'completed':
-        this.novelReadingStatus = NovelReadingStatus.completed;
-        break;
-      default:
-        this.novelReadingStatus = NovelReadingStatus.reading;
-        break;
-    }
+    this.novelReadingStatus = Utility.stringToNovelReadingStatus(novelReadingStatus);
   }
 
   NovelListItemModel.fromJson(String givenId, Map<String, dynamic> json) {
@@ -59,23 +44,7 @@ class NovelListItemModel {
     readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
-    switch (json['novel_reading_status']) {
-      case 'not_started':
-        novelReadingStatus = NovelReadingStatus.notStarted;
-        break;
-      case 'reading':
-        novelReadingStatus = NovelReadingStatus.reading;
-        break;
-      case 'hiatus_completed':
-        novelReadingStatus = NovelReadingStatus.hiatusCompleted;
-        break;
-      case 'completed':
-        novelReadingStatus = NovelReadingStatus.completed;
-        break;
-      default:
-        novelReadingStatus = NovelReadingStatus.reading;
-        break;
-    }
+    novelReadingStatus = Utility.stringToNovelReadingStatus(json['novel_reading_status']);
   }
 
   Map<String, dynamic> toJson() {
@@ -91,23 +60,7 @@ class NovelListItemModel {
     data['read_novel_chapter_count'] = readNovelChapterCount.toString();
     data['novel_link_url'] = novelLinkUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
-    switch (novelReadingStatus) {
-      case NovelReadingStatus.notStarted:
-        data['novel_reading_status'] = 'not_started';
-        break;
-      case NovelReadingStatus.reading:
-        data['novel_reading_status'] = 'reading';
-        break;
-      case NovelReadingStatus.hiatusCompleted:
-        data['novel_reading_status'] = 'hiatus_completed';
-        break;
-      case NovelReadingStatus.completed:
-        data['novel_reading_status'] = 'completed';
-        break;
-      default:
-        data['novel_reading_status'] = 'reading';
-        break;
-    }
+    data['novel_reading_status'] = Utility.novelReadingStatusToString(novelReadingStatus!);
     return data;
   }
 
