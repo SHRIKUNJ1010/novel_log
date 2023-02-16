@@ -2,12 +2,14 @@
 * Created by Shrikunj Patel on 1/30/2023.
 */
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
+import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -42,7 +44,11 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
       appBar: AppBar(
         leading: InkWell(
           onTap: () {
-            pageStateProvider.pop();
+            if (kIsWeb) {
+              pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+            } else {
+              pageStateProvider.pop();
+            }
           },
           child: const Icon(
             Icons.close,
@@ -51,8 +57,8 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
           ),
         ),
         title: const TextView(
-          label: 'Create Novel',
-          fontSize: 26,
+          label: 'Create Hidden List Novel',
+          fontSize: 18,
           color: mWhite,
         ),
         centerTitle: true,
@@ -80,7 +86,11 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       isInWishList: false,
                     ).toJson(),
                   );
-                  pageStateProvider.pop();
+                  if (kIsWeb) {
+                    pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+                  } else {
+                    pageStateProvider.pop();
+                  }
                 } else {
                   Utility.toastMessage(mFA5D5D, 'Invalid Field', 'Novel Name field can\'t be left empty');
                 }
