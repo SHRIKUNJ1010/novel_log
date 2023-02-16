@@ -72,7 +72,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
         NovelServices.editNovel(
           widget.novelId ?? '',
           NovelDescriptionModel(
-            userId: widget.userId??Preference.getUserId(),
+            userId: widget.userId ?? Preference.getUserId(),
             novelName: novelNameController.text,
             novelAuthorName: authorNameController.text,
             novelGenre: novelGenres,
@@ -99,13 +99,13 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
               break;
             case NovelReadingStatus.hiatusCompleted:
               UserServices.changeHiatusNovelCountOfUser(
-                widget.userId??Preference.getUserId(),
+                widget.userId ?? Preference.getUserId(),
                 tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
               );
               break;
             case NovelReadingStatus.completed:
               UserServices.changeCompleteNovelCountOfUser(
-                widget.userId??Preference.getUserId(),
+                widget.userId ?? Preference.getUserId(),
                 tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
               );
               break;
@@ -121,13 +121,13 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
               break;
             case NovelReadingStatus.hiatusCompleted:
               UserServices.changeHiatusNovelCountOfUser(
-                widget.userId??Preference.getUserId(),
+                widget.userId ?? Preference.getUserId(),
                 tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
               );
               break;
             case NovelReadingStatus.completed:
               UserServices.changeCompleteNovelCountOfUser(
-                widget.userId??Preference.getUserId(),
+                widget.userId ?? Preference.getUserId(),
                 tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
               );
               break;
@@ -139,7 +139,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
         final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(
           NovelDescriptionModel(
-            userId: widget.userId??Preference.getUserId(),
+            userId: widget.userId ?? Preference.getUserId(),
             novelName: novelNameController.text,
             novelAuthorName: authorNameController.text,
             novelGenre: novelGenres,
@@ -159,19 +159,19 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
           case NovelReadingStatus.notStarted:
           case NovelReadingStatus.reading:
             UserServices.changeTotalNovelCountOfUser(
-              widget.userId??Preference.getUserId(),
+              widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalStartedNovelCount! + 1,
             );
             break;
           case NovelReadingStatus.hiatusCompleted:
             UserServices.changeHiatusNovelCountOfUser(
-              widget.userId??Preference.getUserId(),
+              widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
             );
             break;
           case NovelReadingStatus.completed:
             UserServices.changeCompleteNovelCountOfUser(
-              widget.userId??Preference.getUserId(),
+              widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
             );
             break;
@@ -210,8 +210,8 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             size: 30,
           ),
         ),
-        title: const TextView(
-          label: 'Create Wish List Novel',
+        title: TextView(
+          label: widget.novelId != null ? 'Edit Wish List Novel' : 'Create Wish List Novel',
           fontSize: 18,
           color: mWhite,
         ),

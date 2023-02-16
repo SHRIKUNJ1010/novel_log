@@ -224,8 +224,8 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
             size: 30,
           ),
         ),
-        title: const TextView(
-          label: 'Create Hidden List Novel',
+        title: TextView(
+          label: widget.novelId != null ? 'Edit Hidden List Novel' : 'Create Hidden List Novel',
           fontSize: 18,
           color: mWhite,
         ),

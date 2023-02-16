@@ -224,8 +224,8 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             size: 30,
           ),
         ),
-        title: const TextView(
-          label: 'Create Novel',
+        title: TextView(
+          label: widget.novelId != null ? 'Edit Novel' : 'Create Novel',
           fontSize: 26,
           color: mWhite,
         ),
