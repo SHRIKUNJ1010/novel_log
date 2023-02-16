@@ -76,18 +76,6 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
           : null,
       floatingActionButton: InkWell(
         onTap: () {
-          // NovelDescriptionModel tempNovel = NovelDescriptionModel(
-          //   userId: widget.userId,
-          //   novelName: 'Testing Novel ${yourNovelListController.novelList.length}',
-          //   novelLinkUrl: 'https://testing_example.com',
-          //   novelAuthorName: 'testing author name',
-          //   novelDescription:
-          //       'this is testing description for novel although it is not necessary to have this discription but it helps manage ui lets use this and see if it really makes ui better',
-          //   novelGenre: ['testing 1', 'testing 2', 'testing 3'],
-          //   isHidden: true,
-          // );
-          // NovelServices.createNovel(tempNovel.toJson());
-          // yourNovelListController.refreshList(widget.userId);
           if (kIsWeb) {
             pageStateProvider.pushReplacement(PageConfigList.getCreateNovelListItemScreen(widget.userId), TransitionType.foldTransition);
           } else {
