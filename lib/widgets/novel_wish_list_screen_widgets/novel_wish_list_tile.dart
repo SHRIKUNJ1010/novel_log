@@ -61,30 +61,32 @@ class NovelWishListTile extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  Positioned(
-                    bottom: 5,
-                    right: 5,
-                    child: Container(
-                      width: 20,
-                      height: 20,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(20),
-                        border: Border.all(
-                          color: mBlack,
-                          width: 1,
-                        ),
-                      ),
-                      padding: EdgeInsets.zero,
-                      alignment: Alignment.center,
-                      child: const TextView(
-                        label: 'N',
-                        fontSize: 10,
-                        fontWeight: FontWeight.w900,
-                        color: mBlack,
-                      ),
-                    ),
-                  ),
+                  isNovel
+                      ? Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: mBlack,
+                                width: 1,
+                              ),
+                            ),
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: const TextView(
+                              label: 'N',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                              color: mBlack,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),

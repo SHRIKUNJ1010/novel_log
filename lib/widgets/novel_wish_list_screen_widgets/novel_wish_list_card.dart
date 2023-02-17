@@ -152,28 +152,30 @@ class NovelWishListCard extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(
-            bottom: 5,
-            right: 5,
-            child: Container(
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(22),
-                border: Border.all(
-                  color: mBlack,
-                  width: 1,
-                ),
-              ),
-              alignment: Alignment.center,
-              child: const TextView(
-                label: 'N',
-                fontSize: 10,
-                color: mBlack,
-              ),
-            ),
-          ),
+          isNovel
+              ? Positioned(
+                  bottom: 5,
+                  right: 5,
+                  child: Container(
+                    width: 22,
+                    height: 22,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      borderRadius: BorderRadius.circular(22),
+                      border: Border.all(
+                        color: mBlack,
+                        width: 1,
+                      ),
+                    ),
+                    alignment: Alignment.center,
+                    child: const TextView(
+                      label: 'N',
+                      fontSize: 10,
+                      color: mBlack,
+                    ),
+                  ),
+                )
+              : const SizedBox(),
         ],
       ),
     );
