@@ -31,7 +31,7 @@ class NovelHiddenListController extends GetxController {
     novelList = [];
     remainingLength = 0;
     callIsLoading();
-    final data = await NovelServices.getNovelHiddenListFirstPage();
+    final data = await NovelServices.getNovelHiddenListFirstPage(userId);
     lastData = data['last_document'];
     novelList = data['novel_list'];
     remainingLength = data['remaining_length'];
@@ -42,7 +42,7 @@ class NovelHiddenListController extends GetxController {
   addNextData(String userId) async {
     if (remainingLength < 20) return;
     callIsLoading();
-    final data = await NovelServices.getNovelHiddenListNextPages(lastData);
+    final data = await NovelServices.getNovelHiddenListNextPages(userId, lastData);
     lastData = data['last_document'];
     novelList += data['novel_list'];
     remainingLength = data['remaining_length'];

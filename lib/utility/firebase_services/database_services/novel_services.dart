@@ -20,8 +20,9 @@ class NovelServices {
   }
 
   //getting first page data for main page novel list
-  static Future<Map<String, dynamic>> getMainNovelListFirstPage() async {
+  static Future<Map<String, dynamic>> getMainNovelListFirstPage(String userId) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "0")
         .orderBy("read_novel_chapter_count")
@@ -38,9 +39,11 @@ class NovelServices {
   //getting next page data from last document snapshot of previous page for
   //main page novel list
   static Future<Map<String, dynamic>> getMainNovelListNextPages(
+    String userId,
     QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "0")
         .orderBy("read_novel_chapter_count")
@@ -56,8 +59,9 @@ class NovelServices {
   }
 
   //first page novel wish list
-  static Future<Map<String, dynamic>> getNovelWishListFirstPage() async {
+  static Future<Map<String, dynamic>> getNovelWishListFirstPage(String userId) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "1")
         .orderBy("total_novel_chapter_count")
@@ -72,9 +76,11 @@ class NovelServices {
 
   //next page novel wish list
   static Future<Map<String, dynamic>> getNovelWishListNextPages(
+    String userId,
     QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "1")
         .orderBy("total_novel_chapter_count")
@@ -89,9 +95,13 @@ class NovelServices {
   }
 
   //first page for novel hidden list
-  static Future<Map<String, dynamic>> getNovelHiddenListFirstPage() async {
-    final tempData =
-        await FirebaseDatabaseServices.novelCollectionReference.where("is_hidden", isEqualTo: "1").where("is_in_wish_list", isEqualTo: "0").limit(20).get();
+  static Future<Map<String, dynamic>> getNovelHiddenListFirstPage(String userId) async {
+    final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
+        .where("is_hidden", isEqualTo: "1")
+        .where("is_in_wish_list", isEqualTo: "0")
+        .limit(20)
+        .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelListItemModel.fromJson(e.id, e.data())).toList(),
       "last_document": tempData.docs[tempData.docs.length - 1],
@@ -101,9 +111,11 @@ class NovelServices {
 
   //next page for novel hidden list
   static Future<Map<String, dynamic>> getNovelHiddenListNextPages(
+    String userId,
     QueryDocumentSnapshot<Map<String, dynamic>>? startAfterDoc,
   ) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference
+        .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "1")
         .where("is_in_wish_list", isEqualTo: "0")
         .startAfterDocument(startAfterDoc!)

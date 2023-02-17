@@ -32,7 +32,7 @@ class YourNovelListController extends GetxController {
     novelList = [];
     remainingLength = 0;
     callIsLoading();
-    final data = await NovelServices.getMainNovelListFirstPage();
+    final data = await NovelServices.getMainNovelListFirstPage(userId);
     lastData = data['last_document'];
     novelList = data['novel_list'];
     remainingLength = data['remaining_length'];
@@ -43,7 +43,7 @@ class YourNovelListController extends GetxController {
   addNextData(String userId) async {
     if (remainingLength < 20) return;
     callIsLoading();
-    final data = await NovelServices.getMainNovelListNextPages(lastData);
+    final data = await NovelServices.getMainNovelListNextPages(userId, lastData);
     lastData = data['last_document'];
     novelList += data['novel_list'];
     remainingLength = data['remaining_length'];
