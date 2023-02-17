@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
+import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
@@ -193,6 +194,10 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
           tempUserController.userData.totalChapterReadCount! + int.parse(readChapterController.text),
         );
       }
+      final tempUserController = Get.put(UserDataController());
+      final tempNovelListController = Get.put(YourNovelListController());
+      tempUserController.getUserData(widget.userId ?? Preference.getUserId());
+      tempNovelListController.refreshList(widget.userId ?? Preference.getUserId());
       if (kIsWeb) {
         pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
       } else {

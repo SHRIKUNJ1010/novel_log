@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
+import 'package:novel_log/models/getx_controller_model/novel_wish_list_controller.dart';
 import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
@@ -179,6 +180,11 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             break;
         }
       }
+      final tempUserController = Get.put(UserDataController());
+      final tempNovelWishListController = Get.put(NovelWishListController());
+      tempUserController.getUserData(widget.userId ?? Preference.getUserId());
+      tempNovelWishListController.refreshList(widget.userId ?? Preference.getUserId());
+
       if (kIsWeb) {
         pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
       } else {
