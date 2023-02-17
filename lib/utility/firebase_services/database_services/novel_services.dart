@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/models/data_models/novel_list_item_model.dart';
 import 'package:novel_log/models/data_models/novel_wish_list_item_model.dart';
+import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/firebase_database_services.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class NovelServices {
   //function for creating novel data in server
@@ -17,6 +19,29 @@ class NovelServices {
   static Future<NovelDescriptionModel> getNovelData(String novelId) async {
     final temp = await FirebaseDatabaseServices.novelCollectionReference.doc(novelId).get();
     return NovelDescriptionModel.fromJson(novelId, temp.data() ?? {});
+  }
+
+  static Future<void> userNovelStatistic(String userId) async {
+    final tempData = await FirebaseDatabaseServices.novelCollectionReference.where("user_id", isEqualTo: userId).get();
+    int readChapterCount = 0;
+    int totalNovelCount = tempData.docs.length;
+    int totalCompletedNovelCount = 0;
+    int totalHiatusNovelCount = 0;
+
+    final tempList = tempData.docs.map((e) => NovelDescriptionModel.fromJson(e.id, e.data())).toList();
+
+    for (var e in tempList) {
+      readChapterCount += e.readNovelChapterCount ?? 0;
+      if (e.novelReadingStatus == NovelReadingStatus.completed) {
+        totalCompletedNovelCount++;
+      }
+      if (e.novelReadingStatus == NovelReadingStatus.hiatusCompleted) {
+        totalHiatusNovelCount++;
+      }
+    }
+
+    Utility.printLog(
+        "Read chapter count: $readChapterCount ======== \nTotal Novel Count $totalNovelCount ======= \nTotal Completed Novel Count $totalCompletedNovelCount ======= \nTotal Hiatus Novel Count $totalHiatusNovelCount =======");
   }
 
   //getting first page data for main page novel list
