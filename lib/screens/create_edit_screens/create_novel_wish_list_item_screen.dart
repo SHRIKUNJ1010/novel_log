@@ -38,6 +38,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
   TextEditingController novelLinkUrlController = TextEditingController();
   TextEditingController authorNameController = TextEditingController();
   TextEditingController novelDescriptionController = TextEditingController();
+  TextEditingController indexingGroupNameController = TextEditingController();
 
   //List<String> novelGenres = ['Action', 'Adventure', 'Comedy', 'Classics', 'Mystery', 'Horror', 'SCi-Fi', 'Thriller', 'Romance', 'Magical Realism'];
   List<String> novelGenres = [];
@@ -60,6 +61,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
     novelNameController.text = oldNovelData!.novelName ?? '';
     novelLinkUrlController.text = oldNovelData!.novelLinkUrl ?? '';
     authorNameController.text = oldNovelData!.novelAuthorName ?? '';
+    indexingGroupNameController.text = oldNovelData!.indexingGroupName ?? '';
     novelDescriptionController.text = oldNovelData!.novelDescription ?? '';
     isNovel = oldNovelData!.isNovel ?? true;
     novelGenres = oldNovelData!.novelGenre ?? [];
@@ -79,6 +81,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             novelGenre: novelGenres,
             novelDescription: novelDescriptionController.text,
             novelImageUrl: '',
+            indexingGroupName: indexingGroupNameController.text,
             isNovel: isNovel,
             totalNovelChapterCount: 0,
             readNovelChapterCount: 0,
@@ -146,6 +149,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             novelGenre: novelGenres,
             novelDescription: novelDescriptionController.text,
             novelImageUrl: '',
+            indexingGroupName: indexingGroupNameController.text,
             isNovel: isNovel,
             totalNovelChapterCount: 0,
             readNovelChapterCount: 0,
@@ -277,6 +281,19 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Link URL',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: indexingGroupNameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Group Name',
                           hintStyle: Utility.getRichTextStyle(
                             fontSize: 16,
                             color: mBlack,

@@ -13,6 +13,7 @@ class NovelDescriptionModel {
   int? totalNovelChapterCount;
   int? readNovelChapterCount;
   String? novelLinkUrl;
+  String? indexingGroupName;
   NovelStatus? novelStatus;
   NovelReadingStatus? novelReadingStatus;
   bool? isHidden;
@@ -26,6 +27,7 @@ class NovelDescriptionModel {
     this.novelGenre = const [],
     this.novelDescription = '',
     this.novelImageUrl = '',
+    this.indexingGroupName = '',
     this.isNovel = true,
     this.totalNovelChapterCount = 0,
     this.readNovelChapterCount = 0,
@@ -47,6 +49,7 @@ class NovelDescriptionModel {
     novelGenre = (json['novel_genre'] as List).map((e) => e.toString()).toList();
     novelDescription = json['novel_description'];
     novelImageUrl = json['novel_image_url'];
+    indexingGroupName = json['indexing_group_name'];
     isNovel = json['is_novel'] == '1' ? true : false;
     totalNovelChapterCount = json['total_novel_chapter_count'];
     readNovelChapterCount = json['read_novel_chapter_count'];
@@ -65,6 +68,7 @@ class NovelDescriptionModel {
     data['novel_genre'] = novelGenre;
     data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
+    data['indexing_group_name'] = indexingGroupName;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     data['total_novel_chapter_count'] = totalNovelChapterCount;
     data['read_novel_chapter_count'] = readNovelChapterCount;

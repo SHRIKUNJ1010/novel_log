@@ -39,6 +39,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
   TextEditingController novelLinkUrlController = TextEditingController();
   TextEditingController authorNameController = TextEditingController();
   TextEditingController novelDescriptionController = TextEditingController();
+  TextEditingController indexingGroupNameController = TextEditingController();
 
   //List<String> novelGenres = ['Action', 'Adventure', 'Comedy', 'Classics', 'Mystery', 'Horror', 'SCi-Fi', 'Thriller', 'Romance', 'Magical Realism'];
   List<String> novelGenres = [];
@@ -64,6 +65,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
     novelLinkUrlController.text = oldNovelData!.novelLinkUrl ?? '';
     authorNameController.text = oldNovelData!.novelAuthorName ?? '';
     novelDescriptionController.text = oldNovelData!.novelDescription ?? '';
+    indexingGroupNameController.text = oldNovelData!.indexingGroupName ?? '';
     isNovel = oldNovelData!.isNovel ?? true;
     novelGenres = oldNovelData!.novelGenre ?? [];
     novelReadingStatus = oldNovelData!.novelReadingStatus ?? NovelReadingStatus.reading;
@@ -81,6 +83,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             novelAuthorName: authorNameController.text,
             novelGenre: novelGenres,
             novelDescription: novelDescriptionController.text,
+            indexingGroupName: indexingGroupNameController.text,
             novelImageUrl: '',
             isNovel: isNovel,
             totalNovelChapterCount: int.parse(totalChapterController.text),
@@ -155,6 +158,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             novelAuthorName: authorNameController.text,
             novelGenre: novelGenres,
             novelDescription: novelDescriptionController.text,
+            indexingGroupName: indexingGroupNameController.text,
             novelImageUrl: '',
             isNovel: isNovel,
             totalNovelChapterCount: totalChapterController.text.isEmpty ? 0 : int.parse(totalChapterController.text),
@@ -339,6 +343,19 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                             fontSize: 16,
                           ),
                         ],
+                      ),
+                      const SizedBox(height: 8),
+                      TextField(
+                        controller: indexingGroupNameController,
+                        textInputAction: TextInputAction.next,
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
+                          hintText: 'Group Name',
+                          hintStyle: Utility.getRichTextStyle(
+                            fontSize: 16,
+                            color: mBlack,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 8),
                       TextField(
