@@ -58,9 +58,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
     if (tempUserId != '') {
       userController.getUserData(tempUserId);
-      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       Preference.setUserId(tempUserId);
       Preference.setIsUserLoggedIn(true);
+      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
       emailEditingController.clear();
