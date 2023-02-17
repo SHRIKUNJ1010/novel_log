@@ -40,8 +40,8 @@ class NovelWishListItemModel {
     novelDescription = json['novel_description'];
     novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
     novelImageUrl = json['novel_image_url'];
-    totalNovelChapterCount = int.parse(json['total_novel_chapter_count']);
-    readNovelChapterCount = int.parse(json['read_novel_chapter_count']);
+    totalNovelChapterCount = json['total_novel_chapter_count'];
+    readNovelChapterCount = json['read_novel_chapter_count'];
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
     novelStatus = Utility.stringToNovelStatus(json['novel_status']);
@@ -56,8 +56,8 @@ class NovelWishListItemModel {
     data['novel_genre'] = novelGenre;
     data['novel_description'] = novelDescription;
     data['novel_image_url'] = novelImageUrl;
-    data['total_novel_chapter_count'] = totalNovelChapterCount.toString();
-    data['read_novel_chapter_count'] = readNovelChapterCount.toString();
+    data['total_novel_chapter_count'] = totalNovelChapterCount;
+    data['read_novel_chapter_count'] = readNovelChapterCount;
     data['novel_link_url'] = novelLinkUrl;
     data['is_novel'] = (isNovel ?? false) ? '1' : '0';
     data['novel_status'] = Utility.novelStatusToString(novelStatus!);

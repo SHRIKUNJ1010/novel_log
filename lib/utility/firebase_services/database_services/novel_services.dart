@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/models/data_models/novel_list_item_model.dart';
 import 'package:novel_log/models/data_models/novel_wish_list_item_model.dart';
@@ -26,6 +25,7 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "0")
+        .orderBy("novel_reading_status")
         .orderBy("read_novel_chapter_count")
         .orderBy("total_novel_chapter_count")
         .limit(20)
@@ -47,6 +47,7 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "0")
+        .orderBy("novel_reading_status")
         .orderBy("read_novel_chapter_count")
         .orderBy("total_novel_chapter_count")
         .startAfterDocument(startAfterDoc!)
@@ -65,7 +66,6 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "1")
-        .orderBy("total_novel_chapter_count")
         .limit(20)
         .get();
     return {
@@ -84,7 +84,6 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "0")
         .where("is_in_wish_list", isEqualTo: "1")
-        .orderBy("total_novel_chapter_count")
         .startAfterDocument(startAfterDoc!)
         .limit(20)
         .get();
@@ -101,6 +100,9 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "1")
         .where("is_in_wish_list", isEqualTo: "0")
+        .orderBy("novel_reading_status")
+        .orderBy("read_novel_chapter_count")
+        .orderBy("total_novel_chapter_count")
         .limit(20)
         .get();
     return {
@@ -119,6 +121,9 @@ class NovelServices {
         .where("user_id", isEqualTo: userId)
         .where("is_hidden", isEqualTo: "1")
         .where("is_in_wish_list", isEqualTo: "0")
+        .orderBy("novel_reading_status")
+        .orderBy("read_novel_chapter_count")
+        .orderBy("total_novel_chapter_count")
         .startAfterDocument(startAfterDoc!)
         .limit(20)
         .get();
