@@ -78,14 +78,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
+      Preference.setUserId(tempUserId);
+      Preference.setIsUserLoggedIn(true);
       final tempUser = UserProfileModel.create(
         userId: tempUserId,
         userName: nameEditingController.text,
         email: emailEditingController.text,
       );
       await UserServices.createUser(tempUserId, tempUser.toJson());
-      Preference.setUserId(tempUserId);
+      drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
       emailEditingController.clear();
