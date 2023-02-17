@@ -157,8 +157,8 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             novelDescription: novelDescriptionController.text,
             novelImageUrl: '',
             isNovel: isNovel,
-            totalNovelChapterCount: int.parse(totalChapterController.text),
-            readNovelChapterCount: int.parse(readChapterController.text),
+            totalNovelChapterCount: totalChapterController.text.isEmpty ? 0 : int.parse(totalChapterController.text),
+            readNovelChapterCount: readChapterController.text.isEmpty ? 0 : int.parse(readChapterController.text),
             novelLinkUrl: novelLinkUrlController.text,
             novelStatus: Utility.novelStatusToString(novelStatus),
             novelReadingStatus: Utility.novelReadingStatusToString(novelReadingStatus),
@@ -175,12 +175,20 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             );
             break;
           case NovelReadingStatus.hiatusCompleted:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
             UserServices.changeHiatusNovelCountOfUser(
               widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
             );
             break;
           case NovelReadingStatus.completed:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
             UserServices.changeCompleteNovelCountOfUser(
               widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
@@ -191,7 +199,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
         }
         UserServices.changeTotalChapterReadCountOfUser(
           widget.userId ?? Preference.getUserId(),
-          tempUserController.userData.totalChapterReadCount! + int.parse(readChapterController.text),
+          tempUserController.userData.totalChapterReadCount! + (readChapterController.text.isEmpty ? 0 : int.parse(readChapterController.text)),
         );
       }
       final tempUserController = Get.put(UserDataController());

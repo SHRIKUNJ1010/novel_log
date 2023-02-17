@@ -100,7 +100,7 @@ class YourNovelListTile extends StatelessWidget {
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
                           label: Utility.getFirstLetterCapital(novelName),
                           fontSize: 20,
-                          maxLines: 2,
+                          maxLines: 6,
                           softWrap: true,
                           color: appPrimaryColor,
                           fontWeight: FontWeight.bold,
@@ -115,14 +115,13 @@ class YourNovelListTile extends StatelessWidget {
                   ),
                   TextView(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
-                    label: 'Chapter $readNovelChapterCount/$totalNovelChapterCount',
+                    label: 'Chapter $readNovelChapterCount/${totalNovelChapterCount == 0 ? "$readNovelChapterCount+" : "$totalNovelChapterCount"}',
                     fontSize: 17,
                     color: mBlack,
                   ),
                   InkWell(
                     onTap: () {
-                      Utility.launchInBrowser('https://pub.dev/packages/url_launcher');
-                      //TODO: launch novel link url
+                      novelLinkUrl != '' ? Utility.launchInBrowser(novelLinkUrl) : null;
                     },
                     child: TextView(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
@@ -131,7 +130,7 @@ class YourNovelListTile extends StatelessWidget {
                       color: m0A77E8,
                       decorationColor: m0A77E8,
                       decorationThickness: 2,
-                      maxLines: 3,
+                      maxLines: 10,
                       softWrap: true,
                       textDecoration: TextDecoration.underline,
                       fontWeight: FontWeight.bold,

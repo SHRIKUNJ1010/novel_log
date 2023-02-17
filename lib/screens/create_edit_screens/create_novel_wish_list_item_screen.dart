@@ -165,12 +165,20 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             );
             break;
           case NovelReadingStatus.hiatusCompleted:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
             UserServices.changeHiatusNovelCountOfUser(
               widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
             );
             break;
           case NovelReadingStatus.completed:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
             UserServices.changeCompleteNovelCountOfUser(
               widget.userId ?? Preference.getUserId(),
               tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,

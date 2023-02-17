@@ -40,7 +40,7 @@ class NovelHiddenListController extends GetxController {
   }
 
   addNextData(String userId) async {
-    if (remainingLength < 20) return;
+    if (remainingLength < 20 || lastData == null) return;
     callIsLoading();
     final data = await NovelServices.getNovelHiddenListNextPages(userId, lastData);
     lastData = data['last_document'];

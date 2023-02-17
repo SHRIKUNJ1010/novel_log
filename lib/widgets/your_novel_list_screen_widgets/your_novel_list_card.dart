@@ -95,25 +95,28 @@ class YourNovelListCard extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
                   label: Utility.getFirstLetterCapital(novelName),
                   fontSize: 20,
+                  softWrap: true,
+                  maxLines: 6,
                   color: appPrimaryColor,
                   fontWeight: FontWeight.bold,
                 ),
                 TextView(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
-                  label: 'Chapter $readNovelChapterCount/$totalNovelChapterCount',
+                  label: 'Chapter $readNovelChapterCount/${totalNovelChapterCount == 0 ? "$readNovelChapterCount+" : "$totalNovelChapterCount"}',
                   fontSize: 17,
                   color: mBlack,
                 ),
                 InkWell(
                   onTap: () {
-                    Utility.launchInBrowser('https://pub.dev/packages/url_launcher');
-                    //TODO: launch novel link url
+                    novelLinkUrl != '' ? Utility.launchInBrowser(novelLinkUrl) : null;
                   },
                   child: TextView(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 5),
                     label: novelLinkUrl,
                     fontSize: 18,
                     color: m0A77E8,
+                    softWrap: true,
+                    maxLines: 10,
                     decorationColor: m0A77E8,
                     decorationThickness: 2,
                     textDecoration: TextDecoration.underline,

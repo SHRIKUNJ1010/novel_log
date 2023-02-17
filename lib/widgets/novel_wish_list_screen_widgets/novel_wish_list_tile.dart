@@ -117,8 +117,7 @@ class NovelWishListTile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      Utility.launchInBrowser('https://pub.dev/packages/url_launcher');
-                      //TODO: launch novel link url
+                      novelLinkUrl != '' ? Utility.launchInBrowser(novelLinkUrl) : null;
                     },
                     child: TextView(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),

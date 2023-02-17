@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/models/data_models/novel_description_model.dart';
 import 'package:novel_log/models/data_models/novel_list_item_model.dart';
 import 'package:novel_log/models/data_models/novel_wish_list_item_model.dart';
@@ -31,7 +32,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
@@ -53,7 +54,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
@@ -69,7 +70,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelWishListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
@@ -89,7 +90,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelWishListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
@@ -104,7 +105,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
@@ -123,7 +124,7 @@ class NovelServices {
         .get();
     return {
       "novel_list": tempData.docs.map((e) => NovelListItemModel.fromJson(e.id, e.data())).toList(),
-      "last_document": tempData.docs[tempData.docs.length - 1],
+      "last_document": tempData.docs.isEmpty ? null : tempData.docs[tempData.docs.length - 1],
       "remaining_length": tempData.docs.length,
     };
   }
