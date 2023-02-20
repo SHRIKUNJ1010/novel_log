@@ -3,7 +3,9 @@
 */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/getx_controller_model/hidden_pin_controller.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
@@ -30,15 +32,23 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
               title: const TextView(label: 'Enter Pin'),
             )
           : null,
-      body: EnterPinWidget(
-        width: width < 500 ? width : 500,
-        title: 'Enter Your Pin',
-        onPositiveTap: () {
-          drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
-        },
-        onNegativeTap: () {
-          Utility.printLog('Negative button called');
-        },
+      body: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          EnterPinWidget(
+            width: width < 500 ? width : 500,
+            title: 'Enter Your Pin',
+            onPositiveTap: () {
+              HiddenPinController pinController = Get.put(HiddenPinController());
+              pinController.updateValue(true);
+              drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+            },
+            onNegativeTap: () {
+              Utility.printLog('Negative button called');
+            },
+          ),
+        ],
       ),
     );
   }

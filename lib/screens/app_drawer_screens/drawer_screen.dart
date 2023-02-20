@@ -7,6 +7,7 @@ import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/getx_controller_model/drawer_selected_tab_controller.dart';
+import 'package:novel_log/models/getx_controller_model/hidden_pin_controller.dart';
 import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/router/drawer_router_delegate.dart';
 import 'package:novel_log/utility/assets_path.dart';
@@ -31,6 +32,7 @@ class DrawerScreen extends StatefulWidget {
 class _DrawerScreenState extends State<DrawerScreen> {
   late final DrawerRouterDelegate delegate;
   DrawerSelectedTabController selectedTabController = Get.put(DrawerSelectedTabController());
+  HiddenPinController pinController = Get.put(HiddenPinController());
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   List<String> drawerItemTitleText = [
@@ -125,7 +127,11 @@ class _DrawerScreenState extends State<DrawerScreen> {
         drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
       case enterPinScreenRoute:
-        drawerStateProvider.pushReplacement(PageConfigList.getEnterPinScreen(Preference.getUserId()), TransitionType.foldTransition);
+        if (pinController.hasEnteredPassword) {
+          drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+        } else {
+          drawerStateProvider.pushReplacement(PageConfigList.getEnterPinScreen(Preference.getUserId()), TransitionType.foldTransition);
+        }
         break;
       /*case 'Hidden List':
         drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
@@ -410,28 +416,54 @@ class _DrawerScreenState extends State<DrawerScreen> {
                                 shrinkWrap: true,
                                 itemCount: drawerItemTitleText.length,
                                 itemBuilder: (context, index) {
-                                  if (controller.selectedPath == drawerItemPathList[index]) {
-                                    return DrawerSelectedItemButton(
-                                      icon: Utility.getSelectedDrawerItemIcon(
-                                        icon: selectedDrawerItemIcon[index],
-                                        iconSize: selectedIconSizeList[index],
-                                      ),
-                                      onTap: () {
-                                        onHorizontalDrawerItemTap(context, index);
-                                      },
-                                      title: drawerItemTitleText[index],
-                                    );
+                                  if (drawerItemPathList[index] == enterPinScreenRoute) {
+                                    if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
+                                      return DrawerSelectedItemButton(
+                                        icon: Utility.getSelectedDrawerItemIcon(
+                                          icon: selectedDrawerItemIcon[index],
+                                          iconSize: selectedIconSizeList[index],
+                                        ),
+                                        onTap: () {
+                                          onHorizontalDrawerItemTap(context, index);
+                                        },
+                                        title: drawerItemTitleText[index],
+                                      );
+                                    } else {
+                                      return DrawerItemButton(
+                                        icon: Utility.getDefaultDrawerItemIcon(
+                                          icon: drawerItemIcon[index],
+                                          iconSize: iconSizeList[index],
+                                        ),
+                                        onTap: () {
+                                          onHorizontalDrawerItemTap(context, index);
+                                        },
+                                        title: drawerItemTitleText[index],
+                                      );
+                                    }
                                   } else {
-                                    return DrawerItemButton(
-                                      icon: Utility.getDefaultDrawerItemIcon(
-                                        icon: drawerItemIcon[index],
-                                        iconSize: iconSizeList[index],
-                                      ),
-                                      onTap: () {
-                                        onHorizontalDrawerItemTap(context, index);
-                                      },
-                                      title: drawerItemTitleText[index],
-                                    );
+                                    if (controller.selectedPath == drawerItemPathList[index]) {
+                                      return DrawerSelectedItemButton(
+                                        icon: Utility.getSelectedDrawerItemIcon(
+                                          icon: selectedDrawerItemIcon[index],
+                                          iconSize: selectedIconSizeList[index],
+                                        ),
+                                        onTap: () {
+                                          onHorizontalDrawerItemTap(context, index);
+                                        },
+                                        title: drawerItemTitleText[index],
+                                      );
+                                    } else {
+                                      return DrawerItemButton(
+                                        icon: Utility.getDefaultDrawerItemIcon(
+                                          icon: drawerItemIcon[index],
+                                          iconSize: iconSizeList[index],
+                                        ),
+                                        onTap: () {
+                                          onHorizontalDrawerItemTap(context, index);
+                                        },
+                                        title: drawerItemTitleText[index],
+                                      );
+                                    }
                                   }
                                 },
                               ),

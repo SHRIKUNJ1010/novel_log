@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/getx_controller_model/hidden_pin_controller.dart';
 import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
@@ -25,11 +26,13 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   bool isLoggedIn = false;
   UserDataController userController = Get.put(UserDataController());
+  HiddenPinController pinController = Get.put(HiddenPinController());
 
   void manageHomeNavigation() async {
     prefs = await SharedPreferences.getInstance();
     isLoggedIn = await FirebaseAuthService.isAlreadyLoggedIn();
     Preference.setIsUserLoggedIn(isLoggedIn);
+    pinController.updateValue(false);
     if (isLoggedIn) {
       Timer(const Duration(milliseconds: 100), () async {
         String tempUserId = Preference.getUserId();

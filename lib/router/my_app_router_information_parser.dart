@@ -3,7 +3,9 @@
 */
 
 import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
+import 'package:novel_log/models/getx_controller_model/hidden_pin_controller.dart';
 import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_routes.dart';
@@ -74,6 +76,7 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
           }
           break;
         case drawerScreenRoute:
+          HiddenPinController pinController = Get.put(HiddenPinController());
           if (Preference.getIsUserLoggedIn()) {
             tempConfig.add(PageConfigList.getDrawerScreen());
             switch (urlSegments.length > 1 ? urlSegments[1] : yourNovelListScreenRoute) {
@@ -84,10 +87,18 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
                 drawerConfig.add(PageConfigList.getNovelWishListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
               case novelHiddenListScreenRoute:
-                drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                if (pinController.hasEnteredPassword) {
+                  drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                } else {
+                  drawerConfig.add(PageConfigList.getEnterPinScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                }
                 break;
               case enterPinScreenRoute:
-                drawerConfig.add(PageConfigList.getEnterPinScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                if (pinController.hasEnteredPassword) {
+                  drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                } else {
+                  drawerConfig.add(PageConfigList.getEnterPinScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                }
                 break;
               case profileScreenRoute:
                 drawerConfig.add(PageConfigList.getProfileScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
