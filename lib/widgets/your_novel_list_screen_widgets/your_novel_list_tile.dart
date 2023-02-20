@@ -52,7 +52,7 @@ class _YourNovelListTileState extends State<YourNovelListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [appThemeColor[50]!, appThemeColor[100]!],
@@ -73,7 +73,7 @@ class _YourNovelListTileState extends State<YourNovelListTile> {
                   Image.asset(
                     bookImagePlaceholder,
                     fit: BoxFit.cover,
-                    height: height,
+                    height: ((height ?? 0) < 100) ? null : height,
                   ),
                   widget.isNovel
                       ? Positioned(

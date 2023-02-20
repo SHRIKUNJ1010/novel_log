@@ -43,19 +43,13 @@ class NovelStatisticWidget extends StatelessWidget {
             children: [
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                label: 'Today Chapter Read Count: ',
+                label: 'Total Chapter Read Count: ',
                 color: mWhite,
                 fontSize: fontSize,
               ),
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 label: 'Total Novel Count: ',
-                color: mWhite,
-                fontSize: fontSize,
-              ),
-              TextView(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                label: 'Total Chapter Read Count: ',
                 color: mWhite,
                 fontSize: fontSize,
               ),
@@ -73,6 +67,12 @@ class NovelStatisticWidget extends StatelessWidget {
               ),
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: 'Today Chapter Read Count: ',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 label: 'Daily Average Chapter Read Count: ',
                 color: mWhite,
                 fontSize: fontSize,
@@ -85,19 +85,13 @@ class NovelStatisticWidget extends StatelessWidget {
             children: [
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                label: '$todayChapterReadCount',
+                label: '$totalChapterReadCount',
                 color: mWhite,
                 fontSize: fontSize,
               ),
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 label: '$totalStartedNovelCount',
-                color: mWhite,
-                fontSize: fontSize,
-              ),
-              TextView(
-                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
-                label: '$totalChapterReadCount',
                 color: mWhite,
                 fontSize: fontSize,
               ),
@@ -110,6 +104,12 @@ class NovelStatisticWidget extends StatelessWidget {
               TextView(
                 padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                 label: '$totalNovelReadCompleteWithNovelHiatus',
+                color: mWhite,
+                fontSize: fontSize,
+              ),
+              TextView(
+                padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
+                label: '$todayChapterReadCount',
                 color: mWhite,
                 fontSize: fontSize,
               ),

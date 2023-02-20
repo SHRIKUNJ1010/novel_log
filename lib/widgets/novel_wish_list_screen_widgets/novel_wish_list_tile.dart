@@ -54,7 +54,7 @@ class _NovelWishListTileState extends State<NovelWishListTile> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+      margin: const EdgeInsets.fromLTRB(5, 10, 5, 0),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [appThemeColor[50]!, appThemeColor[100]!],
@@ -70,65 +70,73 @@ class _NovelWishListTileState extends State<NovelWishListTile> {
           children: [
             Expanded(
               flex: 1,
-              child: Stack(
-                children: [
-                  Image.asset(
-                    bookImagePlaceholder,
-                    fit: BoxFit.cover,
-                    height: height,
-                  ),
-                  widget.isNovel
-                      ? Positioned(
-                          bottom: 5,
-                          right: 5,
-                          child: Container(
-                            width: 20,
-                            height: 20,
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
+              child: Container(
+                color: Colors.red,
+                child: Stack(
+                  children: [
+                    Image.asset(
+                      bookImagePlaceholder,
+                      fit: BoxFit.cover,
+                      height: ((height ?? 0) < 100) ? null : height,
+                    ),
+                    widget.isNovel
+                        ? Positioned(
+                            bottom: 5,
+                            right: 5,
+                            child: Container(
+                              width: 20,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: mBlack,
+                                  width: 1,
+                                ),
+                              ),
+                              padding: EdgeInsets.zero,
+                              alignment: Alignment.center,
+                              child: const TextView(
+                                label: 'N',
+                                fontSize: 10,
+                                fontWeight: FontWeight.w900,
                                 color: mBlack,
-                                width: 1,
                               ),
                             ),
-                            padding: EdgeInsets.zero,
-                            alignment: Alignment.center,
-                            child: const TextView(
-                              label: 'N',
-                              fontSize: 10,
-                              fontWeight: FontWeight.w900,
-                              color: mBlack,
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
-                ],
+                          )
+                        : const SizedBox(),
+                  ],
+                ),
               ),
             ),
             Expanded(
               flex: 2,
               child: Column(
+                key: columnKey,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: TextView(
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
                           label: Utility.getFirstLetterCapital(widget.novelName),
                           fontSize: 20,
-                          maxLines: 2,
+                          maxLines: 6,
                           softWrap: true,
                           color: appPrimaryColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 8.5,
-                        backgroundColor: Utility.novelStatusColor(widget.novelStatus),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: CircleAvatar(
+                          radius: 8.5,
+                          backgroundColor: Utility.novelStatusColor(widget.novelStatus),
+                        ),
                       ),
                       const SizedBox(width: 10),
                     ],
@@ -144,7 +152,7 @@ class _NovelWishListTileState extends State<NovelWishListTile> {
                       color: m0A77E8,
                       decorationColor: m0A77E8,
                       decorationThickness: 2,
-                      maxLines: 3,
+                      maxLines: 10,
                       softWrap: true,
                       textDecoration: TextDecoration.underline,
                       fontWeight: FontWeight.bold,
