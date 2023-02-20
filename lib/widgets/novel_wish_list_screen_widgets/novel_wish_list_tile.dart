@@ -70,43 +70,40 @@ class _NovelWishListTileState extends State<NovelWishListTile> {
           children: [
             Expanded(
               flex: 1,
-              child: Container(
-                color: Colors.red,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      bookImagePlaceholder,
-                      fit: BoxFit.cover,
-                      height: ((height ?? 0) < 100) ? null : height,
-                    ),
-                    widget.isNovel
-                        ? Positioned(
-                            bottom: 5,
-                            right: 5,
-                            child: Container(
-                              width: 20,
-                              height: 20,
-                              decoration: BoxDecoration(
-                                color: Colors.transparent,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: mBlack,
-                                  width: 1,
-                                ),
-                              ),
-                              padding: EdgeInsets.zero,
-                              alignment: Alignment.center,
-                              child: const TextView(
-                                label: 'N',
-                                fontSize: 10,
-                                fontWeight: FontWeight.w900,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    bookImagePlaceholder,
+                    fit: BoxFit.cover,
+                    height: ((height ?? 0) < 100) ? null : height,
+                  ),
+                  widget.isNovel
+                      ? Positioned(
+                          bottom: 5,
+                          right: 5,
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
                                 color: mBlack,
+                                width: 1,
                               ),
                             ),
-                          )
-                        : const SizedBox(),
-                  ],
-                ),
+                            padding: EdgeInsets.zero,
+                            alignment: Alignment.center,
+                            child: const TextView(
+                              label: 'N',
+                              fontSize: 10,
+                              fontWeight: FontWeight.w900,
+                              color: mBlack,
+                            ),
+                          ),
+                        )
+                      : const SizedBox(),
+                ],
               ),
             ),
             Expanded(
