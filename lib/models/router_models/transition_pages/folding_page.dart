@@ -35,26 +35,54 @@ class FoldingPage extends Page {
             if (offsetAnimation.isCompleted) {
               return child;
             } else {
-              return ClipRect(
-                child: CustomPaint(
-                  foregroundPainter: FoldPainter(
-                    context: context,
-                    offset: offsetAnimation.value,
-                  ),
-                  child: Stack(
-                    children: [
-                      Container(color: mBlack.withOpacity(0.5)),
-                      ClipPath(
+              switch (offsetAnimation.status) {
+                case AnimationStatus.dismissed:
+                  return child;
+                case AnimationStatus.forward:
+                  return ClipRect(
+                    child: CustomPaint(
+                      foregroundPainter: FoldPainter(
+                        context: context,
+                        offset: offsetAnimation.value,
+                      ),
+                      child: Stack(
+                        children: [
+                          Container(color: mBlack.withOpacity(0.5)),
+                          ClipPath(
+                            clipper: FoldClipper(
+                              context: context,
+                              offset: offsetAnimation.value,
+                            ),
+                            child: child,
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                case AnimationStatus.reverse:
+                  return ClipRect(
+                    child: CustomPaint(
+                      foregroundPainter: FoldPainter(
+                        context: context,
+                        offset: offsetAnimation.value,
+                      ),
+                      child: ClipPath(
                         clipper: FoldClipper(
                           context: context,
                           offset: offsetAnimation.value,
                         ),
-                        child: child,
+                        child: Stack(
+                          children: [
+                            child,
+                            Container(color: mBlack.withOpacity(0.5)),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
-                ),
-              );
+                    ),
+                  );
+                case AnimationStatus.completed:
+                  return child;
+              }
             }
           },
         );
