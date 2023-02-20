@@ -86,6 +86,9 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
               case novelHiddenListScreenRoute:
                 drawerConfig.add(PageConfigList.getNovelHiddenListScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
+              case enterPinScreenRoute:
+                drawerConfig.add(PageConfigList.getEnterPinScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
+                break;
               case profileScreenRoute:
                 drawerConfig.add(PageConfigList.getProfileScreen(urlSegments.length > 2 ? urlSegments[2] : '123'));
                 break;
@@ -159,6 +162,9 @@ class MyAppRouterInformationParser extends RouteInformationParser<List<PageConfi
                 break;
               case novelHiddenListScreenRoute:
                 url += "/$novelHiddenListScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
+                break;
+              case enterPinScreenRoute:
+                url += "/$enterPinScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";
                 break;
               case profileScreenRoute:
                 url += "/$profileScreenRoute/${drawerStateProvider.config[tempIndex].arguments}";

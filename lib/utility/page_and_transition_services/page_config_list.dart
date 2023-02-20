@@ -78,6 +78,14 @@ class PageConfigList {
     );
   }
 
+  static PageConfiguration getEnterPinScreen(String userId) {
+    return PageConfiguration(
+      key: 'enter_hidden_pin_screen${DateTime.now().microsecondsSinceEpoch}',
+      path: enterPinScreenRoute,
+      arguments: userId,
+    );
+  }
+
   static PageConfiguration getChangePasswordScreen(String userId) {
     return PageConfiguration(
       key: 'change_password_screen${DateTime.now().microsecondsSinceEpoch}',

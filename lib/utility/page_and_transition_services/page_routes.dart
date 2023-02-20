@@ -9,6 +9,7 @@ const String drawerScreenRoute = 'drawer';
 const String yourNovelListScreenRoute = 'your-novel-list';
 const String novelWishListScreenRoute = 'novel-wish-list';
 const String novelHiddenListScreenRoute = 'novel-hidden-list';
+const String enterPinScreenRoute = 'enter-hidden-pin';
 const String profileScreenRoute = 'profile';
 const String changePasswordScreenRoute = 'change-password';
 const String changeHiddenPinScreenRoute = 'change-hidden-pin';

@@ -7,6 +7,7 @@ import 'package:novel_log/models/router_models/page_config.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_hidden_pin_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/change_password_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/drawer_screen.dart';
+import 'package:novel_log/screens/app_drawer_screens/enter_pin_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/novel_hidden_list_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/novel_wish_list_screen.dart';
 import 'package:novel_log/screens/app_drawer_screens/profile_screen.dart';
@@ -63,6 +64,8 @@ class PageConfigToWidget {
         return NovelHiddenListScreen(
           userId: pageConfig.arguments as String,
         );
+      case enterPinScreenRoute:
+        return const EnterPinScreen();
       case profileScreenRoute:
         return ProfileScreen(
           userId: pageConfig.arguments as String,

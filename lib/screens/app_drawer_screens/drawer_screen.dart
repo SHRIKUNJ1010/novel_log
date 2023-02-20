@@ -37,6 +37,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     'Your Novels',
     'Wish List',
     'Hidden List',
+    //'Enter Pin',
     'Profile',
     'Change Password',
     'Change Pin',
@@ -46,7 +47,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
   List<String> drawerItemPathList = [
     yourNovelListScreenRoute,
     novelWishListScreenRoute,
-    novelHiddenListScreenRoute,
+    //novelHiddenListScreenRoute,
+    enterPinScreenRoute,
     profileScreenRoute,
     changePasswordScreenRoute,
     changeHiddenPinScreenRoute,
@@ -101,6 +103,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
         return 'Wish List';
       case novelHiddenListScreenRoute:
         return 'Hidden List';
+      case enterPinScreenRoute:
+        return ' Enter Pin';
       case profileScreenRoute:
         return 'Profile';
       case changePasswordScreenRoute:
@@ -113,26 +117,29 @@ class _DrawerScreenState extends State<DrawerScreen> {
   }
 
   Future<void> changeDrawerItem(int index) async {
-    switch (drawerItemTitleText[index]) {
-      case 'Your Novels':
+    switch (drawerItemPathList[index]) {
+      case yourNovelListScreenRoute:
         drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Wish List':
+      case novelWishListScreenRoute:
         drawerStateProvider.pushReplacement(PageConfigList.getNovelWishListScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Hidden List':
-        drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+      case enterPinScreenRoute:
+        drawerStateProvider.pushReplacement(PageConfigList.getEnterPinScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Profile':
+      /*case 'Hidden List':
+        drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+        break;*/
+      case profileScreenRoute:
         drawerStateProvider.pushReplacement(PageConfigList.getProfileScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Change Password':
+      case changePasswordScreenRoute:
         drawerStateProvider.pushReplacement(PageConfigList.getChangePasswordScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Change Pin':
+      case changeHiddenPinScreenRoute:
         drawerStateProvider.pushReplacement(PageConfigList.getChangeHiddenPinScreen(Preference.getUserId()), TransitionType.foldTransition);
         break;
-      case 'Logout':
+      case 'logout':
         bool value = await Utility.userLogoutAlert();
         if (value) {
           doUserLogout();
@@ -280,28 +287,54 @@ class _DrawerScreenState extends State<DrawerScreen> {
                         shrinkWrap: true,
                         itemCount: drawerItemTitleText.length,
                         itemBuilder: (context, index) {
-                          if (controller.selectedPath == drawerItemPathList[index]) {
-                            return DrawerSelectedItemButton(
-                              icon: Utility.getSelectedDrawerItemIcon(
-                                icon: selectedDrawerItemIcon[index],
-                                iconSize: selectedIconSizeList[index],
-                              ),
-                              onTap: () {
-                                onDrawerItemTap(context, index);
-                              },
-                              title: drawerItemTitleText[index],
-                            );
+                          if (drawerItemPathList[index] == enterPinScreenRoute) {
+                            if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
+                              return DrawerSelectedItemButton(
+                                icon: Utility.getSelectedDrawerItemIcon(
+                                  icon: selectedDrawerItemIcon[index],
+                                  iconSize: selectedIconSizeList[index],
+                                ),
+                                onTap: () {
+                                  onDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            } else {
+                              return DrawerItemButton(
+                                icon: Utility.getDefaultDrawerItemIcon(
+                                  icon: drawerItemIcon[index],
+                                  iconSize: iconSizeList[index],
+                                ),
+                                onTap: () {
+                                  onDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            }
                           } else {
-                            return DrawerItemButton(
-                              icon: Utility.getDefaultDrawerItemIcon(
-                                icon: drawerItemIcon[index],
-                                iconSize: iconSizeList[index],
-                              ),
-                              onTap: () {
-                                onDrawerItemTap(context, index);
-                              },
-                              title: drawerItemTitleText[index],
-                            );
+                            if (controller.selectedPath == drawerItemPathList[index]) {
+                              return DrawerSelectedItemButton(
+                                icon: Utility.getSelectedDrawerItemIcon(
+                                  icon: selectedDrawerItemIcon[index],
+                                  iconSize: selectedIconSizeList[index],
+                                ),
+                                onTap: () {
+                                  onDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            } else {
+                              return DrawerItemButton(
+                                icon: Utility.getDefaultDrawerItemIcon(
+                                  icon: drawerItemIcon[index],
+                                  iconSize: iconSizeList[index],
+                                ),
+                                onTap: () {
+                                  onDrawerItemTap(context, index);
+                                },
+                                title: drawerItemTitleText[index],
+                              );
+                            }
                           }
                         },
                       ),
