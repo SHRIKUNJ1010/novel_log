@@ -147,7 +147,7 @@ class _YourNovelListScreenState extends State<YourNovelListScreen> {
                           );
                         }
                       },
-                      separatorBuilder: (context, index) => const SizedBox(height: 10),
+                      separatorBuilder: (context, index) => const SizedBox(height: 5),
                     ),
                   );
                 }

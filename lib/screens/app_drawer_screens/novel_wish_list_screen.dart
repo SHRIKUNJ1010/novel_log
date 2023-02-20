@@ -148,7 +148,7 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                           );
                         }
                       },
-                      separatorBuilder: (context, index) => const SizedBox(height: 10),
+                      separatorBuilder: (context, index) => const SizedBox(height: 5),
                     ),
                   );
                 }
