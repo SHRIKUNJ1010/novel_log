@@ -8,6 +8,7 @@ import 'package:novel_log/models/getx_controller_model/user_data_controller.dart
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/preference.dart';
+import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/profile_screen_widgets/novel_statistic_widget.dart';
 
@@ -100,6 +101,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             : width > 620
                                 ? 16
                                 : 18,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: CommonRoundedButton(
+                  height: 50,
+                  text: 'Re-calculate statistic',
+                  fontSize: 18,
+                  onTap: () {
+                    controller.reCalculateStatistic(widget.userId);
+                  },
+                ),
               ),
             ],
           );

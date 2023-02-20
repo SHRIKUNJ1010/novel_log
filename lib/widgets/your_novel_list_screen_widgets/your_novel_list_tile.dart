@@ -9,7 +9,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
-class YourNovelListTile extends StatelessWidget {
+class YourNovelListTile extends StatefulWidget {
   final String novelName;
   final String novelImageUrl;
   final List<String> novelGenre;
@@ -32,6 +32,24 @@ class YourNovelListTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<YourNovelListTile> createState() => _YourNovelListTileState();
+}
+
+class _YourNovelListTileState extends State<YourNovelListTile> {
+  final columnKey = GlobalKey();
+  double? height;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        height = columnKey.currentContext!.size!.height;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -52,14 +70,12 @@ class YourNovelListTile extends StatelessWidget {
               flex: 1,
               child: Stack(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset(
-                      bookImagePlaceholder,
-                      fit: BoxFit.cover,
-                    ),
+                  Image.asset(
+                    bookImagePlaceholder,
+                    fit: BoxFit.cover,
+                    height: height,
                   ),
-                  isNovel
+                  widget.isNovel
                       ? Positioned(
                           bottom: 5,
                           right: 5,
@@ -91,16 +107,18 @@ class YourNovelListTile extends StatelessWidget {
             Expanded(
               flex: 2,
               child: Column(
+                key: columnKey,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
                         child: TextView(
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-                          label: Utility.getFirstLetterCapital(novelName),
+                          label: Utility.getFirstLetterCapital(widget.novelName),
                           fontSize: 20,
                           maxLines: 6,
                           softWrap: true,
@@ -108,26 +126,30 @@ class YourNovelListTile extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      CircleAvatar(
-                        radius: 8.5,
-                        backgroundColor: Utility.novelReadingStatusColor(novelReadingStatus),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: CircleAvatar(
+                          radius: 8.5,
+                          backgroundColor: Utility.novelReadingStatusColor(widget.novelReadingStatus),
+                        ),
                       ),
                       const SizedBox(width: 10),
                     ],
                   ),
                   TextView(
                     padding: const EdgeInsets.fromLTRB(10, 0, 0, 5),
-                    label: 'Chapter $readNovelChapterCount/${totalNovelChapterCount == 0 ? "$readNovelChapterCount+" : "$totalNovelChapterCount"}',
+                    label:
+                        'Chapter ${widget.readNovelChapterCount}/${widget.totalNovelChapterCount == 0 ? "${widget.readNovelChapterCount}+" : "${widget.totalNovelChapterCount}"}',
                     fontSize: 17,
                     color: mBlack,
                   ),
                   InkWell(
                     onTap: () {
-                      novelLinkUrl != '' ? Utility.launchInBrowser(novelLinkUrl) : null;
+                      widget.novelLinkUrl != '' ? Utility.launchInBrowser(widget.novelLinkUrl) : null;
                     },
                     child: TextView(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-                      label: novelLinkUrl,
+                      label: widget.novelLinkUrl,
                       fontSize: 18,
                       color: m0A77E8,
                       decorationColor: m0A77E8,
@@ -144,7 +166,7 @@ class YourNovelListTile extends StatelessWidget {
                       direction: Axis.horizontal,
                       spacing: 10,
                       children: [
-                        for (int index = 0; index < novelGenre.length; index++) ...[
+                        for (int index = 0; index < widget.novelGenre.length; index++) ...[
                           Container(
                             decoration: BoxDecoration(
                               color: appPrimaryColor,
@@ -152,7 +174,7 @@ class YourNovelListTile extends StatelessWidget {
                             ),
                             padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                             child: TextView(
-                              label: novelGenre[index],
+                              label: widget.novelGenre[index],
                               color: mWhite,
                               fontSize: 14,
                             ),

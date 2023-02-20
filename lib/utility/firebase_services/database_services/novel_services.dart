@@ -21,7 +21,7 @@ class NovelServices {
     return NovelDescriptionModel.fromJson(novelId, temp.data() ?? {});
   }
 
-  static Future<void> userNovelStatistic(String userId) async {
+  static Future<Map<String, dynamic>> userNovelStatistic(String userId) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference.where("user_id", isEqualTo: userId).get();
     int readChapterCount = 0;
     int totalNovelCount = tempData.docs.length;
@@ -40,8 +40,19 @@ class NovelServices {
       }
     }
 
-    Utility.printLog(
-        "Read chapter count: $readChapterCount ======== \nTotal Novel Count $totalNovelCount ======= \nTotal Completed Novel Count $totalCompletedNovelCount ======= \nTotal Hiatus Novel Count $totalHiatusNovelCount =======");
+    Utility.printLog('''
+    Read chapter count: $readChapterCount ======== 
+    Total Novel Count $totalNovelCount ======= 
+    Total Completed Novel Count $totalCompletedNovelCount ======= 
+    Total Hiatus Novel Count $totalHiatusNovelCount =======
+    ''');
+
+    return {
+      'read_chapter_count': readChapterCount,
+      'total_novel_count': totalNovelCount,
+      'total_completed_novel_count': totalCompletedNovelCount,
+      'total_hiatus_novel_count': totalHiatusNovelCount,
+    };
   }
 
   //getting first page data for main page novel list

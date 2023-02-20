@@ -9,7 +9,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
-class NovelWishListTile extends StatelessWidget {
+class NovelWishListTile extends StatefulWidget {
   final String novelName;
   final String novelImageUrl;
   final List<String> novelGenre;
@@ -34,6 +34,24 @@ class NovelWishListTile extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<NovelWishListTile> createState() => _NovelWishListTileState();
+}
+
+class _NovelWishListTileState extends State<NovelWishListTile> {
+  final columnKey = GlobalKey();
+  double? height;
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      setState(() {
+        height = columnKey.currentContext!.size!.height;
+      });
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
@@ -54,14 +72,12 @@ class NovelWishListTile extends StatelessWidget {
               flex: 1,
               child: Stack(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset(
-                      bookImagePlaceholder,
-                      fit: BoxFit.cover,
-                    ),
+                  Image.asset(
+                    bookImagePlaceholder,
+                    fit: BoxFit.cover,
+                    height: height,
                   ),
-                  isNovel
+                  widget.isNovel
                       ? Positioned(
                           bottom: 5,
                           right: 5,
@@ -102,7 +118,7 @@ class NovelWishListTile extends StatelessWidget {
                       Expanded(
                         child: TextView(
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 5),
-                          label: Utility.getFirstLetterCapital(novelName),
+                          label: Utility.getFirstLetterCapital(widget.novelName),
                           fontSize: 20,
                           maxLines: 2,
                           softWrap: true,
@@ -112,18 +128,18 @@ class NovelWishListTile extends StatelessWidget {
                       ),
                       CircleAvatar(
                         radius: 8.5,
-                        backgroundColor: Utility.novelStatusColor(novelStatus),
+                        backgroundColor: Utility.novelStatusColor(widget.novelStatus),
                       ),
                       const SizedBox(width: 10),
                     ],
                   ),
                   InkWell(
                     onTap: () {
-                      novelLinkUrl != '' ? Utility.launchInBrowser(novelLinkUrl) : null;
+                      widget.novelLinkUrl != '' ? Utility.launchInBrowser(widget.novelLinkUrl) : null;
                     },
                     child: TextView(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
-                      label: novelLinkUrl,
+                      label: widget.novelLinkUrl,
                       fontSize: 18,
                       color: m0A77E8,
                       decorationColor: m0A77E8,
@@ -134,10 +150,10 @@ class NovelWishListTile extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  novelAuthorName != ''
+                  widget.novelAuthorName != ''
                       ? TextView(
                           padding: const EdgeInsets.fromLTRB(10, 5, 0, 10),
-                          label: Utility.getFirstLetterCapital(novelAuthorName),
+                          label: Utility.getFirstLetterCapital(widget.novelAuthorName),
                           fontSize: 17,
                           color: mBlack,
                         )
@@ -148,7 +164,7 @@ class NovelWishListTile extends StatelessWidget {
                       direction: Axis.horizontal,
                       spacing: 10,
                       children: [
-                        for (int index = 0; index < novelGenre.length; index++) ...[
+                        for (int index = 0; index < widget.novelGenre.length; index++) ...[
                           Container(
                             decoration: BoxDecoration(
                               color: appPrimaryColor,
@@ -156,7 +172,7 @@ class NovelWishListTile extends StatelessWidget {
                             ),
                             padding: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                             child: TextView(
-                              label: novelGenre[index],
+                              label: widget.novelGenre[index],
                               color: mWhite,
                               fontSize: 14,
                             ),

@@ -62,7 +62,11 @@ class UserProfileModel {
     email = json['email'] ?? '';
     userProfileImageUrl = json['user_profile_image_url'] ?? '';
     todayChapterReadCount = json['today_chapter_read_count'] ?? 0;
-    dailyAverageChapterReadCount = json['daily_average_chapter_read_count'] ?? 0;
+    dailyAverageChapterReadCount = json['daily_average_chapter_read_count'] != null
+        ? json['daily_average_chapter_read_count'].runtimeType == double
+            ? json['daily_average_chapter_read_count']
+            : json['daily_average_chapter_read_count'] * 1.0
+        : 0.0;
     totalChapterReadCount = json['total_chapter_read_count'] ?? 0;
     totalNovelReadCompleteWithNovelComplete = json['total_novel_read_complete_with_novel_complete'] ?? 0;
     totalNovelReadCompleteWithNovelHiatus = json['total_novel_read_complete_with_novel_hiatus'] ?? 0;
