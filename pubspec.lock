@@ -288,6 +288,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.8.0"
+  password:
+    dependency: "direct main"
+    description:
+      name: password
+      sha256: "8047c8a5ce1c813460b1b69d10a1949a3ea175af2422c456325d3935d2dd5ddb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -336,6 +344,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.3"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "4ed9ae487542d265a99f96bb160f76b5cee725376caa6b365aa0df060d64b2db"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   process:
     dependency: transitive
     description:

@@ -11,12 +11,14 @@ import 'package:novel_log/utility/utility.dart';
 class UserDataController extends GetxController {
   UserProfileModel userData = UserProfileModel();
 
+  //get user data by user id
   getUserData(String userId) async {
     userData = await UserServices.getUserData(userId);
     Utility.printLog(userData.toJson());
     update();
   }
 
+  //re calculating the statistic of novels if data gets reset
   reCalculateStatistic(String userId) async {
     final tempData = await NovelServices.userNovelStatistic(userId);
     userData.totalChapterReadCount = tempData['read_chapter_count'];
@@ -25,4 +27,16 @@ class UserDataController extends GetxController {
     userData.totalNovelReadCompleteWithNovelHiatus = tempData['total_hiatus_novel_count'];
     update();
   }
+
+  changeUserPin(String userId,String userPinNew,String userPinOld) async {
+    final temp = await UserServices.changeUserHiddenPin(userId, userPinOld, userPinNew);
+    getUserData(userId);
+  }
+
+  createNewUserPin(String userId, String userPin) async {
+    final temp = await UserServices.createUserHiddenPin(userId, userPin);
+    getUserData(userId);
+  }
+
+
 }

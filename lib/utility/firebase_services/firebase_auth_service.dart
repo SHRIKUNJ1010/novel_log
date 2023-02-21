@@ -11,6 +11,18 @@ class FirebaseAuthService {
     return user != null;
   }
 
+  //to change password
+  /*static Future<void> changePassword(String password) async {
+    User? user = FirebaseAuth.instance.currentUser;
+    await user!.updatePassword(password);
+    return;
+  }*/
+
+  // static Future<String> getCurrentPassword() async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //
+  // }
+
   //sign in with email in firebase auth
   static Future<String> signInWithEmail(String email, String password, [bool admin = false]) async {
     try {
