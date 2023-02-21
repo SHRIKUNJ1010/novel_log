@@ -3,6 +3,8 @@
 */
 
 import 'package:get/get.dart';
+import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
+import 'package:password/password.dart';
 
 class HiddenPinController extends GetxController {
   bool hasEnteredPassword = false;
@@ -10,5 +12,11 @@ class HiddenPinController extends GetxController {
   updateValue(bool value) {
     hasEnteredPassword = value;
     update();
+  }
+
+  Future<bool> comparePinHash(String userId, String userPin) async {
+    final tempHash = await UserServices.getUserPinHash(userId);
+    final givenPinHash = Password.hash(userPin, PBKDF2());
+    return tempHash == givenPinHash;
   }
 }

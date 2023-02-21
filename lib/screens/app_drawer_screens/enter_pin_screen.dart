@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/getx_controller_model/hidden_pin_controller.dart';
+import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
@@ -39,10 +40,15 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
           EnterPinWidget(
             width: width < 500 ? width : 500,
             title: 'Enter Your Pin',
-            onPositiveTap: () {
+            onPositiveTap: (value) async {
               HiddenPinController pinController = Get.put(HiddenPinController());
-              pinController.updateValue(true);
-              drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+              final temp = await pinController.comparePinHash(Preference.getUserId(), value);
+              if (temp) {
+                pinController.updateValue(true);
+                drawerStateProvider.pushReplacement(PageConfigList.getNovelHiddenListScreen(Preference.getUserId()), TransitionType.foldTransition);
+              } else {
+                Utility.toastMessage(mFA5D5D, 'Wrong Pin', 'Given pin does not match database pin. Please check your pin again');
+              }
             },
             onNegativeTap: () {
               Utility.printLog('Negative button called');

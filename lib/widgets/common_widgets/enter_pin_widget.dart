@@ -10,7 +10,7 @@ import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 class EnterPinWidget extends StatefulWidget {
   final double width;
   final String title;
-  final Function onPositiveTap;
+  final Function(String value) onPositiveTap;
   final Function onNegativeTap;
 
   const EnterPinWidget({
@@ -143,7 +143,7 @@ class _EnterPinWidgetState extends State<EnterPinWidget> {
                             InkWell(
                               onTap: () {
                                 if (filledPin == 6) {
-                                  widget.onPositiveTap.call();
+                                  widget.onPositiveTap.call(pinEditingField.text);
                                 } else {
                                   Utility.toastMessage(mFA5D5D, 'Invalid field', 'Your pin is invalid. Please enter valid pin.');
                                 }
