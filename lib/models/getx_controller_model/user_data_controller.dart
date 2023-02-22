@@ -7,7 +7,6 @@ import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/utility.dart';
-import 'package:password/password.dart';
 
 class UserDataController extends GetxController {
   UserProfileModel userData = UserProfileModel();
@@ -30,18 +29,19 @@ class UserDataController extends GetxController {
   }
 
   changeUserPin(String userId, String userPinNew, String userPinOld) async {
-    final temp = await UserServices.changeUserHiddenPin(userId, userPinOld, userPinNew);
-    getUserData(userId);
+    /*final temp = await UserServices.changeUserHiddenPin(userId, userPinOld, userPinNew);
+    getUserData(userId);*/
   }
 
   createNewUserPin(String userId, String userPin) async {
-    final temp = await UserServices.createUserHiddenPin(userId, userPin);
-    getUserData(userId);
+    /*final temp = await UserServices.createUserHiddenPin(userId, userPin);
+    getUserData(userId);*/
   }
 
   Future<bool> comparePinHash(String userId, String userPin) async {
-    final tempHash = await UserServices.getUserPinHash(userId);
+    /*final tempHash = await UserServices.getUserPinHash(userId);
     final givenPinHash = Password.hash(userPin, PBKDF2());
-    return tempHash == givenPinHash;
+    return tempHash == givenPinHash;*/
+    return true;
   }
 }
