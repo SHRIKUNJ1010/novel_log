@@ -16,6 +16,7 @@ import 'package:novel_log/utility/firebase_services/database_services/user_servi
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
+import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class CreateNovelListItemScreen extends StatefulWidget {
@@ -640,6 +641,17 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                           ),
                         ],
                       ),
+                      widget.novelId != null ? const SizedBox(height: 15) : const SizedBox(),
+                      widget.novelId != null
+                          ? CommonRoundedButton(
+                              height: 50,
+                              text: 'Delete',
+                              buttonColor: mFA5D5D,
+                              onTap: () async {
+                                await NovelServices.deleteNovel(widget.novelId!);
+                              },
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 ),

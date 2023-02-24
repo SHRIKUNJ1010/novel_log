@@ -21,6 +21,10 @@ class NovelServices {
     return NovelDescriptionModel.fromJson(novelId, temp.data() ?? {});
   }
 
+  static Future<void> deleteNovel(String novelId) async {
+    await FirebaseDatabaseServices.novelCollectionReference.doc(novelId).delete();
+  }
+
   static Future<Map<String, dynamic>> userNovelStatistic(String userId) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference.where("user_id", isEqualTo: userId).get();
     int readChapterCount = 0;
