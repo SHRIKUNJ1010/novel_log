@@ -649,6 +649,11 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                               buttonColor: mFA5D5D,
                               onTap: () async {
                                 await NovelServices.deleteNovel(widget.novelId!);
+                                if (kIsWeb) {
+                                  pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+                                } else {
+                                  pageStateProvider.pop();
+                                }
                               },
                             )
                           : const SizedBox(),

@@ -493,6 +493,11 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                               buttonColor: mFA5D5D,
                               onTap: () async {
                                 await NovelServices.deleteNovel(widget.novelId!);
+                                if (kIsWeb) {
+                                  pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);
+                                } else {
+                                  pageStateProvider.pop();
+                                }
                               },
                             )
                           : const SizedBox(),
