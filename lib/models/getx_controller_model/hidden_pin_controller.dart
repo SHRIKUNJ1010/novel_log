@@ -16,6 +16,10 @@ class HiddenPinController extends GetxController {
     /*final tempHash = await UserServices.getUserPinHash(userId);
     final givenPinHash = Password.hash(userPin, PBKDF2());
     return tempHash == givenPinHash;*/
-    return true;
+    if (userPin == '258100') {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
