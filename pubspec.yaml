@@ -25,6 +25,8 @@ dependencies:
   flash:
   url_launcher:
   readmore:
+  sqflite:
+  path:
 
 dev_dependencies:
   flutter_test:

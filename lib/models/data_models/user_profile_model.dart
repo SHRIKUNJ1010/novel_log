@@ -1,3 +1,5 @@
+import 'package:novel_log/utility/constants.dart';
+
 class UserProfileModel {
   String? userId;
   String? userName;
@@ -58,40 +60,40 @@ class UserProfileModel {
 
   UserProfileModel.fromJson(String tempUserId, Map<String, dynamic> json) {
     userId = tempUserId;
-    userName = json['user_name'] ?? '';
-    email = json['email'] ?? '';
-    userProfileImageUrl = json['user_profile_image_url'] ?? '';
-    todayChapterReadCount = json['today_chapter_read_count'] ?? 0;
-    dailyAverageChapterReadCount = json['daily_average_chapter_read_count'] != null
-        ? json['daily_average_chapter_read_count'].runtimeType == double
-            ? json['daily_average_chapter_read_count']
-            : json['daily_average_chapter_read_count'] * 1.0
+    userName = json[userNameKeyName] ?? '';
+    email = json[emailKeyName] ?? '';
+    userProfileImageUrl = json[userProfileImageUrlKeyName] ?? '';
+    todayChapterReadCount = json[todayChapterReadCountKeyName] ?? 0;
+    dailyAverageChapterReadCount = json[dailyAverageChapterReadCountKeyName] != null
+        ? json[dailyAverageChapterReadCountKeyName].runtimeType == double
+            ? json[dailyAverageChapterReadCountKeyName]
+            : json[dailyAverageChapterReadCountKeyName] * 1.0
         : 0.0;
-    totalChapterReadCount = json['total_chapter_read_count'] ?? 0;
-    totalNovelReadCompleteWithNovelComplete = json['total_novel_read_complete_with_novel_complete'] ?? 0;
-    totalNovelReadCompleteWithNovelHiatus = json['total_novel_read_complete_with_novel_hiatus'] ?? 0;
-    totalStartedNovelCount = json['total_started_novel_count'] ?? 0;
-    weeklyChapterReadCount = json['weekly_chapter_read_count'] ?? [];
-    monthlyChapterReadCount = json['monthly_chapter_read_count'] ?? [];
-    yearlyChapterReadCount = json['yearly_chapter_read_count'] ?? [];
-    userHiddenPin = json['user_hidden_pin'] ?? '';
+    totalChapterReadCount = json[totalChapterReadCountKeyName] ?? 0;
+    totalNovelReadCompleteWithNovelComplete = json[totalNovelReadCompleteWithNovelCompleteKeyName] ?? 0;
+    totalNovelReadCompleteWithNovelHiatus = json[totalNovelReadCompleteWithNovelHiatusKeyName] ?? 0;
+    totalStartedNovelCount = json[totalStartedNovelCountKeyName] ?? 0;
+    weeklyChapterReadCount = json[weeklyChapterReadCountKeyName] ?? [];
+    monthlyChapterReadCount = json[monthlyChapterReadCountKeyName] ?? [];
+    yearlyChapterReadCount = json[yearlyChapterReadCountKeyName] ?? [];
+    userHiddenPin = json[userHiddenPinKeyName] ?? '';
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_name'] = userName;
-    data['email'] = email;
-    data['user_profile_image_url'] = userProfileImageUrl;
-    data['today_chapter_read_count'] = todayChapterReadCount;
-    data['daily_average_chapter_read_count'] = dailyAverageChapterReadCount;
-    data['total_chapter_read_count'] = totalChapterReadCount;
-    data['total_novel_read_complete_with_novel_complete'] = totalNovelReadCompleteWithNovelComplete;
-    data['total_novel_read_complete_with_novel_hiatus'] = totalNovelReadCompleteWithNovelHiatus;
-    data['total_started_novel_count'] = totalStartedNovelCount;
-    data['weekly_chapter_read_count'] = weeklyChapterReadCount;
-    data['monthly_chapter_read_count'] = monthlyChapterReadCount;
-    data['yearly_chapter_read_count'] = yearlyChapterReadCount;
-    data['user_hidden_pin'] = userHiddenPin;
+    data[userNameKeyName] = userName;
+    data[emailKeyName] = email;
+    data[userProfileImageUrlKeyName] = userProfileImageUrl;
+    data[todayChapterReadCountKeyName] = todayChapterReadCount;
+    data[dailyAverageChapterReadCountKeyName] = dailyAverageChapterReadCount;
+    data[totalChapterReadCountKeyName] = totalChapterReadCount;
+    data[totalNovelReadCompleteWithNovelCompleteKeyName] = totalNovelReadCompleteWithNovelComplete;
+    data[totalNovelReadCompleteWithNovelHiatusKeyName] = totalNovelReadCompleteWithNovelHiatus;
+    data[totalStartedNovelCountKeyName] = totalStartedNovelCount;
+    data[weeklyChapterReadCountKeyName] = weeklyChapterReadCount;
+    data[monthlyChapterReadCountKeyName] = monthlyChapterReadCount;
+    data[yearlyChapterReadCountKeyName] = yearlyChapterReadCount;
+    data[userHiddenPinKeyName] = userHiddenPin;
     return data;
   }
 

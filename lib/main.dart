@@ -7,6 +7,7 @@ import 'package:novel_log/router/my_app_router_information_parser.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/firebase_services/firebase_options.dart';
+import 'package:novel_log/utility/local_database_services/local_database_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/router_models/router_state_provider/drawer_state_provider.dart';
@@ -15,6 +16,7 @@ import 'models/router_models/router_state_provider/page_state_provider.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
+  await LocalDatabaseServices.initDatabase();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

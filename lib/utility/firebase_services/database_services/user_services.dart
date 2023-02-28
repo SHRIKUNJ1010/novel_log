@@ -1,4 +1,5 @@
 import 'package:novel_log/models/data_models/user_profile_model.dart';
+import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/firebase_services/database_services/firebase_database_services.dart';
 
 class UserServices {
@@ -9,19 +10,19 @@ class UserServices {
   }
 
   static Future<void> changeTotalNovelCountOfUser(String userId, int totalNovelCount) async {
-    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({'total_started_novel_count': totalNovelCount});
+    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({totalStartedNovelCountKeyName: totalNovelCount});
   }
 
   static Future<void> changeTotalChapterReadCountOfUser(String userId, int totalChapterReadCount) async {
-    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({'total_chapter_read_count': totalChapterReadCount});
+    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({todayChapterReadCountKeyName: totalChapterReadCount});
   }
 
   static Future<void> changeCompleteNovelCountOfUser(String userId, int completeNovelCount) async {
-    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({'total_novel_read_complete_with_novel_complete': completeNovelCount});
+    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({totalNovelReadCompleteWithNovelCompleteKeyName: completeNovelCount});
   }
 
   static Future<void> changeHiatusNovelCountOfUser(String userId, int hiatusNovelCount) async {
-    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({'total_novel_read_complete_with_novel_hiatus': hiatusNovelCount});
+    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({totalNovelReadCompleteWithNovelHiatusKeyName: hiatusNovelCount});
   }
 
   /*static Future<void> changeUserHiddenPin(String userId, String oldUserPin, String newUserPin) async {
