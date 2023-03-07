@@ -24,9 +24,9 @@ class UserLocalServices {
               $userHiddenPinKeyName TEXT,
               $todayChapterReadCountKeyName INTEGER,
               $dailyAverageChapterReadCountKeyName INTEGER,
-              $weeklyChapterReadCountKeyName CREATE TYPE weekArray AS INTEGER ARRAY[7],
-              $monthlyChapterReadCountKeyName CREATE TYPE monthArray AS INTEGER ARRAY[30],
-              $yearlyChapterReadCountKeyName CREATE TYPE yearArray AS INTEGER ARRAY[365],
+              $weeklyChapterReadCountKeyName TEXT,
+              $monthlyChapterReadCountKeyName TEXT,
+              $yearlyChapterReadCountKeyName TEXT,
             )
              ''');
       },

@@ -2,6 +2,7 @@
 * Created by Shrikunj Patel on 2/28/2023.
 */
 
+import 'package:novel_log/utility/local_database_services/novel_local_services.dart';
 import 'package:novel_log/utility/local_database_services/user_local_services.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,8 +10,6 @@ import 'package:sqflite/sqflite.dart';
 class LocalDatabaseServices {
   static const databaseName = 'novel_database.db';
   static const databaseVersion = 1;
-
-  static const novelTable = 'novel_table';
 
   static Database? _database;
 
@@ -31,5 +30,6 @@ class LocalDatabaseServices {
 
   static Future onCreate(Database db, int version) async {
     await UserLocalServices.createUserTable();
+    await NovelLocalServices.createNovelTable();
   }
 }

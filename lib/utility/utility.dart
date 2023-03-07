@@ -461,5 +461,15 @@ class Utility {
     }
   }
 
+  static String listToCommaSeparatedString(List<dynamic> list) {
+    return list.join(',');
+  }
+
+  static List<T> commaSeparatedStringToList<T extends Object>(String commaSeparatedString) {
+    List<dynamic> temp = commaSeparatedString.split(',');
+    List<T> value = temp.map((e) => e as T).toList();
+    return value;
+  }
+
 //end of file
 }

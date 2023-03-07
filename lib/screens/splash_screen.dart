@@ -14,6 +14,7 @@ import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,6 +30,10 @@ class _SplashScreenState extends State<SplashScreen> {
   HiddenPinController pinController = Get.put(HiddenPinController());
 
   void manageHomeNavigation() async {
+    var temp = '1,2,3,4';
+    var tempString = 'genre1,genre2,genre3,genre4';
+    Utility.printLog(Utility.commaSeparatedStringToList<int>(temp));
+    Utility.printLog(Utility.commaSeparatedStringToList<String>(tempString));
     prefs = await SharedPreferences.getInstance();
     isLoggedIn = await FirebaseAuthService.isAlreadyLoggedIn();
     Preference.setIsUserLoggedIn(isLoggedIn);

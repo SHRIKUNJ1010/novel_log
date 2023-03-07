@@ -1,3 +1,4 @@
+import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/utility.dart';
 
@@ -43,40 +44,40 @@ class NovelDescriptionModel {
 
   NovelDescriptionModel.fromJson(String tempNovelId, Map<String, dynamic> json) {
     novelId = tempNovelId;
-    userId = json['user_id'];
-    novelName = json['novel_name'];
-    novelAuthorName = json['novel_author_name'];
-    novelGenre = (json['novel_genre'] as List).map((e) => e.toString()).toList();
-    novelDescription = json['novel_description'];
-    novelImageUrl = json['novel_image_url'];
-    indexingGroupName = json['indexing_group_name'];
-    isNovel = json['is_novel'] == '1' ? true : false;
-    totalNovelChapterCount = json['total_novel_chapter_count'];
-    readNovelChapterCount = json['read_novel_chapter_count'];
-    novelLinkUrl = json['novel_link_url'];
-    novelStatus = Utility.stringToNovelStatus(json['novel_status']);
-    novelReadingStatus = Utility.stringToNovelReadingStatus(json['novel_reading_status']);
-    isHidden = json['is_hidden'] == '1' ? true : false;
-    isInWishList = json['is_in_wish_list'] == '1' ? true : false;
+    userId = json[userIdKeyName];
+    novelName = json[novelNameKeyName];
+    novelAuthorName = json[novelAuthorNameKeyName];
+    novelGenre = (json[novelGenreKeyName] as List).map((e) => e.toString()).toList();
+    novelDescription = json[novelDescriptionKeyName];
+    novelImageUrl = json[novelImageUrlKeyName];
+    indexingGroupName = json[indexingGroupNameKeyName];
+    isNovel = json[isNovelKeyName] == '1' ? true : false;
+    totalNovelChapterCount = json[totalNovelChapterCountKeyName];
+    readNovelChapterCount = json[readNovelChapterCountKeyName];
+    novelLinkUrl = json[novelLinkUrlKeyName];
+    novelStatus = Utility.stringToNovelStatus(json[novelStatusKeyName]);
+    novelReadingStatus = Utility.stringToNovelReadingStatus(json[novelReadingStatusKeyName]);
+    isHidden = json[isHiddenKeyName] == '1' ? true : false;
+    isInWishList = json[isInWishListKeyName] == '1' ? true : false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['user_id'] = userId;
-    data['novel_name'] = novelName;
-    data['novel_author_name'] = novelAuthorName;
-    data['novel_genre'] = novelGenre;
-    data['novel_description'] = novelDescription;
-    data['novel_image_url'] = novelImageUrl;
-    data['indexing_group_name'] = indexingGroupName;
-    data['is_novel'] = (isNovel ?? false) ? '1' : '0';
-    data['total_novel_chapter_count'] = totalNovelChapterCount;
-    data['read_novel_chapter_count'] = readNovelChapterCount;
-    data['novel_link_url'] = novelLinkUrl;
-    data['novel_status'] = Utility.novelStatusToString(novelStatus!);
-    data['novel_reading_status'] = Utility.novelReadingStatusToString(novelReadingStatus!);
-    data['is_hidden'] = (isHidden ?? false) ? '1' : '0';
-    data['is_in_wish_list'] = (isInWishList ?? false) ? '1' : '0';
+    data[userIdKeyName] = userId;
+    data[novelNameKeyName] = novelName;
+    data[novelAuthorNameKeyName] = novelAuthorName;
+    data[novelGenreKeyName] = novelGenre;
+    data[novelDescriptionKeyName] = novelDescription;
+    data[novelImageUrlKeyName] = novelImageUrl;
+    data[indexingGroupNameKeyName] = indexingGroupName;
+    data[isNovelKeyName] = (isNovel ?? false) ? '1' : '0';
+    data[totalNovelChapterCountKeyName] = totalNovelChapterCount;
+    data[readNovelChapterCountKeyName] = readNovelChapterCount;
+    data[novelLinkUrlKeyName] = novelLinkUrl;
+    data[novelStatusKeyName] = Utility.novelStatusToString(novelStatus!);
+    data[novelReadingStatusKeyName] = Utility.novelReadingStatusToString(novelReadingStatus!);
+    data[isHiddenKeyName] = (isHidden ?? false) ? '1' : '0';
+    data[isInWishListKeyName] = (isInWishList ?? false) ? '1' : '0';
     return data;
   }
 

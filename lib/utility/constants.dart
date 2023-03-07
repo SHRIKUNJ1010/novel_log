@@ -15,6 +15,7 @@ const String prefIsUserLoggedIn = 'PREF_IS_USER_LOGGED_IN';
 
 //database common key names
 const String userIdKeyName = 'user_id';
+const String novelIdKeyName = 'novel_id';
 
 //database key names for user
 const String userNameKeyName = 'user_name';
@@ -32,3 +33,17 @@ const String yearlyChapterReadCountKeyName = 'yearly_chapter_read_count';
 const String userHiddenPinKeyName = 'user_hidden_pin';
 
 //database key names for novel
+const String novelNameKeyName = 'novel_name';
+const String novelAuthorNameKeyName = 'novel_author_name';
+const String novelGenreKeyName = 'novel_genre';
+const String novelDescriptionKeyName = 'novel_description';
+const String novelImageUrlKeyName = 'novel_image_url';
+const String indexingGroupNameKeyName = 'indexing_group_name';
+const String isNovelKeyName = 'is_novel';
+const String totalNovelChapterCountKeyName = 'total_novel_chapter_count';
+const String readNovelChapterCountKeyName = 'read_novel_chapter_count';
+const String novelLinkUrlKeyName = 'novel_link_url';
+const String novelStatusKeyName = 'novel_status_key_name';
+const String novelReadingStatusKeyName = 'novel_reading_status';
+const String isHiddenKeyName = 'is_hidden';
+const String isInWishListKeyName = 'is_in_wish_list';
