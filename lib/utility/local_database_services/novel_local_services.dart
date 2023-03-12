@@ -9,8 +9,9 @@ class NovelLocalServices {
   static const novelTable = 'novel_table';
 
   static Future<void> createNovelTable() async {
-    await LocalDatabaseServices.database.then((value) {
-      value.execute('''
+    await LocalDatabaseServices.database.then(
+      (value) {
+        value.execute('''
       CREATE TABLE $novelTable (
         $novelIdKeyName TEXT PRIMARY KEY,
         $novelNameKeyName TEXT,
@@ -29,6 +30,7 @@ class NovelLocalServices {
         $isInWishListKeyName TEXT,
       )
       ''');
-    });
+      },
+    );
   }
 }
