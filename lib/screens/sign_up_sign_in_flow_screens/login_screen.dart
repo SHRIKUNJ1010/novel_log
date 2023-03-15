@@ -13,7 +13,6 @@ import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
-import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
@@ -59,7 +58,11 @@ class _LoginScreenState extends State<LoginScreen> {
       passwordEditingController.text,
     );
     if (tempUserId != '') {
-      userController.getUserData(tempUserId);
+      if (!kIsWeb) {
+        await userController.storeDataInLocalDatabase(tempUserId, localDb.database);
+      } else {
+        await userController.getUserData(tempUserId);
+      }
       Preference.setUserId(tempUserId);
       Preference.setIsUserLoggedIn(true);
       NovelServices.userNovelStatistic(tempUserId);

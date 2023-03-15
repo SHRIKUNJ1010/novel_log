@@ -4,15 +4,14 @@
 
 import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/constants.dart';
-import 'package:novel_log/utility/local_database_services/local_database_services.dart';
+import 'package:novel_log/utility/utility.dart';
+import 'package:sqflite/sqflite.dart';
 
 class UserLocalServices {
   static const userTable = 'user_table';
 
-  static Future<void> createUserTable() async {
-    await LocalDatabaseServices.database.then(
-      (value) {
-        value.execute('''
+  static Future<void> createUserTable(Database database) async {
+    database.execute('''
             CREATE TABLE $userTable (
               $userIdKeyName TEXT PRIMARY KEY,
               $userNameKeyName TEXT,
@@ -27,20 +26,16 @@ class UserLocalServices {
               $dailyAverageChapterReadCountKeyName INTEGER,
               $weeklyChapterReadCountKeyName TEXT,
               $monthlyChapterReadCountKeyName TEXT,
-              $yearlyChapterReadCountKeyName TEXT,
+              $yearlyChapterReadCountKeyName TEXT
             )
              ''');
-      },
-    );
+    Utility.printLog("user table created");
   }
 
-  static Future<void> insertUserData(UserProfileModel user) async {
-    await LocalDatabaseServices.database.then(
-      (value) {
-        //remove already existing data from table so that latest data can be accessed
-        //from first element of the query result list
-        value.rawDelete('DELETE FROM $userTable');
-        value.rawInsert('''
+  static Future<void> insertUserData(Database database, UserProfileModel user) async {
+    database.rawDelete('DELETE FROM $userTable');
+    Utility.printLog("user data deleted");
+    database.rawInsert('''
         INSERT INTO $userTable (
           $userIdKeyName,
           $userNameKeyName,
@@ -55,33 +50,31 @@ class UserLocalServices {
           $dailyAverageChapterReadCountKeyName,
           $weeklyChapterReadCountKeyName,
           $monthlyChapterReadCountKeyName,
-          $yearlyChapterReadCountKeyName,
+          $yearlyChapterReadCountKeyName
         ) VALUES (
-          ${user.userId},
-          ${user.userName},
-          ${user.email},
+          "${user.userId}",
+          "${user.userName}",
+          "${user.email}",
           ${user.totalChapterReadCount},
           ${user.totalStartedNovelCount},
           ${user.totalNovelReadCompleteWithNovelComplete},
           ${user.totalNovelReadCompleteWithNovelHiatus},
-          ${user.userProfileImageUrl},
-          ${user.userHiddenPin},
+          "${user.userProfileImageUrl}",
+          "${user.userHiddenPin}",
           ${user.todayChapterReadCount},
           ${user.dailyAverageChapterReadCount},
-          '',
-          '',
-          '',
+          "",
+          "",
+          ""
         )
         ''');
-      },
-    );
+    Utility.printLog("user data inserted");
   }
 
-  static Future<UserProfileModel> getUserData() async {
+  static Future<UserProfileModel> getUserData(Database db) async {
     //when inserting or updating user table data existing data is removed and
     // new data is added so required data will always be in first element of query
     // result list
-    var db = await LocalDatabaseServices.database;
     List data = await db.rawQuery('''SELECT * FROM $userTable''');
     UserProfileModel temp = UserProfileModel(
       userId: data[0][userIdKeyName],
@@ -93,12 +86,13 @@ class UserLocalServices {
       weeklyChapterReadCount: [],
       monthlyChapterReadCount: [],
       yearlyChapterReadCount: [],
-      dailyAverageChapterReadCount: data[0][dailyAverageChapterReadCountKeyName],
+      dailyAverageChapterReadCount: data[0][dailyAverageChapterReadCountKeyName] * 1.00,
       totalChapterReadCount: data[0][totalChapterReadCountKeyName],
       totalNovelReadCompleteWithNovelComplete: data[0][totalNovelReadCompleteWithNovelCompleteKeyName],
       totalNovelReadCompleteWithNovelHiatus: data[0][totalNovelReadCompleteWithNovelHiatusKeyName],
       totalStartedNovelCount: data[0][totalStartedNovelCountKeyName],
     );
+    Utility.printLog("user data get query called");
     return temp;
   }
 }

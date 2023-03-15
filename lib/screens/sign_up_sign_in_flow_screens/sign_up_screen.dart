@@ -5,8 +5,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:novel_log/main.dart';
 import 'package:novel_log/models/data_models/user_profile_model.dart';
+import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
@@ -34,6 +36,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController repeatPasswordEditingController = TextEditingController();
   late Image smallBackgroundImage;
   late Image bigBackgroundImage;
+
+  UserDataController userController = Get.put(UserDataController());
 
   bool verifyFields() {
     return nameEditingController.text.isNotEmpty &&
@@ -86,6 +90,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         email: emailEditingController.text,
       );
       await UserServices.createUser(tempUserId, tempUser.toJson());
+      if (!kIsWeb) {
+        await userController.storeDataInLocalDatabase(tempUserId, localDb.database);
+      } else {
+        await userController.getUserData(tempUserId);
+      }
       drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);

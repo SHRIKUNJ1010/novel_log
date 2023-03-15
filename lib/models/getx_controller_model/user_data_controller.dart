@@ -2,20 +2,36 @@
 * Created by Shrikunj Patel on 2/15/2023.
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:novel_log/models/data_models/user_profile_model.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
+import 'package:novel_log/utility/local_database_services/user_local_services.dart';
 import 'package:novel_log/utility/utility.dart';
+import 'package:sqflite/sqflite.dart';
 
 class UserDataController extends GetxController {
   UserProfileModel userData = UserProfileModel();
 
   //get user data by user id
-  getUserData(String userId) async {
-    userData = await UserServices.getUserData(userId);
+  Future<void> getUserData(String userId, {Database? db}) async {
+    if ((!kIsWeb) && (db != null)) {
+      userData = await UserLocalServices.getUserData(db);
+      Utility.printLog("from Database");
+    } else {
+      userData = await UserServices.getUserData(userId);
+      Utility.printLog("from Firebase");
+    }
     Utility.printLog(userData.toJson());
     update();
+    return;
+  }
+
+  Future<void> storeDataInLocalDatabase(String userId, Database db) async {
+    await Utility.getUserDataFromFirebaseAndInsertIntoLocalDatabase(userId, db);
+    await getUserData(userId, db: db);
+    return;
   }
 
   //re calculating the statistic of novels if data gets reset

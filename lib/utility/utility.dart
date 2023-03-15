@@ -12,8 +12,11 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
+import 'package:novel_log/utility/local_database_services/user_local_services.dart';
 import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
@@ -469,6 +472,12 @@ class Utility {
     List<dynamic> temp = commaSeparatedString.split(',');
     List<T> value = temp.map((e) => e as T).toList();
     return value;
+  }
+
+  static Future<void> getUserDataFromFirebaseAndInsertIntoLocalDatabase(String userId, Database db) async {
+    final temp = await UserServices.getUserData(userId);
+    await UserLocalServices.insertUserData(db, temp);
+    return;
   }
 
 //end of file

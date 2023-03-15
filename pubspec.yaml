@@ -26,6 +26,7 @@ dependencies:
   url_launcher:
   readmore:
   sqflite:
+  path_provider:
   path:
 
 dev_dependencies:

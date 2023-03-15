@@ -3,15 +3,14 @@
 */
 
 import 'package:novel_log/utility/constants.dart';
-import 'package:novel_log/utility/local_database_services/local_database_services.dart';
+import 'package:novel_log/utility/utility.dart';
+import 'package:sqflite/sqflite.dart';
 
 class NovelLocalServices {
   static const novelTable = 'novel_table';
 
-  static Future<void> createNovelTable() async {
-    await LocalDatabaseServices.database.then(
-      (value) {
-        value.execute('''
+  static Future<void> createNovelTable(Database database) async {
+    database.execute('''
       CREATE TABLE $novelTable (
         $novelIdKeyName TEXT PRIMARY KEY,
         $novelNameKeyName TEXT,
@@ -27,10 +26,9 @@ class NovelLocalServices {
         $novelStatusKeyName TEXT,
         $novelReadingStatusKeyName TEXT,
         $isHiddenKeyName TEXT,
-        $isInWishListKeyName TEXT,
+        $isInWishListKeyName TEXT
       )
       ''');
-      },
-    );
+    Utility.printLog("novel table created");
   }
 }

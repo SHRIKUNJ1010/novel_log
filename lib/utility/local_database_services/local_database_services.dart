@@ -4,32 +4,31 @@
 
 import 'package:novel_log/utility/local_database_services/novel_local_services.dart';
 import 'package:novel_log/utility/local_database_services/user_local_services.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class LocalDatabaseServices {
   static const databaseName = 'novel_database.db';
   static const databaseVersion = 1;
 
-  static Database? _database;
+  late Database database;
 
-  static Future<Database> get database async {
-    if (_database != null) return _database!;
-    return await initDatabase();
-  }
-
-  static initDatabase() async {
-    String path = join(await getDatabasesPath(), databaseName);
-    _database = await openDatabase(
+  Future<void> initDatabase() async {
+    Utility.printLog("initDatabase method called");
+    final tempDocumentDirectory = await getApplicationDocumentsDirectory();
+    String path = join(tempDocumentDirectory.path, databaseName);
+    database = await openDatabase(
       path,
       version: databaseVersion,
       onCreate: onCreate,
     );
-    return _database;
   }
 
-  static Future onCreate(Database db, int version) async {
-    await UserLocalServices.createUserTable();
-    await NovelLocalServices.createNovelTable();
+  Future onCreate(Database db, int version) async {
+    Utility.printLog("database onCreate method called");
+    UserLocalServices.createUserTable(db);
+    NovelLocalServices.createNovelTable(db);
   }
 }

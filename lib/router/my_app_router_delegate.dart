@@ -132,7 +132,7 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
         pageConfiguration: PageConfigList.getSplashScreen(),
       );
     }
-    Utility.printLog("pages list : ${pages.map((e) => e.name).toList()}");
+    Utility.printLog("pages list in build method : ${pages.map((e) => e.name).toList()}");
     return List.of(pages);
   }
 
@@ -143,21 +143,22 @@ class MyAppRouterDelegate extends RouterDelegate<List<PageConfiguration>> with C
   Future<void> setNewRoutePath(configuration) {
     Utility.printLog('setNewRoutePath -----------------------------------------------');
     Utility.printLog("set new route path page config list : ${configuration.map((e) => e.path).toList()}");
-    /*if (configuration.isNotEmpty) {
-      pageStateProvider.addAllPages(configuration);
-    }*/
+    Utility.printLog("set new route path pageStateProvider config list : ${pageStateProvider.config.map((e) => e.path).toList()}");
+    if (configuration.isEmpty && pageStateProvider.config.isEmpty) {
+      pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
+    }
     return SynchronousFuture(null);
   }
 
-  /*@override
+/*@override
   Future<void> setInitialRoutePath(configuration) {
     Utility.printLog('setInitialRoutePath --------------------------------');
     Utility.printLog("set initial route path page config list : ${configuration.map((e) => e.path).toList()}");
-    *//*if (configuration.isNotEmpty) {
+    */ /*if (configuration.isNotEmpty) {
       pageStateProvider.addAllPages(configuration);
     } else {
       pageStateProvider.addAllPages([PageConfigList.getSplashScreen()]);
-    }*//*
+    }*/ /*
     return SynchronousFuture(null);
   }*/
 
