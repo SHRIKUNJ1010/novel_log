@@ -37,6 +37,9 @@ class UserLocalServices {
   static Future<void> insertUserData(UserProfileModel user) async {
     await LocalDatabaseServices.database.then(
       (value) {
+        //remove already existing data from table so that latest data can be accessed
+        //from first element of the query result list
+        value.rawDelete('DELETE FROM $userTable');
         value.rawInsert('''
         INSERT INTO $userTable (
           $userIdKeyName,
@@ -65,9 +68,9 @@ class UserLocalServices {
           ${user.userHiddenPin},
           ${user.todayChapterReadCount},
           ${user.dailyAverageChapterReadCount},
-          ${user.weeklyChapterReadCount},
-          ${user.monthlyChapterReadCount},
-          ${user.yearlyChapterReadCount},
+          '',
+          '',
+          '',
         )
         ''');
       },
@@ -75,6 +78,9 @@ class UserLocalServices {
   }
 
   static Future<UserProfileModel> getUserData() async {
+    //when inserting or updating user table data existing data is removed and
+    // new data is added so required data will always be in first element of query
+    // result list
     var db = await LocalDatabaseServices.database;
     List data = await db.rawQuery('''SELECT * FROM $userTable''');
     UserProfileModel temp = UserProfileModel(
@@ -84,9 +90,9 @@ class UserLocalServices {
       userProfileImageUrl: data[0][userProfileImageUrlKeyName],
       userHiddenPin: data[0][userHiddenPinKeyName],
       todayChapterReadCount: data[0][todayChapterReadCountKeyName],
-      weeklyChapterReadCount: data[0][weeklyChapterReadCountKeyName],
-      monthlyChapterReadCount: data[0][monthlyChapterReadCountKeyName],
-      yearlyChapterReadCount: data[0][yearlyChapterReadCountKeyName],
+      weeklyChapterReadCount: [],
+      monthlyChapterReadCount: [],
+      yearlyChapterReadCount: [],
       dailyAverageChapterReadCount: data[0][dailyAverageChapterReadCountKeyName],
       totalChapterReadCount: data[0][totalChapterReadCountKeyName],
       totalNovelReadCompleteWithNovelComplete: data[0][totalNovelReadCompleteWithNovelCompleteKeyName],
