@@ -10,8 +10,8 @@ import 'package:sqflite/sqflite.dart';
 class UserLocalServices {
   static const userTable = 'user_table';
 
-  static Future<void> createUserTable(Database database) async {
-    database.execute('''
+  static Future<void> createUserTable(Database db) async {
+    await db.execute('''
             CREATE TABLE $userTable (
               $userIdKeyName TEXT PRIMARY KEY,
               $userNameKeyName TEXT,
@@ -32,10 +32,10 @@ class UserLocalServices {
     Utility.printLog("user table created");
   }
 
-  static Future<void> insertUserData(Database database, UserProfileModel user) async {
-    database.rawDelete('DELETE FROM $userTable');
+  static Future<void> insertUserData(Database db, UserProfileModel user) async {
+    await db.rawDelete('DELETE FROM $userTable');
     Utility.printLog("user data deleted");
-    database.rawInsert('''
+    await db.rawInsert('''
         INSERT INTO $userTable (
           $userIdKeyName,
           $userNameKeyName,
@@ -95,4 +95,38 @@ class UserLocalServices {
     Utility.printLog("user data get query called");
     return temp;
   }
+
+  static Future<void> changeTotalNovelCountOfUser(Database db, String userId, int totalNovelCount) async {
+    await db.rawUpdate('''
+    UPDATE $userTable
+    SET $totalStartedNovelCountKeyName = $totalNovelCount
+    WHERE $userIdKeyName = $userId
+    ''');
+  }
+
+  static Future<void> changeTotalChapterReadCountOfUser(Database db, String userId, int totalChapterReadCount) async {
+    await db.rawUpdate('''
+    UPDATE $userTable
+    SET $totalChapterReadCountKeyName = $totalChapterReadCount
+    WHERE $userIdKeyName = $userId
+    ''');
+  }
+
+  static Future<void> changeCompleteNovelCountOfUser(Database db, String userId, int completeNovelCount) async {
+    await db.rawUpdate('''
+    UPDATE $userTable
+    SET $totalNovelReadCompleteWithNovelCompleteKeyName = $completeNovelCount
+    WHERE $userIdKeyName = $userId
+    ''');
+  }
+
+  static Future<void> changeHiatusNovelCountOfUser(Database db, String userId, int hiatusNovelCount) async {
+    await db.rawUpdate('''
+    UPDATE $userTable
+    SET $totalNovelReadCompleteWithNovelHiatusKeyName = $hiatusNovelCount
+    WHERE $userIdKeyName = $userId
+    ''');
+  }
+
+  //end of file
 }

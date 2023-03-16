@@ -61,6 +61,25 @@ class NovelDescriptionModel {
     isInWishList = json[isInWishListKeyName] == '1' ? true : false;
   }
 
+  NovelDescriptionModel.fromJsonLocal(Map<String, dynamic> json) {
+    novelId = json[novelIdKeyName];
+    userId = json[userIdKeyName];
+    novelName = json[novelNameKeyName];
+    novelAuthorName = json[novelAuthorNameKeyName];
+    novelGenre = (json[novelGenreKeyName] as List).map((e) => e.toString()).toList();
+    novelDescription = json[novelDescriptionKeyName];
+    novelImageUrl = json[novelImageUrlKeyName];
+    indexingGroupName = json[indexingGroupNameKeyName];
+    isNovel = json[isNovelKeyName] == '1' ? true : false;
+    totalNovelChapterCount = json[totalNovelChapterCountKeyName];
+    readNovelChapterCount = json[readNovelChapterCountKeyName];
+    novelLinkUrl = json[novelLinkUrlKeyName];
+    novelStatus = Utility.stringToNovelStatus(json[novelStatusKeyName]);
+    novelReadingStatus = Utility.stringToNovelReadingStatus(json[novelReadingStatusKeyName]);
+    isHidden = json[isHiddenKeyName] == '1' ? true : false;
+    isInWishList = json[isInWishListKeyName] == '1' ? true : false;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data[userIdKeyName] = userId;

@@ -12,7 +12,9 @@ import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
+import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
 import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
+import 'package:novel_log/utility/local_database_services/novel_local_services.dart';
 import 'package:novel_log/utility/local_database_services/user_local_services.dart';
 import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
@@ -477,6 +479,28 @@ class Utility {
   static Future<void> getUserDataFromFirebaseAndInsertIntoLocalDatabase(String userId, Database db) async {
     final temp = await UserServices.getUserData(userId);
     await UserLocalServices.insertUserData(db, temp);
+    return;
+  }
+
+  static Future<void> getNovelDataFromFirebaseAndInsertIntoLocalDatabase(String userId, Database db) async {
+    final temp = await NovelServices.getAllNovelListForUser(userId);
+    for (var element in temp) {
+      await NovelLocalServices.insertNovelData(db, element);
+    }
+    return;
+  }
+
+  static Future<void> uploadUserDataToFirebaseFromLocalDatabase(String userId, Database db) async {
+    final temp = await UserLocalServices.getUserData(db);
+    await UserServices.createUser(userId, temp.toJson());
+    return;
+  }
+
+  static Future<void> uploadNovelAllListDataToFirebaseFromLocalDatabase(String userId, Database db) async {
+    final temp = await NovelLocalServices.getAllNovelList(db, userId);
+    for (var element in temp) {
+      await NovelServices.editNovel(element.novelId!, element.toJson());
+    }
     return;
   }
 

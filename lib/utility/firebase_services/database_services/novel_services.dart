@@ -60,6 +60,11 @@ class NovelServices {
     };
   }
 
+  static Future<List<NovelDescriptionModel>> getAllNovelListForUser(String userId) async {
+    final tempData = await FirebaseDatabaseServices.novelCollectionReference.where(userIdKeyName, isEqualTo: userId).get();
+    return tempData.docs.map((e) => NovelDescriptionModel.fromJson(e.id, e.data())).toList();
+  }
+
   //getting first page data for main page novel list
   static Future<Map<String, dynamic>> getMainNovelListFirstPage(String userId) async {
     final tempData = await FirebaseDatabaseServices.novelCollectionReference

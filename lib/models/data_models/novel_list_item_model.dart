@@ -50,6 +50,22 @@ class NovelListItemModel {
     novelReadingStatus = Utility.stringToNovelReadingStatus(json['novel_reading_status']);
   }
 
+  NovelListItemModel.fromJsonLocal(Map<String, dynamic> json) {
+    novelId = json['novel_id'];
+    userId = json['user_id'];
+    novelName = json['novel_name'];
+    novelAuthorName = json['novel_author_name'];
+    novelDescription = json['novel_description'];
+    novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
+    novelImageUrl = json['novel_image_url'];
+    indexingGroupName = json['indexing_group_name'];
+    totalNovelChapterCount = json['total_novel_chapter_count'];
+    readNovelChapterCount = json['read_novel_chapter_count'];
+    novelLinkUrl = json['novel_link_url'];
+    isNovel = json['is_novel'] == '1' ? true : false;
+    novelReadingStatus = Utility.stringToNovelReadingStatus(json['novel_reading_status']);
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['novel_id'] = novelId;
