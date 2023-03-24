@@ -14,7 +14,7 @@ class UserServices {
   }
 
   static Future<void> changeTotalChapterReadCountOfUser(String userId, int totalChapterReadCount) async {
-    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({todayChapterReadCountKeyName: totalChapterReadCount});
+    await FirebaseDatabaseServices.userCollectionReference.doc(userId).update({totalChapterReadCountKeyName: totalChapterReadCount});
   }
 
   static Future<void> changeCompleteNovelCountOfUser(String userId, int completeNovelCount) async {

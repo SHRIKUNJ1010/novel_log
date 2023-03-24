@@ -43,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         String tempUserId = Preference.getUserId();
         if (tempUserId != '') {
           if (!kIsWeb) {
-            await userController.storeDataInLocalDatabase(tempUserId, localDb.database);
+            await userController.getUserData(tempUserId, db: localDb.database);
           } else {
             await userController.getUserData(tempUserId);
           }

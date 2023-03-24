@@ -40,14 +40,16 @@ class NovelWishListItemModel {
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
     novelDescription = json['novel_description'];
-    novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
+    if (json['novel_genre'] != '') {
+      novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
+    }
     novelImageUrl = json['novel_image_url'];
     indexingGroupName = json['indexing_group_name'];
     totalNovelChapterCount = json['total_novel_chapter_count'];
     readNovelChapterCount = json['read_novel_chapter_count'];
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
-    novelStatus = Utility.stringToNovelStatus(json['novel_status']);
+    novelStatus = Utility.stringToNovelStatus(json['novel_status'] ?? '');
   }
 
   NovelWishListItemModel.fromJsonLocal(Map<String, dynamic> json) {
@@ -56,14 +58,16 @@ class NovelWishListItemModel {
     novelName = json['novel_name'];
     novelAuthorName = json['novel_author_name'];
     novelDescription = json['novel_description'];
-    novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
+    if (json['novel_genre'] != '') {
+      novelGenre = (json['novel_genre'] as List).map((item) => item as String).toList();
+    }
     novelImageUrl = json['novel_image_url'];
     indexingGroupName = json['indexing_group_name'];
     totalNovelChapterCount = json['total_novel_chapter_count'];
     readNovelChapterCount = json['read_novel_chapter_count'];
     novelLinkUrl = json['novel_link_url'];
     isNovel = json['is_novel'] == '1' ? true : false;
-    novelStatus = Utility.stringToNovelStatus(json['novel_status']);
+    novelStatus = Utility.stringToNovelStatus(json['novel_status'] ?? '');
   }
 
   Map<String, dynamic> toJson() {

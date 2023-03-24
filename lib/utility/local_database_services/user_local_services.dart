@@ -66,7 +66,7 @@ class UserLocalServices {
           "",
           "",
           ""
-        )
+        );
         ''');
     Utility.printLog("user data inserted");
   }
@@ -75,7 +75,7 @@ class UserLocalServices {
     //when inserting or updating user table data existing data is removed and
     // new data is added so required data will always be in first element of query
     // result list
-    List data = await db.rawQuery('''SELECT * FROM $userTable''');
+    List data = await db.rawQuery('''SELECT * FROM $userTable;''');
     UserProfileModel temp = UserProfileModel(
       userId: data[0][userIdKeyName],
       userName: data[0][userNameKeyName],
@@ -100,7 +100,7 @@ class UserLocalServices {
     await db.rawUpdate('''
     UPDATE $userTable
     SET $totalStartedNovelCountKeyName = $totalNovelCount
-    WHERE $userIdKeyName = $userId
+    WHERE $userIdKeyName = "$userId";
     ''');
   }
 
@@ -108,7 +108,7 @@ class UserLocalServices {
     await db.rawUpdate('''
     UPDATE $userTable
     SET $totalChapterReadCountKeyName = $totalChapterReadCount
-    WHERE $userIdKeyName = $userId
+    WHERE $userIdKeyName = "$userId";
     ''');
   }
 
@@ -116,7 +116,7 @@ class UserLocalServices {
     await db.rawUpdate('''
     UPDATE $userTable
     SET $totalNovelReadCompleteWithNovelCompleteKeyName = $completeNovelCount
-    WHERE $userIdKeyName = $userId
+    WHERE $userIdKeyName = "$userId";
     ''');
   }
 
@@ -124,9 +124,9 @@ class UserLocalServices {
     await db.rawUpdate('''
     UPDATE $userTable
     SET $totalNovelReadCompleteWithNovelHiatusKeyName = $hiatusNovelCount
-    WHERE $userIdKeyName = $userId
+    WHERE $userIdKeyName = "$userId";
     ''');
   }
 
-  //end of file
+//end of file
 }

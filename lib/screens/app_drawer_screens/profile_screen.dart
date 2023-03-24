@@ -2,12 +2,18 @@
 * Created by Shrikunj Patel on 1/23/2023.
 */
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:novel_log/main.dart';
+import 'package:novel_log/models/getx_controller_model/novel_hidden_list_controller.dart';
+import 'package:novel_log/models/getx_controller_model/novel_wish_list_controller.dart';
 import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
+import 'package:novel_log/models/getx_controller_model/your_novel_list_controller.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/preference.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/common_rounded_button.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:novel_log/widgets/profile_screen_widgets/novel_statistic_widget.dart';
@@ -32,7 +38,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         if (userController.userData.email == null) {
-          userController.getUserData(Preference.getUserId());
+          if (kIsWeb) {
+            userController.getUserData(Preference.getUserId());
+          } else {
+            userController.getUserData(Preference.getUserId(), db: localDb.database);
+          }
         }
       },
     );
@@ -110,7 +120,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   text: 'Re-calculate statistic',
                   fontSize: 18,
                   onTap: () {
-                    controller.reCalculateStatistic(widget.userId);
+                    if (kIsWeb) {
+                      controller.reCalculateStatistic(widget.userId);
+                    } else {
+                      controller.reCalculateStatisticFromLocalDatabase(localDb.database, widget.userId);
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                child: CommonRoundedButton(
+                  height: 50,
+                  text: 'Transfer User Data to Local Database',
+                  fontSize: 18,
+                  onTap: () async {
+                    if (!kIsWeb) {
+                      await controller.storeDataInLocalDatabase(widget.userId, localDb.database);
+                      controller.getUserData(widget.userId, db: localDb.database);
+                    }
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                child: CommonRoundedButton(
+                  height: 50,
+                  text: 'Transfer Novel Data to Local Database',
+                  fontSize: 18,
+                  onTap: () async {
+                    if (!kIsWeb) {
+                      await Utility.getNovelDataFromFirebaseAndInsertIntoLocalDatabase(widget.userId, localDb.database);
+                      YourNovelListController yourNovelListController = Get.put(YourNovelListController());
+                      NovelWishListController novelWishListController = Get.put(NovelWishListController());
+                      NovelHiddenListController novelHiddenListController = Get.put(NovelHiddenListController());
+                      yourNovelListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                      novelWishListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                      novelHiddenListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                    }
                   },
                 ),
               ),

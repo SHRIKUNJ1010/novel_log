@@ -51,9 +51,11 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
 
   @override
   void initState() {
-    if (widget.novelId != null) {
-      initData();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.novelId != null) {
+        initData();
+      }
+    });
     super.initState();
   }
 
@@ -68,6 +70,8 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
     novelGenres = oldNovelData!.novelGenre ?? [];
     novelReadingStatus = oldNovelData!.novelReadingStatus ?? NovelReadingStatus.reading;
     novelStatus = oldNovelData!.novelStatus ?? NovelStatus.production;
+    if (!mounted) return;
+    setState(() {});
   }
 
   checkValidationAndCreateEditNovel() {
@@ -93,7 +97,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             isInWishList: true,
           ).toJson(),
         );
-        if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+        /*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
           final tempUserController = Get.put(UserDataController());
           switch (oldNovelData!.novelReadingStatus) {
             case NovelReadingStatus.notStarted:
@@ -139,7 +143,7 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             default:
               break;
           }
-        }
+        }*/
       } else {
         final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(

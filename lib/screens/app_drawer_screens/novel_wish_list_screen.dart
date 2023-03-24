@@ -38,14 +38,20 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         if (novelWishListController.novelList.isEmpty) {
-          novelWishListController.refreshList(widget.userId);
+          if (kIsWeb) {
+            novelWishListController.refreshList(widget.userId);
+          } else {
+            novelWishListController.refreshListLocalDatabase(localDb.database, widget.userId);
+          }
         }
         novelGridViewController.addListener(
           () {
             novelWishListController.updateGridScrollPosition(novelGridViewController.position.pixels);
             if (novelGridViewController.position.pixels == novelGridViewController.position.maxScrollExtent) {
               if (novelWishListController.isLoading) return;
-              novelWishListController.addNextData(widget.userId);
+              if (kIsWeb) {
+                novelWishListController.addNextData(widget.userId);
+              }
             }
           },
         );
@@ -54,7 +60,9 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
             novelWishListController.updateListScrollPosition(novelListViewController.position.pixels);
             if (novelListViewController.position.pixels == novelListViewController.position.maxScrollExtent) {
               if (novelWishListController.isLoading) return;
-              novelWishListController.addNextData(widget.userId);
+              if (kIsWeb) {
+                novelWishListController.addNextData(widget.userId);
+              }
             }
           },
         );
@@ -95,7 +103,11 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                 if (!controller.isLoading && controller.novelList.isEmpty) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      controller.refreshList(widget.userId);
+                      if (kIsWeb) {
+                        controller.refreshList(widget.userId);
+                      } else {
+                        controller.refreshListLocalDatabase(localDb.database, widget.userId);
+                      }
                       return Future.value(null);
                     },
                     child: Utility.noDataLoadedText(),
@@ -103,7 +115,11 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                 } else {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      controller.refreshList(widget.userId);
+                      if (kIsWeb) {
+                        controller.refreshList(widget.userId);
+                      } else {
+                        controller.refreshListLocalDatabase(localDb.database, widget.userId);
+                      }
                       return Future.value(null);
                     },
                     child: ListView.separated(
@@ -159,7 +175,11 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                 if (!controller.isLoading && controller.novelList.isEmpty) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      controller.refreshList(widget.userId);
+                      if (kIsWeb) {
+                        controller.refreshList(widget.userId);
+                      } else {
+                        controller.refreshListLocalDatabase(localDb.database, widget.userId);
+                      }
                       return Future.value(null);
                     },
                     child: Utility.noDataLoadedText(),
@@ -167,7 +187,11 @@ class _NovelWishListScreenState extends State<NovelWishListScreen> {
                 } else {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      controller.refreshList(widget.userId);
+                      if (kIsWeb) {
+                        controller.refreshList(widget.userId);
+                      } else {
+                        controller.refreshListLocalDatabase(localDb.database, widget.userId);
+                      }
                       return Future.value(null);
                     },
                     child: ListView(

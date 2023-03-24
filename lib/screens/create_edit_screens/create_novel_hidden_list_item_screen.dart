@@ -12,7 +12,6 @@ import 'package:novel_log/models/getx_controller_model/user_data_controller.dart
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
 import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
-import 'package:novel_log/utility/firebase_services/database_services/user_services.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
@@ -52,9 +51,11 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
 
   @override
   void initState() {
-    if (widget.novelId != null) {
-      initData();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (widget.novelId != null) {
+        initData();
+      }
+    });
     super.initState();
   }
 
@@ -71,6 +72,8 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
     novelGenres = oldNovelData!.novelGenre ?? [];
     novelReadingStatus = oldNovelData!.novelReadingStatus ?? NovelReadingStatus.reading;
     novelStatus = oldNovelData!.novelStatus ?? NovelStatus.production;
+    if (!mounted) return;
+    setState(() {});
   }
 
   checkValidationAndCreateEditNovel() {
@@ -96,7 +99,7 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
             isInWishList: false,
           ).toJson(),
         );
-        if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+        /*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
           final tempUserController = Get.put(UserDataController());
           switch (oldNovelData!.novelReadingStatus) {
             case NovelReadingStatus.notStarted:
@@ -147,11 +150,11 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
           final tempUserController = Get.put(UserDataController());
           UserServices.changeTotalChapterReadCountOfUser(
             widget.userId ?? Preference.getUserId(),
-            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - oldNovelData!.readNovelChapterCount!),
+            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - (oldNovelData!.readNovelChapterCount ?? 0)),
           );
-        }
+        }*/
       } else {
-        final tempUserController = Get.put(UserDataController());
+        //final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(
           NovelDescriptionModel(
             userId: widget.userId ?? Preference.getUserId(),
@@ -171,7 +174,7 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
             isInWishList: false,
           ).toJson(),
         );
-        switch (novelReadingStatus) {
+        /*switch (novelReadingStatus) {
           case NovelReadingStatus.notStarted:
           case NovelReadingStatus.reading:
             UserServices.changeTotalNovelCountOfUser(
@@ -205,7 +208,7 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
         UserServices.changeTotalChapterReadCountOfUser(
           widget.userId ?? Preference.getUserId(),
           tempUserController.userData.totalChapterReadCount! + (readChapterController.text.isEmpty ? 0 : int.parse(readChapterController.text)),
-        );
+        );*/
       }
       final tempUserController = Get.put(UserDataController());
       final tempNovelHiddenListController = Get.put(NovelHiddenListController());

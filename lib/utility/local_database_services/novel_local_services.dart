@@ -41,9 +41,10 @@ class NovelLocalServices {
     List temp = await db.rawQuery('''
          SELECT COUNT(*)
          FROM $novelTable
-         WHERE $novelNameKeyName = ${data.novelName}
+         WHERE $novelNameKeyName = "${data.novelName}";
     ''');
-    if (temp[0] != 0) {
+    if (temp[0]["COUNT(*)"] != 0) {
+      await editNovelData(db, data.novelId ?? '', data);
       return;
     }
     await db.rawInsert('''
@@ -72,16 +73,16 @@ class NovelLocalServices {
           "${Utility.listToCommaSeparatedString(data.novelGenre ?? [])}",
           "${data.novelDescription}",
           "${data.novelImageUrl}",
-          "${data.isNovel}",
+          "${(data.isNovel ?? false) ? 1 : 0}",
           ${data.totalNovelChapterCount},
           ${data.readNovelChapterCount},
           "${data.novelLinkUrl}",
           "${data.indexingGroupName}",
           "${Utility.novelStatusToString(data.novelStatus ?? NovelStatus.production)}",
           "${Utility.novelReadingStatusToString(data.novelReadingStatus ?? NovelReadingStatus.reading)}",
-          "${data.isHidden}",
-          "${data.isInWishList}"
-        )
+          "${(data.isHidden ?? false) ? 1 : 0}",
+          "${(data.isInWishList ?? false) ? 1 : 0}"
+        );
         ''');
     Utility.printLog("novel inserted");
   }
@@ -94,69 +95,85 @@ class NovelLocalServices {
         $novelGenreKeyName = "${Utility.listToCommaSeparatedString(data.novelGenre ?? [])}",
         $novelDescriptionKeyName = "${data.novelDescription}",
         $novelImageUrlKeyName = "${data.novelImageUrl}",
-        $isNovelKeyName = "${data.isNovel}",
+        $isNovelKeyName = "${(data.isNovel ?? false) ? 1 : 0}",
         $totalNovelChapterCountKeyName = ${data.totalNovelChapterCount},
         $readNovelChapterCountKeyName = ${data.readNovelChapterCount},
         $novelLinkUrlKeyName = "${data.novelLinkUrl}",
         $indexingGroupNameKeyName = "${data.indexingGroupName}",
         $novelStatusKeyName = "${Utility.novelStatusToString(data.novelStatus ?? NovelStatus.production)}",
         $novelReadingStatusKeyName = "${Utility.novelReadingStatusToString(data.novelReadingStatus ?? NovelReadingStatus.reading)}",
-        $isHiddenKeyName = "${data.isHidden}",
-        $isInWishListKeyName = "${data.isInWishList}"        
-    WHERE $novelIdKeyName = $novelId 
+        $isHiddenKeyName = "${(data.isHidden ?? false) ? 1 : 0}",
+        $isInWishListKeyName = "${(data.isInWishList ?? false) ? 1 : 0}"        
+    WHERE $novelIdKeyName = "$novelId";
     ''');
     Utility.printLog("novel data updated");
   }
 
   static Future<NovelDescriptionModel> getNovelData(Database db, String novelId) async {
-    List data = await db.rawQuery('''SELECT * FROM $novelTable WHERE $novelIdKeyName = $novelId''');
+    List data = await db.rawQuery('''SELECT * FROM $novelTable WHERE $novelIdKeyName = "$novelId";''');
     Utility.printLog("novel get data called");
     return NovelDescriptionModel.fromJson(novelId, data[0]);
   }
 
   static Future<void> deleteNovel(Database db, String novelId) async {
-    await db.rawDelete('''DELETE FROM $novelTable WHERE $novelIdKeyName = $novelId''');
+    await db.rawDelete('''DELETE FROM $novelTable WHERE $novelIdKeyName = "$novelId";''');
     Utility.printLog("novel get data called");
   }
 
   static Future<Map<String, dynamic>> userNovelStatistic(Database db, String userId) async {
     List temp1 = await db.rawQuery('''
-         SELECT COUNT(*) AS $totalStartedNovelCountKeyName, 
-                SUM($readNovelChapterCountKeyName) AS $totalChapterReadCountKeyName
+         SELECT 
+            COUNT(*) AS $totalStartedNovelCountKeyName, 
+            SUM($readNovelChapterCountKeyName) AS $totalChapterReadCountKeyName
          FROM $novelTable
-         WHERE $userIdKeyName = $userId
+         WHERE $userIdKeyName = "$userId";
     ''');
     List temp2 = await db.rawQuery('''
          SELECT 
             COUNT(*) AS $totalNovelReadCompleteWithNovelCompleteKeyName
          FROM $novelTable
          WHERE 
-            $userIdKeyName = $userId 
+            $userIdKeyName = "$userId" 
             AND 
-            $novelReadingStatusKeyName = "completed"
+            $novelReadingStatusKeyName = "completed";
     ''');
     List temp3 = await db.rawQuery('''
          SELECT 
             COUNT(*) AS $totalNovelReadCompleteWithNovelHiatusKeyName
          FROM $novelTable
          WHERE 
-            $userIdKeyName = $userId 
+            $userIdKeyName = "$userId" 
             AND 
-            $novelReadingStatusKeyName = "hiatusCompleted"
+            $novelReadingStatusKeyName = "hiatus_completed";
     ''');
 
     Utility.printLog("novel statistic data called");
     return {
       'read_chapter_count': temp1[0][totalChapterReadCountKeyName],
       'total_novel_count': temp1[0][totalStartedNovelCountKeyName],
-      'total_completed_novel_count': temp2[0],
-      'total_hiatus_novel_count': temp3[0],
+      'total_completed_novel_count': temp2[0][totalNovelReadCompleteWithNovelCompleteKeyName],
+      'total_hiatus_novel_count': temp3[0][totalNovelReadCompleteWithNovelHiatusKeyName],
     };
   }
 
   static Future<List<NovelListItemModel>> getNovelList(Database db, String userId) async {
     List data = await db.rawQuery('''
-    SELECT * FROM $novelTable WHERE $userIdKeyName = $userId, $isHiddenKeyName = "0", $isInWishListKeyName = "0"
+    SELECT * 
+    FROM $novelTable 
+    WHERE 
+      $userIdKeyName = "$userId" 
+      AND 
+      $isHiddenKeyName = "0" 
+      AND 
+      $isInWishListKeyName = "0"
+    ORDER BY 
+      $novelReadingStatusKeyName ASC, 
+      $isNovelKeyName DESC, 
+      $indexingGroupNameKeyName ASC, 
+      $novelAuthorNameKeyName ASC, 
+      $readNovelChapterCountKeyName ASC, 
+      $totalNovelChapterCountKeyName ASC, 
+      $novelNameKeyName ASC;
     ''');
     Utility.printLog("novel get list data called");
     return data.map((e) => NovelListItemModel.fromJsonLocal(e)).toList();
@@ -164,7 +181,19 @@ class NovelLocalServices {
 
   static Future<List<NovelWishListItemModel>> getNovelWishList(Database db, String userId) async {
     List data = await db.rawQuery('''
-    SELECT * FROM $novelTable WHERE $userIdKeyName = $userId, $isHiddenKeyName = "0", $isInWishListKeyName = "1"
+    SELECT * 
+    FROM $novelTable 
+    WHERE 
+      $userIdKeyName = "$userId" 
+      AND 
+      $isHiddenKeyName = "0" 
+      AND 
+      $isInWishListKeyName = "1"
+    ORDER BY  
+      $isNovelKeyName DESC, 
+      $indexingGroupNameKeyName ASC, 
+      $novelAuthorNameKeyName ASC, 
+      $novelNameKeyName ASC;
     ''');
     Utility.printLog("novel get wish list data called");
     return data.map((e) => NovelWishListItemModel.fromJsonLocal(e)).toList();
@@ -172,14 +201,33 @@ class NovelLocalServices {
 
   static Future<List<NovelListItemModel>> getNovelHiddenList(Database db, String userId) async {
     List data = await db.rawQuery('''
-    SELECT * FROM $novelTable WHERE $userIdKeyName = $userId, $isHiddenKeyName = "1", $isInWishListKeyName = "0"
+    SELECT * 
+    FROM $novelTable 
+    WHERE 
+      $userIdKeyName = "$userId" 
+      AND 
+      $isHiddenKeyName = "1" 
+      AND 
+      $isInWishListKeyName = "0"
+    ORDER BY 
+      $novelReadingStatusKeyName ASC, 
+      $isNovelKeyName DESC, 
+      $indexingGroupNameKeyName ASC, 
+      $novelAuthorNameKeyName ASC, 
+      $readNovelChapterCountKeyName ASC, 
+      $totalNovelChapterCountKeyName ASC, 
+      $novelNameKeyName ASC;
     ''');
     Utility.printLog("novel get hidden list data called");
     return data.map((e) => NovelListItemModel.fromJsonLocal(e)).toList();
   }
 
   static Future<List<NovelDescriptionModel>> getAllNovelList(Database db, String userId) async {
-    List data = await db.rawQuery('''SELECT * FROM $novelTable WHERE $userIdKeyName = $userId''');
+    List data = await db.rawQuery('''
+    SELECT * 
+    FROM $novelTable 
+    WHERE $userIdKeyName = "$userId";
+    ''');
     Utility.printLog("novel get all list data called");
     return data.map((e) => NovelDescriptionModel.fromJsonLocal(e)).toList();
   }

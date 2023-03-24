@@ -55,8 +55,8 @@ class NovelDescriptionModel {
     totalNovelChapterCount = json[totalNovelChapterCountKeyName];
     readNovelChapterCount = json[readNovelChapterCountKeyName];
     novelLinkUrl = json[novelLinkUrlKeyName];
-    novelStatus = Utility.stringToNovelStatus(json[novelStatusKeyName]);
-    novelReadingStatus = Utility.stringToNovelReadingStatus(json[novelReadingStatusKeyName]);
+    novelStatus = Utility.stringToNovelStatus(json[novelStatusKeyName] ?? '');
+    novelReadingStatus = Utility.stringToNovelReadingStatus(json[novelReadingStatusKeyName] ?? '');
     isHidden = json[isHiddenKeyName] == '1' ? true : false;
     isInWishList = json[isInWishListKeyName] == '1' ? true : false;
   }

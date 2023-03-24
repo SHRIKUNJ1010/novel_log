@@ -65,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       Preference.setUserId(tempUserId);
       Preference.setIsUserLoggedIn(true);
-      NovelServices.userNovelStatistic(tempUserId);
+      //NovelServices.userNovelStatistic(tempUserId);
       drawerStateProvider.pushReplacement(PageConfigList.getYourNovelListScreen(tempUserId), TransitionType.foldTransition);
       pageStateProvider.popUntil(PageConfigList.getLoginScreen());
       pageStateProvider.pushReplacement(PageConfigList.getDrawerScreen(), TransitionType.foldTransition);

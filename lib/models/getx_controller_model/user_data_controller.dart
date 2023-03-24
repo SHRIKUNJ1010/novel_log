@@ -19,7 +19,7 @@ class UserDataController extends GetxController {
   Future<void> getUserData(String userId, {Database? db}) async {
     if ((!kIsWeb) && (db != null)) {
       userData = await UserLocalServices.getUserData(db);
-      Utility.printLog("from Database");
+      Utility.printLog("from  Local Database");
     } else {
       userData = await UserServices.getUserData(userId);
       Utility.printLog("from Firebase");
@@ -31,7 +31,6 @@ class UserDataController extends GetxController {
 
   Future<void> storeDataInLocalDatabase(String userId, Database db) async {
     await Utility.getUserDataFromFirebaseAndInsertIntoLocalDatabase(userId, db);
-    await getUserData(userId, db: db);
     return;
   }
 
@@ -42,6 +41,10 @@ class UserDataController extends GetxController {
     userData.totalStartedNovelCount = tempData['total_novel_count'];
     userData.totalNovelReadCompleteWithNovelComplete = tempData['total_completed_novel_count'];
     userData.totalNovelReadCompleteWithNovelHiatus = tempData['total_hiatus_novel_count'];
+    UserServices.changeTotalNovelCountOfUser(userId, tempData['total_novel_count']);
+    UserServices.changeTotalChapterReadCountOfUser(userId, tempData['read_chapter_count']);
+    UserServices.changeHiatusNovelCountOfUser(userId, tempData['total_hiatus_novel_count']);
+    UserServices.changeCompleteNovelCountOfUser(userId, tempData['total_completed_novel_count']);
     update();
   }
 
@@ -51,6 +54,10 @@ class UserDataController extends GetxController {
     userData.totalStartedNovelCount = tempData['total_novel_count'];
     userData.totalNovelReadCompleteWithNovelComplete = tempData['total_completed_novel_count'];
     userData.totalNovelReadCompleteWithNovelHiatus = tempData['total_hiatus_novel_count'];
+    UserLocalServices.changeTotalNovelCountOfUser(db, userId, tempData['total_novel_count']);
+    UserLocalServices.changeTotalChapterReadCountOfUser(db, userId, tempData['read_chapter_count']);
+    UserLocalServices.changeHiatusNovelCountOfUser(db, userId, tempData['total_hiatus_novel_count']);
+    UserLocalServices.changeCompleteNovelCountOfUser(db, userId, tempData['total_completed_novel_count']);
     update();
   }
 
