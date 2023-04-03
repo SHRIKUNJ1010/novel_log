@@ -156,8 +156,8 @@ class NovelLocalServices {
     };
   }
 
-  static Future<List<NovelListItemModel>> getNovelList(Database db, String userId) async {
-    List data = await db.rawQuery('''
+  static Future<List<NovelListItemModel>> getNovelList(Database db, String userId, {String searchQuery = ''}) async {
+    var rawQuery = '''
     SELECT * 
     FROM $novelTable 
     WHERE 
@@ -174,13 +174,35 @@ class NovelLocalServices {
       $readNovelChapterCountKeyName ASC, 
       $totalNovelChapterCountKeyName ASC, 
       $novelNameKeyName ASC;
-    ''');
+    ''';
+    if (searchQuery != '') {
+      rawQuery = '''
+      SELECT * 
+      FROM $novelTable 
+      WHERE 
+        $userIdKeyName = "$userId" 
+        AND 
+        $isHiddenKeyName = "0" 
+        AND 
+        $isInWishListKeyName = "0"
+        $novelNameKeyName LIKE "%$searchQuery%"
+      ORDER BY 
+        $novelReadingStatusKeyName ASC, 
+        $isNovelKeyName DESC, 
+        $indexingGroupNameKeyName ASC, 
+        $novelAuthorNameKeyName ASC, 
+        $readNovelChapterCountKeyName ASC, 
+        $totalNovelChapterCountKeyName ASC, 
+        $novelNameKeyName ASC;
+      ''';
+    }
+    List data = await db.rawQuery(rawQuery);
     Utility.printLog("novel get list data called");
     return data.map((e) => NovelListItemModel.fromJsonLocal(e)).toList();
   }
 
-  static Future<List<NovelWishListItemModel>> getNovelWishList(Database db, String userId) async {
-    List data = await db.rawQuery('''
+  static Future<List<NovelWishListItemModel>> getNovelWishList(Database db, String userId, {String searchQuery = ''}) async {
+    var rawQuery = '''
     SELECT * 
     FROM $novelTable 
     WHERE 
@@ -194,13 +216,32 @@ class NovelLocalServices {
       $indexingGroupNameKeyName ASC, 
       $novelAuthorNameKeyName ASC, 
       $novelNameKeyName ASC;
-    ''');
+    ''';
+    if (searchQuery != '') {
+      rawQuery = '''
+      SELECT * 
+      FROM $novelTable 
+      WHERE 
+        $userIdKeyName = "$userId" 
+        AND 
+        $isHiddenKeyName = "0" 
+        AND 
+        $isInWishListKeyName = "1"
+      $novelNameKeyName LIKE "%$searchQuery%"
+      ORDER BY  
+        $isNovelKeyName DESC, 
+        $indexingGroupNameKeyName ASC, 
+        $novelAuthorNameKeyName ASC, 
+        $novelNameKeyName ASC;
+      ''';
+    }
+    List data = await db.rawQuery(rawQuery);
     Utility.printLog("novel get wish list data called");
     return data.map((e) => NovelWishListItemModel.fromJsonLocal(e)).toList();
   }
 
-  static Future<List<NovelListItemModel>> getNovelHiddenList(Database db, String userId) async {
-    List data = await db.rawQuery('''
+  static Future<List<NovelListItemModel>> getNovelHiddenList(Database db, String userId, {String searchQuery = ''}) async {
+    var rawQuery = '''
     SELECT * 
     FROM $novelTable 
     WHERE 
@@ -217,7 +258,29 @@ class NovelLocalServices {
       $readNovelChapterCountKeyName ASC, 
       $totalNovelChapterCountKeyName ASC, 
       $novelNameKeyName ASC;
-    ''');
+    ''';
+    if (searchQuery != '') {
+      rawQuery = '''
+      SELECT * 
+      FROM $novelTable 
+      WHERE 
+        $userIdKeyName = "$userId" 
+        AND 
+        $isHiddenKeyName = "1" 
+        AND 
+        $isInWishListKeyName = "0"
+      $novelNameKeyName LIKE "%$searchQuery%"
+      ORDER BY 
+        $novelReadingStatusKeyName ASC, 
+        $isNovelKeyName DESC, 
+        $indexingGroupNameKeyName ASC, 
+        $novelAuthorNameKeyName ASC, 
+        $readNovelChapterCountKeyName ASC, 
+        $totalNovelChapterCountKeyName ASC, 
+        $novelNameKeyName ASC;
+      ''';
+    }
+    List data = await db.rawQuery(rawQuery);
     Utility.printLog("novel get hidden list data called");
     return data.map((e) => NovelListItemModel.fromJsonLocal(e)).toList();
   }

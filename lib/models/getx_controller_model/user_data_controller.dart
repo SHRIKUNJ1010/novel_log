@@ -58,6 +58,10 @@ class UserDataController extends GetxController {
     UserLocalServices.changeTotalChapterReadCountOfUser(db, userId, tempData['read_chapter_count']);
     UserLocalServices.changeHiatusNovelCountOfUser(db, userId, tempData['total_hiatus_novel_count']);
     UserLocalServices.changeCompleteNovelCountOfUser(db, userId, tempData['total_completed_novel_count']);
+    UserServices.changeTotalNovelCountOfUser(userId, tempData['total_novel_count']);
+    UserServices.changeTotalChapterReadCountOfUser(userId, tempData['read_chapter_count']);
+    UserServices.changeHiatusNovelCountOfUser(userId, tempData['total_hiatus_novel_count']);
+    UserServices.changeCompleteNovelCountOfUser(userId, tempData['total_completed_novel_count']);
     update();
   }
 
