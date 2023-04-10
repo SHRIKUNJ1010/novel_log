@@ -185,6 +185,7 @@ class NovelLocalServices {
         $isHiddenKeyName = "0" 
         AND 
         $isInWishListKeyName = "0"
+        AND
         $novelNameKeyName LIKE "%$searchQuery%"
       ORDER BY 
         $novelReadingStatusKeyName ASC, 
@@ -227,7 +228,8 @@ class NovelLocalServices {
         $isHiddenKeyName = "0" 
         AND 
         $isInWishListKeyName = "1"
-      $novelNameKeyName LIKE "%$searchQuery%"
+        AND
+        $novelNameKeyName LIKE "%$searchQuery%"
       ORDER BY  
         $isNovelKeyName DESC, 
         $indexingGroupNameKeyName ASC, 
@@ -269,7 +271,8 @@ class NovelLocalServices {
         $isHiddenKeyName = "1" 
         AND 
         $isInWishListKeyName = "0"
-      $novelNameKeyName LIKE "%$searchQuery%"
+        AND
+        $novelNameKeyName LIKE "%$searchQuery%"
       ORDER BY 
         $novelReadingStatusKeyName ASC, 
         $isNovelKeyName DESC, 
