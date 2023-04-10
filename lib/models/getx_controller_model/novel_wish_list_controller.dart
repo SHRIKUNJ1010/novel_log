@@ -43,18 +43,18 @@ class NovelWishListController extends GetxController {
     callIsNotLoading();
   }
 
-  refreshListLocalDatabase(Database db, String userId) async {
+  refreshListLocalDatabase(Database db, String userId, {String searchQuery = ''}) async {
     gridScrollPosition = 0;
     listScrollPosition = 0;
     novelList = [];
     callIsLoading();
-    novelList = await NovelLocalServices.getNovelWishList(db, userId);
+    novelList = await NovelLocalServices.getNovelWishList(db, userId, searchQuery: searchQuery);
     Utility.printLog(novelList);
     callIsNotLoading();
   }
 
   addNextData(String userId) async {
-    if (remainingLength < 20|| lastData == null) return;
+    if (remainingLength < 20 || lastData == null) return;
     callIsLoading();
     final data = await NovelServices.getNovelWishListNextPages(userId, lastData);
     lastData = data['last_document'];

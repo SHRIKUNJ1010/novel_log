@@ -43,12 +43,12 @@ class NovelHiddenListController extends GetxController {
     callIsNotLoading();
   }
 
-  refreshListLocalDatabase(Database db, String userId) async {
+  refreshListLocalDatabase(Database db, String userId, {String searchQuery = ''}) async {
     gridScrollPosition = 0;
     listScrollPosition = 0;
     novelList = [];
     callIsLoading();
-    novelList = await NovelLocalServices.getNovelHiddenList(db, userId);
+    novelList = await NovelLocalServices.getNovelHiddenList(db, userId, searchQuery: searchQuery);
     Utility.printLog(novelList);
     callIsNotLoading();
   }
