@@ -95,22 +95,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: appPrimaryColor,
               ),
               const SizedBox(height: 20),
-              NovelStatisticWidget(
-                todayChapterReadCount: controller.userData.todayChapterReadCount ?? 0,
-                totalStartedNovelCount: controller.userData.totalStartedNovelCount ?? 0,
-                totalChapterReadCount: controller.userData.totalChapterReadCount ?? 0,
-                totalNovelReadCompleteWithNovelComplete: controller.userData.totalNovelReadCompleteWithNovelComplete ?? 0,
-                totalNovelReadCompleteWithNovelHiatus: controller.userData.totalNovelReadCompleteWithNovelHiatus ?? 0,
-                dailyAverageChapterReadCount: controller.userData.dailyAverageChapterReadCount ?? 0,
-                fontSize: width > 720
-                    ? 22
-                    : width > 670
-                        ? 20
-                        : width > 645
-                            ? 18
-                            : width > 620
-                                ? 16
-                                : 18,
+              SafeArea(
+                child: NovelStatisticWidget(
+                  todayChapterReadCount: controller.userData.todayChapterReadCount ?? 0,
+                  totalStartedNovelCount: controller.userData.totalStartedNovelCount ?? 0,
+                  totalChapterReadCount: controller.userData.totalChapterReadCount ?? 0,
+                  totalNovelReadCompleteWithNovelComplete: controller.userData.totalNovelReadCompleteWithNovelComplete ?? 0,
+                  totalNovelReadCompleteWithNovelHiatus: controller.userData.totalNovelReadCompleteWithNovelHiatus ?? 0,
+                  dailyAverageChapterReadCount: controller.userData.dailyAverageChapterReadCount ?? 0,
+                  fontSize: width > 720
+                      ? 22
+                      : width > 670
+                          ? 20
+                          : width > 645
+                              ? 18
+                              : width > 620
+                                  ? 16
+                                  : 18,
+                ),
               ),
               const SizedBox(height: 20),
               Padding(
