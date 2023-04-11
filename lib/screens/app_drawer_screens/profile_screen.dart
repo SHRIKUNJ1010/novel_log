@@ -95,7 +95,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: appPrimaryColor,
               ),
               const SizedBox(height: 20),
-              SafeArea(
+              Container(
+                margin: width < 600 ? const EdgeInsets.only(left: 15, right: 15) : null,
                 child: NovelStatisticWidget(
                   todayChapterReadCount: controller.userData.todayChapterReadCount ?? 0,
                   totalStartedNovelCount: controller.userData.totalStartedNovelCount ?? 0,
@@ -111,7 +112,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ? 18
                               : width > 620
                                   ? 16
-                                  : 18,
+                                  : 17,
                 ),
               ),
               const SizedBox(height: 20),
