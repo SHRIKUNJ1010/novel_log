@@ -333,10 +333,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const SizedBox(height: 20),
+
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
                 ],
               ),
             ),
