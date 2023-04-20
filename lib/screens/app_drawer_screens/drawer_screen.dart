@@ -1,6 +1,7 @@
 /*
 * Created by Shrikunj Patel on 1/23/2023.
 */
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
@@ -197,11 +198,29 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return Scaffold(
       key: scaffoldKey,
       restorationId: 'drawer_scaffold',
-      appBar: width < 700 ? getAppBarWithDrawerIcon() : null,
-      drawer: width < 700 ? getCollapsableDrawer() : null,
+      appBar: kIsWeb
+          ? width < 701
+              ? getAppBarWithDrawerIcon()
+              : null
+          : width < 901
+              ? getAppBarWithDrawerIcon()
+              : null,
+      drawer: kIsWeb
+          ? width < 701
+              ? getCollapsableDrawer()
+              : null
+          : width < 901
+              ? getCollapsableDrawer()
+              : null,
       body: Row(
         children: [
-          width > 700 ? getNonCollapsableDrawer() : const SizedBox(),
+          kIsWeb
+              ? width > 700
+                  ? getNonCollapsableDrawer()
+                  : const SizedBox()
+              : width > 900
+                  ? getNonCollapsableDrawer()
+                  : const SizedBox(),
           Expanded(
             child: getRouterView(),
           ),

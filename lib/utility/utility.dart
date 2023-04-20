@@ -211,13 +211,24 @@ class Utility {
   }
 
   static AppBar? getCommonAppBarWithoutIcon(double width, String title) {
-    if (width > 700) {
-      return AppBar(
-        centerTitle: true,
-        title: TextView(label: title),
-      );
+    if (kIsWeb) {
+      if (width > 700) {
+        return AppBar(
+          centerTitle: true,
+          title: TextView(label: title),
+        );
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      if (width > 900) {
+        return AppBar(
+          centerTitle: true,
+          title: TextView(label: title),
+        );
+      } else {
+        return null;
+      }
     }
   }
 
@@ -324,18 +335,39 @@ class Utility {
   static int widthToGridCount(double width) {
     printLog("width: ------------------------ $width");
     int gridCount = 1;
-    if (width > 470) {
-      gridCount = 2;
-      if (width > 700) {
-        gridCount = 1;
-        if (width > 840) {
-          gridCount = 2;
-          if (width > 1110) {
-            gridCount = 3;
-            if (width > 1380) {
-              gridCount = 4;
-              if (width > 1650) {
-                gridCount = 5;
+    if (kIsWeb) {
+      if (width > 470) {
+        gridCount = 2;
+        if (width > 700) {
+          gridCount = 1;
+          if (width > 840) {
+            gridCount = 2;
+            if (width > 1110) {
+              gridCount = 3;
+              if (width > 1380) {
+                gridCount = 4;
+                if (width > 1650) {
+                  gridCount = 5;
+                }
+              }
+            }
+          }
+        }
+      }
+    } else {
+      if (width > 400) {
+        gridCount = 2;
+        if (width > 700) {
+          gridCount = 3;
+          if (width > 900) {
+            gridCount = 2;
+            if (width > 1110) {
+              gridCount = 3;
+              if (width > 1380) {
+                gridCount = 4;
+                if (width > 1650) {
+                  gridCount = 5;
+                }
               }
             }
           }
@@ -343,26 +375,6 @@ class Utility {
       }
     }
     return gridCount;
-  }
-
-  static double widthToGridCrossAxisSpacing(double width) {
-    double crossAxisSpacing = 0;
-    if (width > 600) {
-      crossAxisSpacing = width - 570;
-      if (width > 840) {
-        crossAxisSpacing = width - 840;
-        if (width > 1110) {
-          crossAxisSpacing = width - 1110;
-          if (width > 1380) {
-            crossAxisSpacing = width - 1380;
-            if (width > 1650) {
-              crossAxisSpacing = width - 1650;
-            }
-          }
-        }
-      }
-    }
-    return crossAxisSpacing;
   }
 
   static String novelReadingStatusLabel(NovelReadingStatus status) {
