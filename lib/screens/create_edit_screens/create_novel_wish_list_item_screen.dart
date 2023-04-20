@@ -97,53 +97,6 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
             isInWishList: true,
           ).toJson(),
         );
-        /*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
-          final tempUserController = Get.put(UserDataController());
-          switch (oldNovelData!.novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
-              );
-              break;
-            default:
-              break;
-          }
-          switch (novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
-              );
-              break;
-            default:
-              break;
-          }
-        }*/
       } else {
         final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(
@@ -270,6 +223,12 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                       TextField(
                         controller: novelNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Name',
@@ -283,6 +242,12 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                       TextField(
                         controller: novelLinkUrlController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Link URL',
@@ -296,6 +261,12 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                       TextField(
                         controller: indexingGroupNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Group Name',
@@ -309,6 +280,12 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                       TextField(
                         controller: authorNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Author Name',
@@ -322,6 +299,12 @@ class _CreateNovelWishListItemScreenState extends State<CreateNovelWishListItemS
                       TextField(
                         controller: novelDescriptionController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         maxLines: 5,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),

@@ -268,6 +268,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: TextField(
                               controller: emailEditingController,
                               textInputAction: TextInputAction.next,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                             ),
                           ),
                           const TextView(
@@ -281,6 +287,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: TextField(
                               controller: passwordEditingController,
                               textInputAction: TextInputAction.next,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                               obscureText: true,
                             ),
                           ),
@@ -294,6 +306,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                             child: TextField(
                               controller: repeatPasswordEditingController,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                               textInputAction: TextInputAction.done,
                               obscureText: true,
                               onSubmitted: (value) {
@@ -340,7 +358,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           const SizedBox(height: 20),
-
                         ],
                       ),
                     ),

@@ -99,60 +99,7 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
             isInWishList: false,
           ).toJson(),
         );
-        /*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
-          final tempUserController = Get.put(UserDataController());
-          switch (oldNovelData!.novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
-              );
-              break;
-            default:
-              break;
-          }
-          switch (novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
-              );
-              break;
-            default:
-              break;
-          }
-        }
-        if (oldNovelData!.readNovelChapterCount != int.parse(readChapterController.text)) {
-          final tempUserController = Get.put(UserDataController());
-          UserServices.changeTotalChapterReadCountOfUser(
-            widget.userId ?? Preference.getUserId(),
-            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - (oldNovelData!.readNovelChapterCount ?? 0)),
-          );
-        }*/
+
       } else {
         //final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(
@@ -174,41 +121,7 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
             isInWishList: false,
           ).toJson(),
         );
-        /*switch (novelReadingStatus) {
-          case NovelReadingStatus.notStarted:
-          case NovelReadingStatus.reading:
-            UserServices.changeTotalNovelCountOfUser(
-              widget.userId ?? Preference.getUserId(),
-              tempUserController.userData.totalStartedNovelCount! + 1,
-            );
-            break;
-          case NovelReadingStatus.hiatusCompleted:
-            UserServices.changeTotalNovelCountOfUser(
-              widget.userId ?? Preference.getUserId(),
-              tempUserController.userData.totalStartedNovelCount! + 1,
-            );
-            UserServices.changeHiatusNovelCountOfUser(
-              widget.userId ?? Preference.getUserId(),
-              tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
-            );
-            break;
-          case NovelReadingStatus.completed:
-            UserServices.changeTotalNovelCountOfUser(
-              widget.userId ?? Preference.getUserId(),
-              tempUserController.userData.totalStartedNovelCount! + 1,
-            );
-            UserServices.changeCompleteNovelCountOfUser(
-              widget.userId ?? Preference.getUserId(),
-              tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
-            );
-            break;
-          default:
-            break;
-        }
-        UserServices.changeTotalChapterReadCountOfUser(
-          widget.userId ?? Preference.getUserId(),
-          tempUserController.userData.totalChapterReadCount! + (readChapterController.text.isEmpty ? 0 : int.parse(readChapterController.text)),
-        );*/
+
       }
       final tempUserController = Get.put(UserDataController());
       final tempNovelHiddenListController = Get.put(NovelHiddenListController());
@@ -282,6 +195,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       TextField(
                         controller: novelNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Name',
@@ -295,6 +214,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       TextField(
                         controller: novelLinkUrlController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Link URL',
@@ -313,6 +238,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                               child: TextField(
                                 controller: readChapterController,
                                 textInputAction: TextInputAction.next,
+                                onTapOutside: (down) {
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                    FocusManager.instance.primaryFocus!.unfocus();
+                                  }
+                                },
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   isDense: true,
@@ -333,6 +264,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                               child: TextField(
                                 controller: totalChapterController,
                                 textInputAction: TextInputAction.next,
+                                onTapOutside: (down) {
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                    FocusManager.instance.primaryFocus!.unfocus();
+                                  }
+                                },
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   isDense: true,
@@ -352,6 +289,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       TextField(
                         controller: indexingGroupNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Group Name',
@@ -365,6 +308,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       TextField(
                         controller: authorNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Author Name',
@@ -378,6 +327,12 @@ class _CreateNovelHiddenListItemScreenState extends State<CreateNovelHiddenListI
                       TextField(
                         controller: novelDescriptionController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         maxLines: 5,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),

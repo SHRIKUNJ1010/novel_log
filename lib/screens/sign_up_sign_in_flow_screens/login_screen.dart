@@ -12,7 +12,6 @@ import 'package:novel_log/models/getx_controller_model/user_data_controller.dart
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/enum_variable_types.dart';
-import 'package:novel_log/utility/firebase_services/database_services/novel_services.dart';
 import 'package:novel_log/utility/firebase_services/firebase_auth_service.dart';
 import 'package:novel_log/utility/page_and_transition_services/page_config_list.dart';
 import 'package:novel_log/utility/preference.dart';
@@ -219,6 +218,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: TextField(
                               controller: emailEditingController,
                               textInputAction: TextInputAction.next,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                             ),
                           ),
                           const TextView(
@@ -231,6 +236,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                             child: TextField(
                               controller: passwordEditingController,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                               obscureText: true,
                               textInputAction: TextInputAction.done,
                               onSubmitted: (value) {
@@ -333,7 +344,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                           const SizedBox(height: 20),
-
                         ],
                       ),
                     ),

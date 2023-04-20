@@ -56,12 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: width > 600
-          ? AppBar(
-              centerTitle: true,
-              title: const TextView(label: 'Profile'),
-            )
-          : null,
+      appBar: Utility.getCommonAppBarWithoutIcon(width, 'Profile'),
       body: GetBuilder<UserDataController>(
         builder: (controller) {
           return SingleChildScrollView(

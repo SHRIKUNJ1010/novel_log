@@ -3,7 +3,7 @@
 */
 
 import 'package:flutter/material.dart';
-import 'package:novel_log/widgets/common_widgets/text_widget.dart';
+import 'package:novel_log/utility/utility.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   final String userId;
@@ -23,12 +23,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: width > 600
-          ? AppBar(
-              centerTitle: true,
-              title: const TextView(label: 'Change Password'),
-            )
-          : null,
+      appBar: Utility.getCommonAppBarWithoutIcon(width, 'Change Password'),
       body: Container(
         color: Colors.cyanAccent,
       ),

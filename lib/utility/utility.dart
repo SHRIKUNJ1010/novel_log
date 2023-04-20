@@ -5,9 +5,10 @@
 import 'dart:io';
 import 'dart:math' as math;
 
+import 'package:flash/flash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flash/flash.dart';
+import 'package:http/http.dart' as http;
 import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/constants.dart';
@@ -20,7 +21,6 @@ import 'package:novel_log/widgets/common_widgets/logout_alert_dialog.dart';
 import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
 class Utility {
   //printing log when app is in debug mode
@@ -210,6 +210,17 @@ class Utility {
     }
   }
 
+  static AppBar? getCommonAppBarWithoutIcon(double width, String title) {
+    if (width > 700) {
+      return AppBar(
+        centerTitle: true,
+        title: TextView(label: title),
+      );
+    } else {
+      return null;
+    }
+  }
+
   //drawer default icon
   static Widget getDefaultDrawerItemIcon({required IconData icon, double iconSize = 35}) {
     return Icon(
@@ -311,17 +322,21 @@ class Utility {
   }
 
   static int widthToGridCount(double width) {
-    int gridCount = 0;
-    if (width > 600) {
-      gridCount = 1;
-      if (width > 840) {
-        gridCount = 2;
-        if (width > 1110) {
-          gridCount = 3;
-          if (width > 1380) {
-            gridCount = 4;
-            if (width > 1650) {
-              gridCount = 5;
+    printLog("width: ------------------------ $width");
+    int gridCount = 1;
+    if (width > 470) {
+      gridCount = 2;
+      if (width > 700) {
+        gridCount = 1;
+        if (width > 840) {
+          gridCount = 2;
+          if (width > 1110) {
+            gridCount = 3;
+            if (width > 1380) {
+              gridCount = 4;
+              if (width > 1650) {
+                gridCount = 5;
+              }
             }
           }
         }

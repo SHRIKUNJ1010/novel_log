@@ -2,6 +2,199 @@
 * Created by Shrikunj Patel on 1/24/2023.
 */
 
+/*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+          final tempUserController = Get.put(UserDataController());
+          switch (oldNovelData!.novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
+              );
+              break;
+            default:
+              break;
+          }
+          switch (novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+              );
+              break;
+            default:
+              break;
+          }
+        }*/
+
+/*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+          final tempUserController = Get.put(UserDataController());
+          switch (oldNovelData!.novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
+              );
+              break;
+            default:
+              break;
+          }
+          switch (novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+              );
+              break;
+            default:
+              break;
+          }
+        }
+        if (oldNovelData!.readNovelChapterCount != int.parse(readChapterController.text)) {
+          final tempUserController = Get.put(UserDataController());
+          UserServices.changeTotalChapterReadCountOfUser(
+            widget.userId ?? Preference.getUserId(),
+            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - (oldNovelData!.readNovelChapterCount ?? 0)),
+          );
+        }*/
+
+/*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
+          final tempUserController = Get.put(UserDataController());
+          switch (oldNovelData!.novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
+              );
+              break;
+            default:
+              break;
+          }
+          switch (novelReadingStatus) {
+            case NovelReadingStatus.notStarted:
+              //do nothing
+              break;
+            case NovelReadingStatus.reading:
+              //do nothing
+              break;
+            case NovelReadingStatus.hiatusCompleted:
+              UserServices.changeHiatusNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+              );
+              break;
+            case NovelReadingStatus.completed:
+              UserServices.changeCompleteNovelCountOfUser(
+                widget.userId ?? Preference.getUserId(),
+                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+              );
+              break;
+            default:
+              break;
+          }
+        }
+        if (oldNovelData!.readNovelChapterCount != int.parse(readChapterController.text)) {
+          final tempUserController = Get.put(UserDataController());
+          UserServices.changeTotalChapterReadCountOfUser(
+            widget.userId ?? Preference.getUserId(),
+            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - (oldNovelData!.readNovelChapterCount ?? 0)),
+          );
+        }*/
+
+/*switch (novelReadingStatus) {
+          case NovelReadingStatus.notStarted:
+          case NovelReadingStatus.reading:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
+            break;
+          case NovelReadingStatus.hiatusCompleted:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
+            UserServices.changeHiatusNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
+            );
+            break;
+          case NovelReadingStatus.completed:
+            UserServices.changeTotalNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalStartedNovelCount! + 1,
+            );
+            UserServices.changeCompleteNovelCountOfUser(
+              widget.userId ?? Preference.getUserId(),
+              tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
+            );
+            break;
+          default:
+            break;
+        }
+        UserServices.changeTotalChapterReadCountOfUser(
+          widget.userId ?? Preference.getUserId(),
+          tempUserController.userData.totalChapterReadCount! + (readChapterController.text.isEmpty ? 0 : int.parse(readChapterController.text)),
+        );*/
 /*return Navigator(
                     key: drawerNavigatorKey,
                     initialRoute: snapshot.data ?? yourNovelListScreenRoute,

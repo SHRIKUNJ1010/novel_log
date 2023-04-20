@@ -57,7 +57,15 @@ class _CommonSearchWidgetState extends State<CommonSearchWidget> {
           ),
           onSubmitted: widget.onSubmitted,
           onChanged: widget.onChanged,
-          onTapOutside: widget.onTapOutside,
+          onTapOutside: (down) {
+            if (widget.onTapOutside != null) {
+              widget.onTapOutside!.call(down);
+            }
+            FocusScopeNode currentFocus = FocusScope.of(context);
+            if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+              FocusManager.instance.primaryFocus!.unfocus();
+            }
+          },
         );
       },
     );

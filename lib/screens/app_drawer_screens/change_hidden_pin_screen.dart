@@ -3,8 +3,8 @@
 */
 import 'package:flutter/material.dart';
 import 'package:novel_log/models/getx_controller_model/user_data_controller.dart';
+import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/enter_pin_widget.dart';
-import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class ChangeHiddenPinScreen extends StatefulWidget {
   final String userId;
@@ -39,12 +39,7 @@ class _ChangeHiddenPinScreenState extends State<ChangeHiddenPinScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: width > 600
-          ? AppBar(
-              centerTitle: true,
-              title: const TextView(label: 'Change Pin'),
-            )
-          : null,
+      appBar: Utility.getCommonAppBarWithoutIcon(width, 'Change Pin'),
       body: IndexedStack(
         index: currentPage,
         children: [

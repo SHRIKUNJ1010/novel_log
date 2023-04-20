@@ -72,7 +72,7 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
     novelGenres = oldNovelData!.novelGenre ?? [];
     novelReadingStatus = oldNovelData!.novelReadingStatus ?? NovelReadingStatus.reading;
     novelStatus = oldNovelData!.novelStatus ?? NovelStatus.production;
-    if(!mounted)return;
+    if (!mounted) return;
     setState(() {});
   }
 
@@ -99,62 +99,8 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
             isInWishList: false,
           ).toJson(),
         );
-        /*if (oldNovelData!.novelReadingStatus != novelReadingStatus) {
-          final tempUserController = Get.put(UserDataController());
-          switch (oldNovelData!.novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! - 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! - 1,
-              );
-              break;
-            default:
-              break;
-          }
-          switch (novelReadingStatus) {
-            case NovelReadingStatus.notStarted:
-              //do nothing
-              break;
-            case NovelReadingStatus.reading:
-              //do nothing
-              break;
-            case NovelReadingStatus.hiatusCompleted:
-              UserServices.changeHiatusNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelHiatus! + 1,
-              );
-              break;
-            case NovelReadingStatus.completed:
-              UserServices.changeCompleteNovelCountOfUser(
-                widget.userId ?? Preference.getUserId(),
-                tempUserController.userData.totalNovelReadCompleteWithNovelComplete! + 1,
-              );
-              break;
-            default:
-              break;
-          }
-        }
-        if (oldNovelData!.readNovelChapterCount != int.parse(readChapterController.text)) {
-          final tempUserController = Get.put(UserDataController());
-          UserServices.changeTotalChapterReadCountOfUser(
-            widget.userId ?? Preference.getUserId(),
-            tempUserController.userData.totalChapterReadCount! + (int.parse(readChapterController.text) - (oldNovelData!.readNovelChapterCount ?? 0)),
-          );
-        }*/
       } else {
-        final tempUserController = Get.put(UserDataController());
+        //final tempUserController = Get.put(UserDataController());
         NovelServices.createNovel(
           NovelDescriptionModel(
             userId: widget.userId ?? Preference.getUserId(),
@@ -282,6 +228,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                       TextField(
                         controller: novelNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Name',
@@ -295,6 +247,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                       TextField(
                         controller: novelLinkUrlController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Novel Link URL',
@@ -313,6 +271,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                               child: TextField(
                                 controller: readChapterController,
                                 textInputAction: TextInputAction.next,
+                                onTapOutside: (down) {
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                    FocusManager.instance.primaryFocus!.unfocus();
+                                  }
+                                },
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   isDense: true,
@@ -333,6 +297,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                               child: TextField(
                                 controller: totalChapterController,
                                 textInputAction: TextInputAction.next,
+                                onTapOutside: (down) {
+                                  FocusScopeNode currentFocus = FocusScope.of(context);
+                                  if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                    FocusManager.instance.primaryFocus!.unfocus();
+                                  }
+                                },
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   isDense: true,
@@ -352,6 +322,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                       TextField(
                         controller: indexingGroupNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Group Name',
@@ -365,6 +341,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                       TextField(
                         controller: authorNameController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           hintText: 'Author Name',
@@ -378,6 +360,12 @@ class _CreateNovelListItemScreenState extends State<CreateNovelListItemScreen> {
                       TextField(
                         controller: novelDescriptionController,
                         textInputAction: TextInputAction.next,
+                        onTapOutside: (down) {
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                            FocusManager.instance.primaryFocus!.unfocus();
+                          }
+                        },
                         maxLines: 5,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),

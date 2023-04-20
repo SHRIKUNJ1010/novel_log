@@ -44,23 +44,15 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Listener(
-      onPointerDown: (_) {
-        /*FocusScopeNode currentFocus = FocusScope.of(context);
-        if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-          FocusManager.instance.primaryFocus!.unfocus();
-        }*/
-      },
-      child: GetMaterialApp.router(
-        title: appName,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: appThemeColor,
-          primaryColor: appPrimaryColor,
-        ),
-        routerDelegate: delegate,
-        routeInformationParser: parser,
+    return GetMaterialApp.router(
+      title: appName,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: appThemeColor,
+        primaryColor: appPrimaryColor,
       ),
+      routerDelegate: delegate,
+      routeInformationParser: parser,
     );
   }
 }

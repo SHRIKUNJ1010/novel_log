@@ -197,293 +197,307 @@ class _DrawerScreenState extends State<DrawerScreen> {
     return Scaffold(
       key: scaffoldKey,
       restorationId: 'drawer_scaffold',
-      appBar: width < 600
-          ? AppBar(
-              leading: InkWell(
-                onTap: () {
-                  scaffoldKey.currentState!.openDrawer();
-                },
-                child: const Icon(
-                  Icons.menu,
-                  color: mWhite,
-                  size: 30,
-                ),
-              ),
-              centerTitle: true,
-              title: GetBuilder<DrawerSelectedTabController>(
-                builder: (controller) {
-                  return TextView(label: getAppBarTitle(controller.selectedPath));
-                },
-              ),
-            )
-          : null,
-      drawer: width < 600
-          ? Drawer(
-              backgroundColor: appPrimaryColor,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Stack(
-                    children: [
-                      Container(
-                        height: 170 + MediaQuery.of(context).padding.top,
-                        decoration: const BoxDecoration(
-                          color: appPrimaryColor,
-                          image: DecorationImage(
-                            image: AssetImage(drawerLibraryBackground),
-                            fit: BoxFit.cover,
-                            opacity: 0.6,
-                          ),
-                        ),
-                      ),
-                      SafeArea(
-                        child: InkWell(
-                          onTap: () {
-                            scaffoldKey.currentState!.closeDrawer();
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(left: 15, top: 10),
-                            child: Icon(
-                              Icons.menu,
-                              color: mWhite,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 5 + MediaQuery.of(context).padding.top,
-                        left: 0,
-                        right: 0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              nlIconImage,
-                              width: 70,
-                              height: 70,
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        top: 75 + MediaQuery.of(context).padding.top,
-                        left: 0,
-                        right: 0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            TextView(
-                              label: 'Welcome',
-                              color: mWhite,
-                              fontSize: 20,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  GetBuilder<DrawerSelectedTabController>(builder: (controller) {
-                    return Expanded(
-                      child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        itemCount: drawerItemTitleText.length,
-                        itemBuilder: (context, index) {
-                          if (drawerItemPathList[index] == enterPinScreenRoute) {
-                            if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
-                              return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(
-                                  icon: selectedDrawerItemIcon[index],
-                                  iconSize: selectedIconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            } else {
-                              return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(
-                                  icon: drawerItemIcon[index],
-                                  iconSize: iconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            }
-                          } else {
-                            if (controller.selectedPath == drawerItemPathList[index]) {
-                              return DrawerSelectedItemButton(
-                                icon: Utility.getSelectedDrawerItemIcon(
-                                  icon: selectedDrawerItemIcon[index],
-                                  iconSize: selectedIconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            } else {
-                              return DrawerItemButton(
-                                icon: Utility.getDefaultDrawerItemIcon(
-                                  icon: drawerItemIcon[index],
-                                  iconSize: iconSizeList[index],
-                                ),
-                                onTap: () {
-                                  onDrawerItemTap(context, index);
-                                },
-                                title: drawerItemTitleText[index],
-                              );
-                            }
-                          }
-                        },
-                      ),
-                    );
-                  }),
-                ],
-              ),
-            )
-          : null,
+      appBar: width < 700 ? getAppBarWithDrawerIcon() : null,
+      drawer: width < 700 ? getCollapsableDrawer() : null,
       body: Row(
         children: [
-          width > 620
-              ? GetBuilder<DrawerSelectedTabController>(
-                  builder: (controller) {
-                    return Drawer(
-                      backgroundColor: appPrimaryColor,
-                      child: SizedBox(
-                        width: 300,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Stack(
-                              children: [
-                                Container(
-                                  height: 170 + MediaQuery.of(context).padding.top,
-                                  decoration: const BoxDecoration(
-                                    color: appPrimaryColor,
-                                    image: DecorationImage(
-                                      image: AssetImage(drawerLibraryBackground),
-                                      fit: BoxFit.cover,
-                                      opacity: 0.6,
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 5 + MediaQuery.of(context).padding.top,
-                                  left: 0,
-                                  right: 0,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Image.asset(
-                                        nlIconImage,
-                                        width: 70,
-                                        height: 70,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 75 + MediaQuery.of(context).padding.top,
-                                  left: 0,
-                                  right: 0,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      TextView(
-                                        label: 'Welcome',
-                                        color: mWhite,
-                                        fontSize: 20,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 5),
-                            Expanded(
-                              child: ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                itemCount: drawerItemTitleText.length,
-                                itemBuilder: (context, index) {
-                                  if (drawerItemPathList[index] == enterPinScreenRoute) {
-                                    if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
-                                      return DrawerSelectedItemButton(
-                                        icon: Utility.getSelectedDrawerItemIcon(
-                                          icon: selectedDrawerItemIcon[index],
-                                          iconSize: selectedIconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    } else {
-                                      return DrawerItemButton(
-                                        icon: Utility.getDefaultDrawerItemIcon(
-                                          icon: drawerItemIcon[index],
-                                          iconSize: iconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    }
-                                  } else {
-                                    if (controller.selectedPath == drawerItemPathList[index]) {
-                                      return DrawerSelectedItemButton(
-                                        icon: Utility.getSelectedDrawerItemIcon(
-                                          icon: selectedDrawerItemIcon[index],
-                                          iconSize: selectedIconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    } else {
-                                      return DrawerItemButton(
-                                        icon: Utility.getDefaultDrawerItemIcon(
-                                          icon: drawerItemIcon[index],
-                                          iconSize: iconSizeList[index],
-                                        ),
-                                        onTap: () {
-                                          onHorizontalDrawerItemTap(context, index);
-                                        },
-                                        title: drawerItemTitleText[index],
-                                      );
-                                    }
-                                  }
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                )
-              : const SizedBox(),
+          width > 700 ? getNonCollapsableDrawer() : const SizedBox(),
           Expanded(
-            child: GetBuilder<DrawerSelectedTabController>(builder: (controller) {
-              return Router(
-                routerDelegate: delegate,
-              );
-            }),
+            child: getRouterView(),
           ),
         ],
       ),
+    );
+  }
+
+  AppBar getAppBarWithDrawerIcon() {
+    return AppBar(
+      leading: InkWell(
+        onTap: () {
+          scaffoldKey.currentState!.openDrawer();
+        },
+        child: const Icon(
+          Icons.menu,
+          color: mWhite,
+          size: 30,
+        ),
+      ),
+      centerTitle: true,
+      title: GetBuilder<DrawerSelectedTabController>(
+        builder: (controller) {
+          return TextView(label: getAppBarTitle(controller.selectedPath));
+        },
+      ),
+    );
+  }
+
+  Widget getRouterView() {
+    return GetBuilder<DrawerSelectedTabController>(
+      builder: (controller) {
+        return Router(
+          routerDelegate: delegate,
+        );
+      },
+    );
+  }
+
+  Widget getCollapsableDrawer() {
+    return Drawer(
+      backgroundColor: appPrimaryColor,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              Container(
+                height: 170 + MediaQuery.of(context).padding.top,
+                decoration: const BoxDecoration(
+                  color: appPrimaryColor,
+                  image: DecorationImage(
+                    image: AssetImage(drawerLibraryBackground),
+                    fit: BoxFit.cover,
+                    opacity: 0.6,
+                  ),
+                ),
+              ),
+              SafeArea(
+                child: InkWell(
+                  onTap: () {
+                    scaffoldKey.currentState!.closeDrawer();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 15, top: 10),
+                    child: Icon(
+                      Icons.menu,
+                      color: mWhite,
+                      size: 30,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 5 + MediaQuery.of(context).padding.top,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      nlIconImage,
+                      width: 70,
+                      height: 70,
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 75 + MediaQuery.of(context).padding.top,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    TextView(
+                      label: 'Welcome',
+                      color: mWhite,
+                      fontSize: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 5),
+          GetBuilder<DrawerSelectedTabController>(
+            builder: (controller) {
+              return Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: drawerItemTitleText.length,
+                  itemBuilder: (context, index) {
+                    if (drawerItemPathList[index] == enterPinScreenRoute) {
+                      if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
+                        return DrawerSelectedItemButton(
+                          icon: Utility.getSelectedDrawerItemIcon(
+                            icon: selectedDrawerItemIcon[index],
+                            iconSize: selectedIconSizeList[index],
+                          ),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      } else {
+                        return DrawerItemButton(
+                          icon: Utility.getDefaultDrawerItemIcon(
+                            icon: drawerItemIcon[index],
+                            iconSize: iconSizeList[index],
+                          ),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      }
+                    } else {
+                      if (controller.selectedPath == drawerItemPathList[index]) {
+                        return DrawerSelectedItemButton(
+                          icon: Utility.getSelectedDrawerItemIcon(
+                            icon: selectedDrawerItemIcon[index],
+                            iconSize: selectedIconSizeList[index],
+                          ),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      } else {
+                        return DrawerItemButton(
+                          icon: Utility.getDefaultDrawerItemIcon(
+                            icon: drawerItemIcon[index],
+                            iconSize: iconSizeList[index],
+                          ),
+                          onTap: () {
+                            onDrawerItemTap(context, index);
+                          },
+                          title: drawerItemTitleText[index],
+                        );
+                      }
+                    }
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getNonCollapsableDrawer() {
+    return GetBuilder<DrawerSelectedTabController>(
+      builder: (controller) {
+        return Drawer(
+          backgroundColor: appPrimaryColor,
+          child: SizedBox(
+            width: 300,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 170 + MediaQuery.of(context).padding.top,
+                      decoration: const BoxDecoration(
+                        color: appPrimaryColor,
+                        image: DecorationImage(
+                          image: AssetImage(drawerLibraryBackground),
+                          fit: BoxFit.cover,
+                          opacity: 0.6,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 5 + MediaQuery.of(context).padding.top,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            nlIconImage,
+                            width: 70,
+                            height: 70,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                      top: 75 + MediaQuery.of(context).padding.top,
+                      left: 0,
+                      right: 0,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          TextView(
+                            label: 'Welcome',
+                            color: mWhite,
+                            fontSize: 20,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: drawerItemTitleText.length,
+                    itemBuilder: (context, index) {
+                      if (drawerItemPathList[index] == enterPinScreenRoute) {
+                        if (controller.selectedPath == enterPinScreenRoute || controller.selectedPath == novelHiddenListScreenRoute) {
+                          return DrawerSelectedItemButton(
+                            icon: Utility.getSelectedDrawerItemIcon(
+                              icon: selectedDrawerItemIcon[index],
+                              iconSize: selectedIconSizeList[index],
+                            ),
+                            onTap: () {
+                              onHorizontalDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        } else {
+                          return DrawerItemButton(
+                            icon: Utility.getDefaultDrawerItemIcon(
+                              icon: drawerItemIcon[index],
+                              iconSize: iconSizeList[index],
+                            ),
+                            onTap: () {
+                              onHorizontalDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        }
+                      } else {
+                        if (controller.selectedPath == drawerItemPathList[index]) {
+                          return DrawerSelectedItemButton(
+                            icon: Utility.getSelectedDrawerItemIcon(
+                              icon: selectedDrawerItemIcon[index],
+                              iconSize: selectedIconSizeList[index],
+                            ),
+                            onTap: () {
+                              onHorizontalDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        } else {
+                          return DrawerItemButton(
+                            icon: Utility.getDefaultDrawerItemIcon(
+                              icon: drawerItemIcon[index],
+                              iconSize: iconSizeList[index],
+                            ),
+                            onTap: () {
+                              onHorizontalDrawerItemTap(context, index);
+                            },
+                            title: drawerItemTitleText[index],
+                          );
+                        }
+                      }
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

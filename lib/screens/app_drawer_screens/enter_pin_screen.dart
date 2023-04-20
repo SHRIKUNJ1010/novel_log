@@ -12,7 +12,6 @@ import 'package:novel_log/utility/page_and_transition_services/page_config_list.
 import 'package:novel_log/utility/preference.dart';
 import 'package:novel_log/utility/utility.dart';
 import 'package:novel_log/widgets/common_widgets/enter_pin_widget.dart';
-import 'package:novel_log/widgets/common_widgets/text_widget.dart';
 
 class EnterPinScreen extends StatefulWidget {
   const EnterPinScreen({Key? key}) : super(key: key);
@@ -27,12 +26,7 @@ class _EnterPinScreenState extends State<EnterPinScreen> {
     final double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: width > 600
-          ? AppBar(
-              centerTitle: true,
-              title: const TextView(label: 'Enter Pin'),
-            )
-          : null,
+      appBar: Utility.getCommonAppBarWithoutIcon(width, 'Enter Pin'),
       body: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,

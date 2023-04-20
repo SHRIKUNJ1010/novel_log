@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:novel_log/main.dart';
 import 'package:novel_log/utility/assets_path.dart';
 import 'package:novel_log/utility/color.dart';
 import 'package:novel_log/utility/utility.dart';
@@ -182,6 +181,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                             child: TextField(
                               controller: emailEditingController,
+                              onTapOutside: (down) {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+                                if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+                                  FocusManager.instance.primaryFocus!.unfocus();
+                                }
+                              },
                             ),
                           ),
                           const SizedBox(height: 20),
