@@ -47,7 +47,8 @@ class NovelDescriptionModel {
     userId = json[userIdKeyName];
     novelName = json[novelNameKeyName];
     novelAuthorName = json[novelAuthorNameKeyName];
-    novelGenre = (json[novelGenreKeyName] as List).map((e) => e.toString()).toList();
+    novelGenre =
+        json[novelGenreKeyName] == null ? [] : (json[novelGenreKeyName] as List).map((e) => e.toString()).toList();
     novelDescription = json[novelDescriptionKeyName];
     novelImageUrl = json[novelImageUrlKeyName];
     indexingGroupName = json[indexingGroupNameKeyName];

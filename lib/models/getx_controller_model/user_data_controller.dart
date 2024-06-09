@@ -15,6 +15,13 @@ import 'package:sqflite/sqflite.dart';
 class UserDataController extends GetxController {
   UserProfileModel userData = UserProfileModel();
 
+  bool loadingNovelStatics = false;
+
+  void changeNovelStaticsLoading(bool value) {
+    loadingNovelStatics = value;
+    update();
+  }
+
   //get user data by user id
   Future<void> getUserData(String userId, {Database? db}) async {
     if ((!kIsWeb) && (db != null)) {

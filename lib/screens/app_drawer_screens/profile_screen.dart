@@ -99,8 +99,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     todayChapterReadCount: controller.userData.todayChapterReadCount ?? 0,
                     totalStartedNovelCount: controller.userData.totalStartedNovelCount ?? 0,
                     totalChapterReadCount: controller.userData.totalChapterReadCount ?? 0,
-                    totalNovelReadCompleteWithNovelComplete: controller.userData.totalNovelReadCompleteWithNovelComplete ?? 0,
-                    totalNovelReadCompleteWithNovelHiatus: controller.userData.totalNovelReadCompleteWithNovelHiatus ?? 0,
+                    totalNovelReadCompleteWithNovelComplete:
+                        controller.userData.totalNovelReadCompleteWithNovelComplete ?? 0,
+                    totalNovelReadCompleteWithNovelHiatus:
+                        controller.userData.totalNovelReadCompleteWithNovelHiatus ?? 0,
                     dailyAverageChapterReadCount: controller.userData.dailyAverageChapterReadCount ?? 0,
                     fontSize: width > 720
                         ? 22
@@ -145,24 +147,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                  child: CommonRoundedButton(
-                    height: 50,
-                    text: 'Transfer Novel Data to Local Database',
-                    fontSize: 18,
-                    onTap: () async {
-                      if (!kIsWeb) {
-                        await Utility.getNovelDataFromFirebaseAndInsertIntoLocalDatabase(widget.userId, localDb.database);
-                        YourNovelListController yourNovelListController = Get.put(YourNovelListController());
-                        NovelWishListController novelWishListController = Get.put(NovelWishListController());
-                        NovelHiddenListController novelHiddenListController = Get.put(NovelHiddenListController());
-                        yourNovelListController.refreshListLocalDatabase(localDb.database, widget.userId);
-                        novelWishListController.refreshListLocalDatabase(localDb.database, widget.userId);
-                        novelHiddenListController.refreshListLocalDatabase(localDb.database, widget.userId);
-                      }
-                    },
-                  ),
+                  child: controller.loadingNovelStatics
+                      ? const CircularProgressIndicator()
+                      : CommonRoundedButton(
+                          height: 50,
+                          text: 'Transfer Novel Data to Local Database',
+                          fontSize: 18,
+                          onTap: () async {
+                            if (!kIsWeb) {
+                              controller.changeNovelStaticsLoading(true);
+                              try {
+                                await Utility.getNovelDataFromFirebaseAndInsertIntoLocalDatabase(
+                                    widget.userId, localDb.database);
+                                YourNovelListController yourNovelListController = Get.put(YourNovelListController());
+                                NovelWishListController novelWishListController = Get.put(NovelWishListController());
+                                NovelHiddenListController novelHiddenListController =
+                                    Get.put(NovelHiddenListController());
+                                yourNovelListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                                novelWishListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                                novelHiddenListController.refreshListLocalDatabase(localDb.database, widget.userId);
+                                controller.changeNovelStaticsLoading(false);
+                              } catch (e) {
+                                Utility.printLog(e.toString());
+                                Utility.toastMessage(mFA5D5D, 'Error', e.toString());
+                                controller.changeNovelStaticsLoading(false);
+                              }
+                            }
+                          },
+                        ),
                 ),
-                if (!kIsWeb) Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
+                if (!kIsWeb)
+                  Platform.isIOS || Platform.isAndroid ? const SizedBox(height: 100) : const SizedBox(height: 30),
               ],
             ),
           );
